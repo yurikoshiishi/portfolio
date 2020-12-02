@@ -1,17 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import {persistStore, persistReducer} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
+import reducer from './modules';
+// import {ThemeProvider} from '@material-ui/core/styles';
+// import {theme} from './theme';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['app'],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+const store = createStore(
+  persistedReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const persistor = persistStore(store);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      {/* <ThemeProvider theme={theme}> */}
+      <App />
+      {/* </ThemeProvider> */}
+    </PersistGate>
+  </Provider>,
+  document.querySelector('#root')
+);
