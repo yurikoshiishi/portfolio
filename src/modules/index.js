@@ -1,9 +1,9 @@
 const SET_LANGUAGE = 'SET_LANGUAGE';
-const SET_MODE = 'SET_MODE';
+const SET_THEME = 'SET_THEME';
 
 const INITIAL_STATE = {
   language: 'ja',
-  mode: 'light'
+  theme: 'light',
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -11,23 +11,26 @@ const reducer = (state = INITIAL_STATE, action) => {
     case SET_LANGUAGE: {
       return {
         ...state,
-        language: action.payload
+        language: action.payload,
       };
     }
-    case SET_MODE: {
+    case SET_THEME: {
       return {
         ...state,
-        mode: action.payload
+        mode: action.payload,
       };
     }
     default: {
-     return state
+      return state;
     }
   }
 };
 
-export default reducer
+export default reducer;
 
-export const setLanguage = language => ({type: SET_LANGUAGE, action: language});
+export const setLanguage = (language) => ({
+  type: SET_LANGUAGE,
+  payload: language,
+});
 
-export const setMode = mode => ({type: SET_MODE, action: mode});
+export const setMode = (theme) => ({type: SET_THEME, payload: theme});
