@@ -15,7 +15,7 @@ import LanguageProvider from './components/LanguageProvider';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['language', 'theme'],
+  whitelist: ['lang', 'theme'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

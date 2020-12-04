@@ -2,16 +2,17 @@ const SET_LANGUAGE = 'SET_LANGUAGE';
 const SET_THEME = 'SET_THEME';
 
 const INITIAL_STATE = {
-  language: 'ja',
+  lang: 'en',
   theme: 'light',
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SET_LANGUAGE: {
+      const {language, force} = action.payload;
       return {
         ...state,
-        language: action.payload,
+        lang: {language, force},
       };
     }
     case SET_THEME: {
@@ -28,9 +29,9 @@ const reducer = (state = INITIAL_STATE, action) => {
 
 export default reducer;
 
-export const setLanguage = (language) => ({
+export const setLanguage = ({language, force}) => ({
   type: SET_LANGUAGE,
-  payload: language,
+  payload: {language, force},
 });
 
 export const setMode = (theme) => ({type: SET_THEME, payload: theme});

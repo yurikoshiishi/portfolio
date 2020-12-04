@@ -1,22 +1,50 @@
 import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {connect} from 'react-redux';
+import {setLanguage} from '../../modules/';
+
+const getLanguage = () => {
+  if (!window || !window.navigator) {
+    return 'en';
+  }
+
+  const lang =
+    (window.navigator.languages && window.navigator.languages[0]) ||
+    window.navigator.language ||
+    window.navigator.userLanguage ||
+    window.navigator.browserLanguage;
+  if (lang && typeof lang === 'string' && lang.indexOf('ja') !== -1) {
+    return 'ja';
+  }
+
+  return 'en';
+};
 
 const LanguageProvider = (props) => {
-  const {lang} = props;
+  const {language, force, setLanguage} = props;
   const {i18n} = useTranslation();
 
   useEffect(() => {
-    i18n.changeLanguage(lang);
-  }, [lang, i18n]);
+    //NOTE: detect language preference
+    const browserLanguage = getLanguage();
+    if (!force) {
+      console.log(force);
+      setLanguage({language: browserLanguage, force: false});
+    }
+  }, []);
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
 
   return props.children;
 };
 
 const mapStateToProps = (state) => {
   return {
-    lang: state.language,
+    language: state.lang.language,
+    force: state.lang.force,
   };
 };
 
-export default connect(mapStateToProps)(LanguageProvider);
+export default connect(mapStateToProps, {setLanguage})(LanguageProvider);

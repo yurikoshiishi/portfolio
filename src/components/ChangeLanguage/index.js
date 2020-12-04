@@ -22,7 +22,7 @@ const ChangeLanguage = ({language, setLanguage}) => {
   };
 
   const handleChangeLanguage = (language) => {
-    setLanguage(language);
+    setLanguage({language, force: true});
     handleClose();
   };
 
@@ -54,7 +54,7 @@ const ChangeLanguage = ({language, setLanguage}) => {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.language,
+    language: state.lang.language,
   };
 };
 
