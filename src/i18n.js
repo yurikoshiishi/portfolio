@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import ja from './data/ja.json';
-import en from './data/en.json';
+import ja from './data/translations/ja/';
+import en from './data/translations/en/';
 
 // the translations
 // (tip move them in a JSON file and import them)
@@ -15,6 +15,8 @@ i18n
   .init({
     resources,
     lng: 'en',
+    fallbackLng: 'en',
+    returnEmptyString: false,
     keySeparator: false, // we do not use keys in form messages.welcome
     interpolation: {
       escapeValue: false, // react already safes from xss

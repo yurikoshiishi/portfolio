@@ -4,8 +4,12 @@ import Copyright from './Copyright';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginLeft: '-100%',
-    marginRight: '-100%',
+    marginLeft: theme.spacing(-5),
+    marginRight: theme.spacing(-5),
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: theme.spacing(-2),
+      marginRight: theme.spacing(-2),
+    },
   },
   container: {
     textAlign: 'center',

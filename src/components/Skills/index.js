@@ -1,5 +1,6 @@
 import {Grid} from '@material-ui/core';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   CssIcon,
   GitHubIcon,
@@ -25,8 +26,9 @@ const SKILL_ITEMS = [
 ];
 
 const Skills = () => {
+  const {t} = useTranslation();
   return (
-    <Section title="Skills">
+    <Section title={t('Skills')}>
       <Grid container spacing={1}>
         {SKILL_ITEMS.map((item) => (
           <Grid key={item.text} item xs={4} sm={3}>

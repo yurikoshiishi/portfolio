@@ -78,14 +78,16 @@ const EntryContent = () => {
       <div className={classes.textContainer}>
         <div className="name">
           <Typography variant="body1" color="textSecondary">
-            Web Developer
+            {t('Web Developer')}
           </Typography>
           <Typography variant="h1" color="textPrimary">
-            {t('name')}
+            {t('Yuri Koshiishi')}
           </Typography>
         </div>
         <Typography variant="body2" color="textSecondary">
-          {t('introduction')}
+          {t(
+            "Hi, my name is Yuri Koshiishi. I'm a Web Developer who's passionate about JavsScript."
+          )}
         </Typography>
         <div className={classes.buttonContainer}>
           <Button

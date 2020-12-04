@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
       left: '15px',
       bottom: '3px',
     },
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(1, 1, 3, 5),
+    },
   },
   header: {
     display: 'flex',
@@ -43,9 +46,20 @@ const useStyles = makeStyles((theme) => ({
       background: theme.palette.background.paper,
     },
   },
+  list: {
+    '& .MuiTypography-root': {
+      lineHeight: '1.2',
+    },
+  },
 }));
 
-const ExperienceItem = ({time, company, jobTitle, jobDescription, isFirst}) => {
+const ExperienceItem = ({
+  time,
+  company,
+  jobTitle,
+  jobDescriptions,
+  isFirst,
+}) => {
   const classes = useStyles();
   return (
     <div className={`${classes.root} ${isFirst ? 'first' : ''}`}>
@@ -62,9 +76,15 @@ const ExperienceItem = ({time, company, jobTitle, jobDescription, isFirst}) => {
       <Typography variant="h4" color="textPrimary">
         {jobTitle}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {jobDescription}
-      </Typography>
+      <ul className={classes.list}>
+        {jobDescriptions.map((desc) => (
+          <li key={desc}>
+            <Typography variant="body2" color="textSecondary">
+              {desc}{' '}
+            </Typography>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

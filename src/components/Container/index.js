@@ -3,7 +3,7 @@ import {Container as MuiContainer, makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(10, 2, 5),
+    padding: theme.spacing(10, 2, 10),
     [theme.breakpoints.down('xs')]: {
       padding: '0',
     },

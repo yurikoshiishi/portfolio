@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     '& svg': {
       width: '20px',
+      height: '20px',
     },
     '& .MuiButton-root': {
       '&:first-child': {

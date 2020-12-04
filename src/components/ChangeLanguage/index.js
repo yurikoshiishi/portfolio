@@ -43,6 +43,7 @@ const ChangeLanguage = ({language, setLanguage}) => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        disableScrollLock={true}
       >
         <MenuItem onClick={() => handleChangeLanguage('en')}>English</MenuItem>
         <MenuItem onClick={() => handleChangeLanguage('ja')}>日本語</MenuItem>

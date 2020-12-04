@@ -79,7 +79,7 @@ const Contact = () => {
   };
 
   return (
-    <Section title="Contact">
+    <Section title={t('Contact')}>
       <div className={classes.root}>
         <Formik
           validationSchema={validationSchema}
@@ -96,6 +96,8 @@ const Contact = () => {
                   label={t('Email')}
                   as={TextField}
                   required
+                  type="email"
+                  autoComplete="email"
                   {...FIELD_CONFIG}
                   error={errors.email && touched.email}
                   helperText={
@@ -106,6 +108,8 @@ const Contact = () => {
               <Box>
                 <Field
                   name="name"
+                  type="text"
+                  autoComplete="name"
                   label={t('Name')}
                   as={TextField}
                   {...FIELD_CONFIG}
@@ -115,6 +119,8 @@ const Contact = () => {
                 <Field
                   name="subject"
                   label={t('Subject')}
+                  type="text"
+                  autoComplete="off"
                   as={TextField}
                   {...FIELD_CONFIG}
                 />
@@ -123,6 +129,8 @@ const Contact = () => {
                 <Field
                   name="message"
                   label={t('Body')}
+                  type="text"
+                  autoComplete="off"
                   as={TextField}
                   {...FIELD_CONFIG}
                   required

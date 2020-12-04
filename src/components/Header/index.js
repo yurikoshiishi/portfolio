@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {
   Box,
   Toolbar,
@@ -17,14 +17,7 @@ import {Link} from 'react-scroll';
 import ChangeLanguage from '../ChangeLanguage';
 import MenuIcon from '@material-ui/icons/Menu';
 import ElevationScroll from './ElevationScroll';
-
-const LINKS = [
-  {to: 'about', text: 'About'},
-  {to: 'skills', text: 'Skills'},
-  {to: 'projects', text: 'Projects'},
-  {to: 'experience', text: 'Experience'},
-  {to: 'contact', text: 'Contact'},
-];
+import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -71,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(0.5),
         '& .MuiButton-root': {
           fontSize: '12px',
+          textTransform: 'none',
         },
       },
     },
@@ -99,6 +93,18 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const {t} = useTranslation();
+
+  const LINKS = useMemo(
+    () => [
+      {to: 'about', text: t('About')},
+      {to: 'skills', text: t('Skills')},
+      {to: 'projects', text: t('Projects')},
+      {to: 'experience', text: t('Experience')},
+      {to: 'contact', text: t('Contact')},
+    ],
+    [t]
+  );
 
   const handleDrawerToggle = () => {
     setOpen(!open);

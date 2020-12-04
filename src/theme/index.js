@@ -203,6 +203,7 @@ export const theme = createMuiTheme({
     MuiButton: {
       root: {
         borderRadius: '20px',
+        textTransform: 'none',
       },
       text: {
         '&&$fullWidth': {

@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     '& svg': {
       width: '20px',
+      height: '20px',
       fill: theme.palette.text.secondary,
     },
   },

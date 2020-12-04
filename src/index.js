@@ -10,11 +10,12 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import {theme} from './theme';
 import App from './App';
 import './i18n';
+import LanguageProvider from './components/LanguageProvider';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['app'],
+  whitelist: ['language', 'theme'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -32,7 +33,9 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ThemeProvider theme={theme}>
-        <App />
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
       </ThemeProvider>
     </PersistGate>
   </Provider>,

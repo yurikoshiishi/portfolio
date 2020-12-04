@@ -23,7 +23,7 @@ exports.sendContactForm = functions
       const msg = {
         to: gmailEmail,
         from: {
-          email: email,
+          email: 'noreply@yurikoshiishi.com',
           name: name ? name : 'Anonymous User',
         },
         subject: subject ? subject : 'No Subject',
