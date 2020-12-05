@@ -1,7 +1,8 @@
-import React from 'react';
-import {makeStyles} from '@material-ui/core';
+import React, {useMemo} from 'react';
+import {makeStyles, Typography} from '@material-ui/core';
 import WarningOutlinedIcon from '@material-ui/icons/WarningOutlined';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
+import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,20 +34,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TYPE_MAP = {
-  error: {
-    text:
-      'An unexpected error occurred while sending a message. Please try again.',
-    icon: <WarningOutlinedIcon />,
-  },
-  success: {
-    text: 'Thank you for contacting. I will get back to you within 48 hours.',
-    icon: <CheckCircleOutlinedIcon />,
-  },
-};
-
 const Alert = ({type}) => {
   const classes = useStyles();
+  const {t} = useTranslation();
+
+  const TYPE_MAP = useMemo(
+    () => ({
+      error: {
+        text: t(
+          'An unexpected error occurred while sending a message. Please try again.'
+        ),
+        icon: <WarningOutlinedIcon />,
+      },
+      success: {
+        text: t(
+          'Thank you for contacting. I will get back to you within 48 hours.'
+        ),
+        icon: <CheckCircleOutlinedIcon />,
+      },
+    }),
+    [t]
+  );
 
   if (!type) {
     return null;
@@ -56,7 +64,7 @@ const Alert = ({type}) => {
     <div className={classes[type]}>
       <div className={classes.container}>
         <div>{TYPE_MAP[type].icon}</div>
-        {TYPE_MAP[type].text}
+        <Typography variant="body2">{TYPE_MAP[type].text}</Typography>
       </div>
     </div>
   );

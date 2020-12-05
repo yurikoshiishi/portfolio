@@ -101,7 +101,9 @@ const Contact = () => {
                   {...FIELD_CONFIG}
                   error={errors.email && touched.email}
                   helperText={
-                    errors.email && touched.email ? t(errors.email) : ''
+                    errors.email && touched.email
+                      ? t('Required. Please enter a valid email.')
+                      : ''
                   }
                 />
               </Box>
@@ -139,7 +141,7 @@ const Contact = () => {
                   rowsMax={30}
                   error={errors.message && touched.message}
                   helperText={
-                    errors.message && touched.message ? t(errors.message) : ''
+                    errors.message && touched.message ? t('Required.') : ''
                   }
                 />
               </Box>

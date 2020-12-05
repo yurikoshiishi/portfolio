@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: 'flex',
     alignItems: 'center',
-    margin: theme.spacing(0, 0, 2, -5),
+    margin: theme.spacing(0, -2, 2, -6),
     '& .chip': {
       borderRadius: '30px',
       border: `2px solid ${theme.palette.primary.light}`,
@@ -44,11 +44,15 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1),
       position: 'relative',
       background: theme.palette.background.paper,
+      flexShrink: '0',
     },
   },
+  title: {
+    marginBottom: theme.spacing(1),
+  },
   list: {
-    '& .MuiTypography-root': {
-      lineHeight: '1.2',
+    '& li': {
+      marginBottom: theme.spacing(1),
     },
   },
 }));
@@ -73,7 +77,7 @@ const ExperienceItem = ({
           {company}
         </Typography>
       </div>
-      <Typography variant="h4" color="textPrimary">
+      <Typography variant="h4" color="textPrimary" className={classes.title}>
         {jobTitle}
       </Typography>
       <ul className={classes.list}>
