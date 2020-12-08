@@ -6,7 +6,6 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     width: '100%',
     height: '0',
-    maxWidth: '940px',
     paddingBottom: '56.25%',
     overflow: 'hidden',
     '& iframe': {
