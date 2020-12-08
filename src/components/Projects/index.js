@@ -25,6 +25,7 @@ const Projects = () => {
           'CSS',
           'Firebase',
         ],
+        youtubeVideoId: 'K4XIKTlgvnA',
         projectUrl: 'https://dashboard.barbellbase.app',
         githubUrl: '',
       },

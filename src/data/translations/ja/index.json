@@ -28,5 +28,6 @@
   "Thank you for contacting. I will get back to you within 48 hours.": "ご連絡ありがとうございます。48時間以内に返答いたしますので、今しばらくお待ちください。",
   "An unexpected error occurred while sending a message. Please try again.": "メッセージ送信中にエラーが発生しました。お手数をおかけしますが、再度お試しください。",
   "Required. Please enter a valid email.": "必須項目です。正しいメールアドレスを入力してください。",
-  "Required.": "必須項目です。"
+  "Required.": "必須項目です。",
+  "play video": "デモを再生"
 }

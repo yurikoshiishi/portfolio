@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {connect} from 'react-redux';
 import {setLanguage} from '../../modules/';
@@ -28,7 +28,6 @@ const LanguageProvider = (props) => {
     //NOTE: detect language preference
     const browserLanguage = getLanguage();
     if (!force) {
-      console.log(force);
       setLanguage({language: browserLanguage, force: false});
     }
   }, []);

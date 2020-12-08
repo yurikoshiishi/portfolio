@@ -1,9 +1,10 @@
 import React from 'react';
-import {makeStyles, Chip, Divider, Button} from '@material-ui/core';
+import {makeStyles, Chip, Divider, Button, Box} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CallMade from '@material-ui/icons/CallMade';
 import {useTranslation} from 'react-i18next';
 import {GitHubIcon} from '../Icons';
+import VideoModal from './VideoModal';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     '&:hover': {
       borderColor: '#5B9FED',
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(1),
     },
   },
   imageContainer: {
@@ -45,21 +49,6 @@ const useStyles = makeStyles((theme) => ({
       width: '20px',
       height: '20px',
     },
-    '& .MuiButton-root': {
-      '&:first-child': {
-        marginRight: theme.spacing(1),
-      },
-    },
-  },
-  imageLink: {
-    '&:after': {
-      position: 'absolute',
-      top: '0',
-      left: '0',
-      right: '0',
-      bottom: '0',
-      content: '""',
-    },
   },
 }));
 
@@ -68,6 +57,7 @@ export const ProjectItem = ({
   imageSrc,
   description,
   technologies,
+  youtubeVideoId,
   projectUrl,
   githubUrl,
 }) => {
@@ -81,7 +71,6 @@ export const ProjectItem = ({
           href={projectUrl ? projectUrl : githubUrl ? githubUrl : '#'}
           target="_blank"
           rel="noopener noreferrer"
-          className={classes.imageLink}
         >
           <img src={imageSrc} alt={name} />
         </a>
@@ -101,24 +90,34 @@ export const ProjectItem = ({
         ))}
       </div>
       <div className={classes.buttonContainer}>
-        {projectUrl && (
-          <Button
-            color="primary"
-            variant="outlined"
-            startIcon={<CallMade />}
-            component="a"
-            href={projectUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t('see live')}
-          </Button>
-        )}
+        <Box mb={1} display="flex" alignItems="center" width="100%">
+          <Box mr={1} flex="1">
+            {youtubeVideoId && <VideoModal videoId={youtubeVideoId} />}
+          </Box>
+          <Box flex="1">
+            {projectUrl && (
+              <Button
+                fullWidth
+                color="primary"
+                variant="outlined"
+                startIcon={<CallMade />}
+                component="a"
+                href={projectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t('see live')}
+              </Button>
+            )}
+          </Box>
+        </Box>
+
         {githubUrl && (
           <Button
             color="default"
             variant="outlined"
             startIcon={<GitHubIcon />}
+            fullWidth
             component="a"
             href={githubUrl}
             target="_blank"

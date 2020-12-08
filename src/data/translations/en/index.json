@@ -7,7 +7,7 @@
   "Contact Info": "Contact Info",
   "See more": "See More",
   "Contact me": "Contact Me",
-  "see live": "See Live",
+  "see live": "Visit Website",
   "view source": "View Source",
   "Web Developer": "Web Developer",
   "Projects": "Projects",
@@ -28,5 +28,6 @@
   "Thank you for contacting. I will get back to you within 48 hours.": "",
   "An unexpected error occurred while sending a message. Please try again.": "",
   "Required. Please enter a valid email.": "",
-  "Required.": ""
+  "Required.": "",
+  "play video": "Watch Demo"
 }
