@@ -24,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiAvatar-root': {
       width: '225px',
       height: '225px',
-      border: `15px solid ${theme.palette.background.paper}`,
-      boxShadow: '0px 0px 25px 0px rgba(0,0,0,.1)',
+      border: `2px solid ${theme.palette.divider}`,
       [theme.breakpoints.down('sm')]: {
         width: '175px',
         height: '175px',
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down('xs')]: {
         width: '125px',
         height: '125px',
-        border: `10px solid ${theme.palette.background.paper}`,
       },
     },
   },

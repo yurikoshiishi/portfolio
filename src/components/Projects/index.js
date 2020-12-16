@@ -18,7 +18,7 @@ const Projects = () => {
         ),
         technologies: [
           'Javascript',
-          'React.js',
+          'React',
           'Redux',
           'Node.js',
           'HTML',

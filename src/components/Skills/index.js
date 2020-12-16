@@ -16,7 +16,7 @@ import SkillItem from './SkillItem';
 
 const SKILL_ITEMS = [
   {text: 'JavaScript', icon: <JavaScriptIcon />},
-  {text: 'React.js', icon: <ReactIcon />},
+  {text: 'React', icon: <ReactIcon />},
   {text: 'Redux', icon: <ReduxIcon />},
   {text: 'Node.js', icon: <NodeIcon />},
   {text: 'HTML', icon: <HtmlIcon />},
