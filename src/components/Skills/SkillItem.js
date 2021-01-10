@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(2),
     '& svg': {
-      maxWidth: '45px',
+      width: '45px',
+      height: '45px',
       marginBottom: theme.spacing(1),
     },
   },

@@ -3,6 +3,7 @@ import Section from '../Section';
 import ProjectItem from './ProjectItem';
 import {Grid} from '@material-ui/core';
 import barbellbaseImage from '../../data/assets/barbellbase.png';
+import previewImage from '../../data/assets/preview.png';
 import {useTranslation} from 'react-i18next';
 
 const Projects = () => {
@@ -13,9 +14,18 @@ const Projects = () => {
       {
         name: 'Barbellbase',
         imageSrc: barbellbaseImage,
-        description: t(
-          'Online coaching platform built for personal trainers in Japan. Core functionalities include workout logging, schedule sharing, real-time messaging, etc.'
-        ),
+        descriptions: [
+          t('Online coaching platform built for personal trainers in Japan. '),
+          t(
+            'Built SPA frontend in React, with Firebase backend for authentication, NoSQL database, and serverless functions.'
+          ),
+          t(
+            'Integrated 3rd party solutions such as Stripe for billing, and SendGrid for sending emails.'
+          ),
+          t(
+            'Core functionalities include workout logging, schedule sharing, real-time messaging, etc.'
+          ),
+        ],
         technologies: [
           'Javascript',
           'React',
@@ -27,6 +37,34 @@ const Projects = () => {
         ],
         youtubeVideoId: 'K4XIKTlgvnA',
         projectUrl: 'https://dashboard.barbellbase.app',
+        githubUrl: '',
+      },
+      {
+        name: 'PReview',
+        imageSrc: previewImage,
+        descriptions: [
+          t('Product review sharing platform designed for protein powders.'),
+          t(
+            'Built SSR frontend as well as API endpoints in Next.js, with PostgresSQL database.'
+          ),
+          t('Deployed the server and database in VPS.'),
+          t(
+            'Core functionalities include posting/liking/sorting/filtering reviews, product search, etc.'
+          ),
+        ],
+        technologies: [
+          'TypeScript',
+          'React',
+          'Next.js',
+          'Node.js',
+          'PostgresSQL',
+          'HTML',
+          'CSS',
+          'Firebase',
+          'VPS',
+        ],
+        youtubeVideoId: '037HeJRu_-Y',
+        projectUrl: 'https://review-protein.com',
         githubUrl: '',
       },
     ],

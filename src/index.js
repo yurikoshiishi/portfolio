@@ -27,7 +27,9 @@ const store = createStore(
 
 const persistor = persistStore(store);
 
-console.log(theme);
+if (process.env.NODE_ENV === 'development') {
+  console.log(theme);
+}
 
 ReactDOM.render(
   <Provider store={store}>
