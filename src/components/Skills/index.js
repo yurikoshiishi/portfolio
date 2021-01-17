@@ -12,6 +12,7 @@ import {
   NodeIcon,
   PostgreSQLIcon,
   ReactIcon,
+  ReduxIcon,
   TypeScriptIcon,
 } from '../Icons';
 import Section from '../Section';
@@ -21,6 +22,7 @@ const SKILL_ITEMS = [
   {text: 'JavaScript', icon: <JavaScriptIcon />},
   {text: 'TypeScript', icon: <TypeScriptIcon />},
   {text: 'React', icon: <ReactIcon />},
+  {text: 'Redux', icon: <ReduxIcon />},
   {text: 'Next.js', icon: <NextJSIcon />},
   {text: 'Node.js', icon: <NodeIcon />},
   {text: 'PostgreSQL', icon: <PostgreSQLIcon />},
