@@ -9,6 +9,14 @@ const Experience = () => {
   const EXPERIENCE_ITEMS = useMemo(
     () => [
       {
+        time: t('2021/1 - Current'),
+        company: t('Nzigen, Inc. Tokyo, Japan.'),
+        jobTitle: t('Frontend Developer'),
+        jobDescriptions: [
+          t("Developed and maintained the frontend for clients' websites."),
+        ],
+      },
+      {
         time: t('2018/4 - 2020/10'),
         company: t('Dome Corp. Tokyo, Japan.'),
         jobTitle: t('E-commerce Specialist'),

@@ -10,7 +10,7 @@ import {
   JavaScriptIcon,
   NextJSIcon,
   NodeIcon,
-  PostgresSQLIcon,
+  PostgreSQLIcon,
   ReactIcon,
   TypeScriptIcon,
 } from '../Icons';
@@ -23,7 +23,7 @@ const SKILL_ITEMS = [
   {text: 'React', icon: <ReactIcon />},
   {text: 'Next.js', icon: <NextJSIcon />},
   {text: 'Node.js', icon: <NodeIcon />},
-  {text: 'PostgresSQL', icon: <PostgresSQLIcon />},
+  {text: 'PostgreSQL', icon: <PostgreSQLIcon />},
   {text: 'Firebase', icon: <FirebaseIcon />},
   {text: 'HTML', icon: <HtmlIcon />},
   {text: 'CSS', icon: <CssIcon />},

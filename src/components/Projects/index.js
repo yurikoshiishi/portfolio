@@ -45,7 +45,7 @@ const Projects = () => {
         descriptions: [
           t('Product review sharing platform designed for protein powders.'),
           t(
-            'Built SSR frontend as well as API endpoints in Next.js, with PostgresSQL database.'
+            'Built SSR frontend as well as API endpoints in Next.js, with PostgreSQL database.'
           ),
           t('Deployed the server and database in VPS.'),
           t(
@@ -57,7 +57,7 @@ const Projects = () => {
           'React',
           'Next.js',
           'Node.js',
-          'PostgresSQL',
+          'PostgreSQL',
           'HTML',
           'CSS',
           'Firebase',

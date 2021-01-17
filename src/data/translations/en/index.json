@@ -35,7 +35,11 @@
   "Integrated 3rd party solutions such as Stripe for billing, and SendGrid for sending emails.": "",
   "Core functionalities include workout logging, schedule sharing, real-time messaging, etc.": "",
   "Product review sharing platform designed for protein powders.": "Product review sharing platform for protein powders.",
-  "Built SSR frontend as well as API endpoints in Next.js, with PostgresSQL database.": "",
+  "Built SSR frontend as well as API endpoints in Next.js, with PostgreSQL database.": "",
   "Deployed the server and database in VPS.": "",
-  "Core functionalities include posting/liking/sorting/filtering reviews, product search, etc.": ""
+  "Core functionalities include posting/liking/sorting/filtering reviews, product search, etc.": "",
+  "2021/1 - Current": "",
+  "Nzigen, Inc. Tokyo, Japan.": "",
+  "Frontend Developer": "",
+  "Developed and maintained the frontend for clients' websites.": ""
 }
