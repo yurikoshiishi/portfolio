@@ -4,14 +4,16 @@ import {setLanguage} from '../../store';
 import {Button, Menu, MenuItem} from '@material-ui/core';
 import TranslateOutlinedIcon from '@material-ui/icons/TranslateOutlined';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
+import {useRouter} from 'next/dist/client/router';
 
 const LANGUAGE_MAP = {
   en: 'English',
   ja: '日本語',
 };
 
-const ChangeLanguage = ({language, setLanguage}) => {
+const ChangeLanguage = ({language}) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const router = useRouter();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,7 +24,9 @@ const ChangeLanguage = ({language, setLanguage}) => {
   };
 
   const handleChangeLanguage = (language) => {
-    setLanguage({language, force: true});
+    router.push('/', undefined, {
+      locale: language,
+    });
     handleClose();
   };
 
