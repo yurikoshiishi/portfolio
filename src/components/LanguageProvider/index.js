@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {connect} from 'react-redux';
-import {setLanguage} from '../../modules/';
+import {setLanguage} from '../../store';
 
 const getLanguage = () => {
   if (!window || !window.navigator) {
@@ -33,7 +33,9 @@ const LanguageProvider = (props) => {
   }, []);
 
   useEffect(() => {
-    i18n.changeLanguage(language);
+    if (i18n && i18n.changeLanguage) {
+      i18n.changeLanguage(language);
+    }
   }, [language, i18n]);
 
   return props.children;

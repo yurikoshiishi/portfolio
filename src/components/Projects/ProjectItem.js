@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles, Chip, Divider, Button, Box} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CallMade from '@material-ui/icons/CallMade';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import {GitHubIcon} from '../Icons';
 import VideoModal from './VideoModal';
 

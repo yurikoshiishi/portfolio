@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Modal, Button, makeStyles} from '@material-ui/core';
 import YouTubeVideo from '../YoutubeVideo';
 import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 
 const useStyles = makeStyles((theme) => ({
   modal: {

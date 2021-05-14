@@ -3,7 +3,7 @@ const chalk = require('chalk');
 
 module.exports = {
   input: [
-    'app/**/*.{js,jsx}',
+    'src/**/*.{js,jsx,tsx}',
     // Use ! to filter out files or directories
     '!app/**/*.spec.{js,jsx}',
     '!app/i18n/**',

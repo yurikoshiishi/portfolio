@@ -1,7 +1,6 @@
 import React from 'react';
 import {Avatar, makeStyles, Typography, Button} from '@material-ui/core';
-import {useTranslation} from 'react-i18next';
-import avatarImage from '../../data/assets/avatar.JPG';
+import {useTranslation} from 'next-i18next';
 import {Link} from 'react-scroll';
 
 const useStyles = makeStyles((theme) => ({
@@ -71,7 +70,7 @@ const EntryContent = () => {
   return (
     <div className={classes.root}>
       <div className={classes.avatarContainer}>
-        <Avatar src={avatarImage} alt="avatar" />
+        <Avatar src="/assets/avatar.jpg" alt="avatar" />
       </div>
       <div className={classes.textContainer}>
         <div className="name">

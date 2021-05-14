@@ -17,7 +17,7 @@ import {Link} from 'react-scroll';
 import ChangeLanguage from '../ChangeLanguage';
 import MenuIcon from '@material-ui/icons/Menu';
 import ElevationScroll from './ElevationScroll';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -115,7 +115,7 @@ const Header = () => {
   };
 
   const container =
-    window !== undefined ? () => window.document.body : undefined;
+    typeof window !== 'undefined' ? () => window.document.body : undefined;
 
   return (
     <ElevationScroll>

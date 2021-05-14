@@ -2,9 +2,7 @@ import React, {useMemo} from 'react';
 import Section from '../Section';
 import ProjectItem from './ProjectItem';
 import {Grid} from '@material-ui/core';
-import barbellbaseImage from '../../data/assets/barbellbase.png';
-import previewImage from '../../data/assets/preview.png';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 
 const Projects = () => {
   const {t} = useTranslation();
@@ -13,7 +11,7 @@ const Projects = () => {
     () => [
       {
         name: 'Barbellbase',
-        imageSrc: barbellbaseImage,
+        imageSrc: '/assets/barbellbase.png',
         descriptions: [
           t('Online coaching platform built for personal trainers in Japan. '),
           t(
@@ -41,7 +39,7 @@ const Projects = () => {
       },
       {
         name: 'PReview',
-        imageSrc: previewImage,
+        imageSrc: '/assets/preview.png',
         descriptions: [
           t('Product review sharing platform designed for protein powders.'),
           t(
