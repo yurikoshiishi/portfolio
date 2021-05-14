@@ -25,10 +25,8 @@ const LanguageProvider = (props) => {
   const {i18n} = useTranslation();
 
   useEffect(() => {
-    //NOTE: detect language preference
-    const browserLanguage = getLanguage();
-    if (!force) {
-      setLanguage({language: browserLanguage, force: false});
+    if (typeof i18n.language === 'string' && i18n.language !== language) {
+      setLanguage({language: i18n.language, force: false});
     }
   }, []);
 
