@@ -3,8 +3,9 @@ const chalk = require('chalk');
 
 module.exports = {
   input: [
-    'src/**/*.{js,jsx,tsx}',
+    'src/components/**/*.{js,tsx}',
     // Use ! to filter out files or directories
+    '!src/store.js',
     '!app/**/*.spec.{js,jsx}',
     '!app/i18n/**',
     '!**/node_modules/**',
@@ -32,13 +33,13 @@ module.exports = {
       },
     },
     lngs: ['en', 'ja'],
-    ns: ['index'],
+    ns: ['common'],
     defaultLng: 'en',
-    defaultNs: 'index',
+    defaultNs: 'common',
     defaultValue: '',
     resource: {
-      loadPath: 'src/data/translations/{{lng}}/{{ns}}.json',
-      savePath: 'src/data/translations/{{lng}}/{{ns}}.json',
+      loadPath: 'public/locales/{{lng}}/{{ns}}.json',
+      savePath: 'public/locales/{{lng}}/{{ns}}.json',
       jsonIndent: 2,
       lineEnding: '\n',
     },

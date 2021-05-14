@@ -13,7 +13,13 @@ const Experience = () => {
         company: t('Nzigen, Inc. Tokyo, Japan.'),
         jobTitle: t('Frontend Developer'),
         jobDescriptions: [
-          t("Developed and maintained the frontend for clients' websites."),
+          t('Built an in-house chrome extension tool. (TypeScript, React)'),
+          t(
+            'Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)'
+          ),
+          t(
+            'Migrated frontend build tools from gulp + compass to webpack. (JavaScript)'
+          ),
         ],
       },
       {
