@@ -41,5 +41,8 @@
   "2021/1 - Current": "2021/1 - Current",
   "Nzigen, Inc. Tokyo, Japan.": "Nzigen, Inc. Tokyo, Japan.",
   "Frontend Developer": "Frontend Developer",
-  "Developed and maintained the frontend for clients' websites.": "Developed and maintained the frontend for clients' websites."
+  "Developed and maintained the frontend for clients' websites.": "Developed and maintained the frontend for clients' websites.",
+  "Built an in-house chrome extension tool. (TypeScript, React)": "Built an in-house chrome extension tool. (TypeScript, React)",
+  "Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)": "Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)",
+  "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)": "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)"
 }

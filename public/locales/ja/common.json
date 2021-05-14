@@ -41,5 +41,8 @@
   "2021/1 - Current": "2021/1 - 現在",
   "Nzigen, Inc. Tokyo, Japan.": "エヌ次元株式会社（東京、日本）",
   "Frontend Developer": "フロントエンドエンジニア",
-  "Developed and maintained the frontend for clients' websites.": "各クライアントプロジェクトのフロントエンド構築、および保守を担当。"
+  "Developed and maintained the frontend for clients' websites.": "各クライアントプロジェクトのフロントエンド構築、および保守を担当。",
+  "Built an in-house chrome extension tool. (TypeScript, React)": "社内向けのChrome拡張の実装（TypeScript, React）",
+  "Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)": "UIデザイナーと共同してのコーポレートサイトリニューアル（HTML, SASS, JavaScript, PHP）",
+  "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)": "Gulp + CompassベースのフロントエンドビルドツールをWebpackに移行（JavaScript）"
 }
