@@ -35,10 +35,13 @@ const IndexPage = () => (
   </Container>
 );
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({locale}: {locale: string}) => {
+  if (!locale || ['en', 'ja'].indexOf(locale) === -1) {
+    locale = 'en';
+  }
   return {
     props: {
-      ...(await serverSideTranslations('en')),
+      ...(await serverSideTranslations(locale)),
     },
   };
 };
