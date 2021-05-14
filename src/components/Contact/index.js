@@ -10,7 +10,7 @@ import Section from '../Section';
 import {Formik, Form, Field} from 'formik';
 import * as yup from 'yup';
 import {sendContactForm} from '../../apis';
-import {useTranslation} from 'react-i18next';
+import {useTranslation} from 'next-i18next';
 import Alert from './Alert';
 import MyContact from './MyContact';
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {setLanguage} from '../../modules';
+import {setLanguage} from '../../store';
 import {Button, Menu, MenuItem} from '@material-ui/core';
 import TranslateOutlinedIcon from '@material-ui/icons/TranslateOutlined';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
