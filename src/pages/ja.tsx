@@ -11,7 +11,7 @@ import Experience from '../components/Experience';
 import Footer from '../components/Footer';
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 
-const IndexPage = () => (
+const JapaneseIndexPage = () => (
   <Container>
     <Header />
     <Card>
@@ -38,9 +38,9 @@ const IndexPage = () => (
 export const getStaticProps = async () => {
   return {
     props: {
-      ...(await serverSideTranslations('en')),
+      ...(await serverSideTranslations('ja')),
     },
   };
 };
 
-export default IndexPage;
+export default JapaneseIndexPage;

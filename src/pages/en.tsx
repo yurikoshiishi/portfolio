@@ -11,7 +11,7 @@ import Experience from '../components/Experience';
 import Footer from '../components/Footer';
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 
-const IndexPage = () => (
+const EnglishIndexPage = () => (
   <Container>
     <Header />
     <Card>
@@ -43,4 +43,4 @@ export const getStaticProps = async () => {
   };
 };
 
-export default IndexPage;
+export default EnglishIndexPage;
