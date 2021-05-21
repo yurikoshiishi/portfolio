@@ -99,8 +99,8 @@ const Header = () => {
     () => [
       {to: 'about', text: t('About')},
       {to: 'skills', text: t('Skills')},
-      {to: 'projects', text: t('Projects')},
       {to: 'experience', text: t('Experience')},
+      {to: 'projects', text: t('Projects')},
       {to: 'contact', text: t('Contact')},
     ],
     [t]

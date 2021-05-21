@@ -21,11 +21,11 @@ const IndexPage = () => (
       <Element name="skills">
         <Skills />
       </Element>
-      <Element name="projects">
-        <Projects />
-      </Element>
       <Element name="experience">
         <Experience />
+      </Element>
+      <Element name="projects">
+        <Projects />
       </Element>
       <Element name="contact">
         <Contact />
