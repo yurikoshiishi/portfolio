@@ -44,5 +44,8 @@
   "Developed and maintained the frontend for clients' websites.": "Developed and maintained the frontend for clients' websites.",
   "Built an in-house chrome extension tool. (TypeScript, React)": "Built an in-house chrome extension tool. (TypeScript, React)",
   "Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)": "Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)",
-  "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)": "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)"
+  "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)": "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)",
+  "source not available": "Source Not Available",
+  "Product review sharing platform build with Next.js, Express, and PostgreSQL.": "Product review sharing platform build with Next.js, Express, and PostgreSQL.",
+  "Deployed in VPS using Docker and nginx": "Deployed in VPS using Docker and nginx"
 }
