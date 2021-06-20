@@ -67,7 +67,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ProjectItem = ({
+export interface ProjectItemProps {
+  name: string;
+  imageSrc: string;
+  descriptions: string[];
+  technologies: string[];
+  youtubeVideoId: string;
+  projectUrl: string;
+  githubUrl?: string;
+}
+
+export const ProjectItem: React.FC<ProjectItemProps> = ({
   name,
   imageSrc,
   descriptions,
@@ -91,7 +101,7 @@ export const ProjectItem = ({
         </a>
       </div>
       <div className={classes.textContainer}>
-        <Typography variant="h3" color="textPrimary" className={classes.title}>
+        <Typography variant="h3" color="textPrimary">
           {name}
         </Typography>
         <ul className={classes.descriptions}>
@@ -137,21 +147,19 @@ export const ProjectItem = ({
               )}
             </Box>
           </Box>
-
-          {githubUrl && (
-            <Button
-              color="default"
-              variant="outlined"
-              startIcon={<GitHubIcon />}
-              fullWidth
-              component="a"
-              href={githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t('view source')}
-            </Button>
-          )}
+          <Button
+            color="default"
+            variant="outlined"
+            startIcon={<GitHubIcon />}
+            fullWidth
+            component="a"
+            href={githubUrl}
+            disabled={!githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t('view source')}
+          </Button>
         </div>
       </Box>
     </div>

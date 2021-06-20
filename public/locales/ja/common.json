@@ -44,5 +44,8 @@
   "Developed and maintained the frontend for clients' websites.": "各クライアントプロジェクトのフロントエンド構築、および保守を担当。",
   "Built an in-house chrome extension tool. (TypeScript, React)": "社内向けのChrome拡張の実装（TypeScript, React）",
   "Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)": "UIデザイナーと共同してのコーポレートサイトリニューアル（HTML, SASS, JavaScript, PHP）",
-  "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)": "Gulp + CompassベースのフロントエンドビルドツールをWebpackに移行（JavaScript）"
+  "Migrated frontend build tools from gulp + compass to webpack. (JavaScript)": "Gulp + CompassベースのフロントエンドビルドツールをWebpackに移行（JavaScript）",
+  "source not available": "Source Not Available",
+  "Product review sharing platform build with Next.js, Express, and PostgreSQL.": "商品レビューシェアプラットフォームをNext.js、Express、PostgreSQLで実装。",
+  "Deployed in VPS using Docker and nginx": "Dockerとnginxを利用してVPSにデプロイ。"
 }

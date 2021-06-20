@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
 import Section from '../Section';
-import ProjectItem from './ProjectItem';
+import ProjectItem, {ProjectItemProps} from './ProjectItem';
 import {Grid} from '@material-ui/core';
 import {useTranslation} from 'next-i18next';
 
 const Projects = () => {
   const {t} = useTranslation();
 
-  const PROJECT_ITEMS = useMemo(
+  const PROJECT_ITEMS: ProjectItemProps[] = useMemo(
     () => [
       {
         name: 'Barbellbase',
@@ -32,20 +32,21 @@ const Projects = () => {
           'HTML',
           'CSS',
           'Firebase',
+          'Stripe',
+          'SendGrid',
         ],
         youtubeVideoId: 'K4XIKTlgvnA',
         projectUrl: 'https://dashboard.barbellbase.app',
         githubUrl: '',
       },
       {
-        name: 'PReview',
+        name: 'Next.js + Express',
         imageSrc: '/assets/preview.png',
         descriptions: [
-          t('Product review sharing platform designed for protein powders.'),
           t(
-            'Built SSR frontend as well as API endpoints in Next.js, with PostgreSQL database.'
+            'Product review sharing platform build with Next.js, Express, and PostgreSQL.'
           ),
-          t('Deployed the server and database in VPS.'),
+          t('Deployed in VPS using Docker and nginx'),
           t(
             'Core functionalities include posting/liking/sorting/filtering reviews, product search, etc.'
           ),
@@ -54,16 +55,19 @@ const Projects = () => {
           'TypeScript',
           'React',
           'Next.js',
-          'Node.js',
+          'Express',
           'PostgreSQL',
           'HTML',
           'CSS',
           'Firebase',
+          'Docker',
+          'nginx',
           'VPS',
         ],
         youtubeVideoId: '037HeJRu_-Y',
         projectUrl: 'https://review-protein.com',
-        githubUrl: '',
+        githubUrl:
+          'https://github.com/yurikoshiishi/nextjs-express-postgresql-example-app',
       },
     ],
     [t]
