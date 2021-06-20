@@ -1,3 +1,3 @@
 # Portfolio
 
-Personal portfolio website
+Portfolio website build with Next.js
