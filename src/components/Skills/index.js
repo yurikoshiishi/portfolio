@@ -1,6 +1,6 @@
 import {Grid} from '@material-ui/core';
 import React from 'react';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 import {
   CssIcon,
   FirebaseIcon,
@@ -34,7 +34,7 @@ const SKILL_ITEMS = [
 ];
 
 const Skills = () => {
-  const {t} = useTranslation();
+  const {t} = useTranslation('common');
   return (
     <Section title={t('Skills')}>
       <Grid container spacing={1}>

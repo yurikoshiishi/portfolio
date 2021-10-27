@@ -1,6 +1,6 @@
 import React from 'react';
 import {Avatar, makeStyles, Typography, Button} from '@material-ui/core';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 import {Link} from 'react-scroll';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EntryContent = () => {
   const classes = useStyles();
-  const {t} = useTranslation();
+  const {t} = useTranslation('common');
 
   return (
     <div className={classes.root}>
@@ -82,9 +82,7 @@ const EntryContent = () => {
           </Typography>
         </div>
         <Typography variant="body2" color="textSecondary">
-          {t(
-            "Hi, my name is Yuri Koshiishi. I'm a Web Developer who's passionate about JavsScript."
-          )}
+          {t('profile.description')}
         </Typography>
         <div className={classes.buttonContainer}>
           <Button

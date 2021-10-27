@@ -17,7 +17,7 @@ import {Link} from 'react-scroll';
 import ChangeLanguage from '../ChangeLanguage';
 import MenuIcon from '@material-ui/icons/Menu';
 import ElevationScroll from './ElevationScroll';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const {t} = useTranslation();
+  const {t, lang} = useTranslation('common');
 
   const LINKS = useMemo(
     () => [
@@ -103,7 +103,7 @@ const Header = () => {
       {to: 'projects', text: t('Projects')},
       {to: 'contact', text: t('Contact')},
     ],
-    [t]
+    [t, lang]
   );
 
   const handleDrawerToggle = () => {

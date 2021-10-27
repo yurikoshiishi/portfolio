@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles, Chip, Divider, Button, Box} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CallMade from '@material-ui/icons/CallMade';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 import {GitHubIcon} from '../Icons';
 import VideoModal from './VideoModal';
 
@@ -87,7 +87,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({
   githubUrl,
 }) => {
   const classes = useStyles();
-  const {t} = useTranslation();
+  const {t} = useTranslation('common');
 
   return (
     <div className={classes.card}>

@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {makeStyles, Typography} from '@material-ui/core';
 import WarningOutlinedIcon from '@material-ui/icons/WarningOutlined';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Alert = ({type}) => {
   const classes = useStyles();
-  const {t} = useTranslation();
+  const {t} = useTranslation('common');
 
   const TYPE_MAP = useMemo(
     () => ({

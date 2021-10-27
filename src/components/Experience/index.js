@@ -1,48 +1,17 @@
 import React, {useMemo} from 'react';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 import Section from '../Section';
 import ExperienceItem from './ExperienceItem';
 
+const EXPERIENCE_ITEM_LENGTH = 3;
+const JOB_DESCRIPTIONS_LENGTHS = [4, 3, 3];
+
 const Experience = () => {
-  const {t} = useTranslation();
+  const {t, lang} = useTranslation('common');
 
   const EXPERIENCE_ITEMS = useMemo(
-    () => [
-      {
-        time: t('2021/1 - Current'),
-        company: t('Nzigen, Inc. Tokyo, Japan.'),
-        jobTitle: t('Frontend Developer'),
-        jobDescriptions: [
-          t('Built an in-house chrome extension tool. (TypeScript, React)'),
-          t(
-            'Renewed a corporate website working with a UI designer. (HTML, SASS, JavaScript, PHP)'
-          ),
-          t(
-            'Migrated frontend build tools from gulp + compass to webpack. (JavaScript)'
-          ),
-        ],
-      },
-      {
-        time: t('2018/4 - 2020/10'),
-        company: t('Dome Corp. Tokyo, Japan.'),
-        jobTitle: t('E-commerce Specialist'),
-        jobDescriptions: [
-          t(
-            'Worked on official e-commerce sites for Under Armour (Global Sports Apparel) and DNS (Japanese Sports Supplement).'
-          ),
-          t(
-            'Localized Under Armour e-commerce site for Japan in collaboration with North America and APAC Teams, including translations as well as interpreting, issue handling and testing functionalities.'
-          ),
-          t(
-            'Implemented various A/B tests through Adobe Target as well as creating landing pages and in-site contents with HTML, CSS, and JavaScript.'
-          ),
-          t(
-            'Recovered CVR for Under Armour e-commerce site by 60% in cooperation with Adobe team, using in-depth analysis to improve UX, after it dropped down due to e-commerce platform renewal. '
-          ),
-        ],
-      },
-    ],
-    [t]
+    () => generateExperienceTranslations(t),
+    [t, lang]
   );
 
   return (
@@ -55,5 +24,24 @@ const Experience = () => {
     </Section>
   );
 };
+
+function generateExperienceTranslations(t) {
+  const translations = [];
+
+  for (let i = 0; i < EXPERIENCE_ITEM_LENGTH; i++) {
+    const jobDescriptions = Array.from({
+      length: JOB_DESCRIPTIONS_LENGTHS[i],
+    }).map((_, j) => t(`experiences.${i}.jobDescriptions.${j}`));
+
+    translations.push({
+      time: t(`experiences.${i}.time`),
+      company: t(`experiences.${i}.company`),
+      jobTitle: t(`experiences.${i}.jobTitle`),
+      jobDescriptions,
+    });
+  }
+
+  return translations.reverse();
+}
 
 export default Experience;

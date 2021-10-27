@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Modal, Button, makeStyles} from '@material-ui/core';
 import YouTubeVideo from '../YoutubeVideo';
 import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const VideoModal = ({videoId}) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const {t} = useTranslation();
+  const {t} = useTranslation('common');
 
   const handleOpen = () => {
     setOpen(true);

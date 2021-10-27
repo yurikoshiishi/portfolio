@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {setLanguage} from '../../store';
 import {Button, Menu, MenuItem} from '@material-ui/core';
 import TranslateOutlinedIcon from '@material-ui/icons/TranslateOutlined';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
@@ -11,7 +9,7 @@ const LANGUAGE_MAP = {
   ja: '日本語',
 };
 
-const ChangeLanguage = ({language}) => {
+const ChangeLanguage = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const router = useRouter();
 
@@ -39,7 +37,7 @@ const ChangeLanguage = ({language}) => {
         startIcon={<TranslateOutlinedIcon />}
         endIcon={<ExpandMoreOutlinedIcon />}
       >
-        {LANGUAGE_MAP[language] ? LANGUAGE_MAP[language] : 'Language'}
+        {LANGUAGE_MAP[router.locale] ? LANGUAGE_MAP[router.locale] : 'Language'}
       </Button>
       <Menu
         id="simple-menu"
@@ -56,10 +54,4 @@ const ChangeLanguage = ({language}) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    language: state.lang.language,
-  };
-};
-
-export default connect(mapStateToProps, {setLanguage})(ChangeLanguage);
+export default ChangeLanguage;

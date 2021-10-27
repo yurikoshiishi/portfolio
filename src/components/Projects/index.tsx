@@ -2,28 +2,19 @@ import React, {useMemo} from 'react';
 import Section from '../Section';
 import ProjectItem, {ProjectItemProps} from './ProjectItem';
 import {Grid} from '@material-ui/core';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 
 const Projects = () => {
-  const {t} = useTranslation();
+  const {t, lang} = useTranslation('common');
 
   const PROJECT_ITEMS: ProjectItemProps[] = useMemo(
     () => [
       {
         name: 'Barbellbase',
         imageSrc: '/assets/barbellbase.png',
-        descriptions: [
-          t('Online coaching platform built for personal trainers in Japan. '),
-          t(
-            'Built SPA frontend in React, with Firebase backend for authentication, NoSQL database, and serverless functions.'
-          ),
-          t(
-            'Integrated 3rd party solutions such as Stripe for billing, and SendGrid for sending emails.'
-          ),
-          t(
-            'Core functionalities include workout logging, schedule sharing, real-time messaging, etc.'
-          ),
-        ],
+        descriptions: Array.from({length: 4}).map((_, i) =>
+          t(`projects.0.descriptions.${i}`)
+        ),
         technologies: [
           'Javascript',
           'React',
@@ -42,15 +33,9 @@ const Projects = () => {
       {
         name: 'Next.js + Express',
         imageSrc: '/assets/preview.png',
-        descriptions: [
-          t(
-            'Product review sharing platform build with Next.js, Express, and PostgreSQL.'
-          ),
-          t('Deployed in VPS using Docker and nginx'),
-          t(
-            'Core functionalities include posting/liking/sorting/filtering reviews, product search, etc.'
-          ),
-        ],
+        descriptions: Array.from({length: 3}).map((_, i) =>
+          t(`projects.1.descriptions.${i}`)
+        ),
         technologies: [
           'TypeScript',
           'React',
@@ -70,7 +55,7 @@ const Projects = () => {
           'https://github.com/yurikoshiishi/nextjs-express-postgresql-example-app',
       },
     ],
-    [t]
+    [t, lang]
   );
 
   return (

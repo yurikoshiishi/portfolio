@@ -2,7 +2,7 @@ import React from 'react';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import {makeStyles, Button, Typography, Box} from '@material-ui/core';
 import {GitHubIcon, LinkedInIcon} from '../Icons';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 
 const CONTACTS = [
   {
@@ -88,7 +88,7 @@ const ContactItem = ({icon, text, href}) => {
 
 const MyContact = () => {
   const classes = useStyles();
-  const {t} = useTranslation();
+  const {t} = useTranslation('common');
   return (
     <div className={classes.root}>
       <div className={classes.container}>

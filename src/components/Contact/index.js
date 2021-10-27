@@ -10,7 +10,7 @@ import Section from '../Section';
 import {Formik, Form, Field} from 'formik';
 import * as yup from 'yup';
 import {sendContactForm} from '../../apis';
-import {useTranslation} from 'next-i18next';
+import useTranslation from 'next-translate/useTranslation';
 import Alert from './Alert';
 import MyContact from './MyContact';
 
@@ -59,7 +59,7 @@ const Contact = () => {
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
-  const {t} = useTranslation();
+  const {t} = useTranslation('common');
 
   const handleSendContactForm = async (formData, resetForm) => {
     setLoading(true);
