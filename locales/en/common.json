@@ -1,4 +1,8 @@
 {
+  "hero": {
+    "greeting": "Hi, I'm Yuri Koshiishi👋",
+    "description": "a Frontend Developer / Web Producer who's passionate about web technologies and building the best user experience."
+  },
   "Email": "Email",
   "Name": "Name",
   "Subject": "Subject",
