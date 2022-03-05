@@ -1,4 +1,4 @@
-import React, { VFC } from "react";
+import React, { useState, VFC } from "react";
 import {
   Image,
   Container,
@@ -7,7 +7,6 @@ import {
   Box,
   Heading,
   Text,
-  VisuallyHidden,
   HStack,
   IconButton,
 } from "@chakra-ui/react";
@@ -19,8 +18,21 @@ interface HeroProps {
   links: SocialLink[];
 }
 
+const emojiId = `emoji-hand-${new Date().getTime()}`;
+
 const Hero: VFC<HeroProps> = ({ links }) => {
   const { t } = useTranslation("common");
+  const [isTypingDone, setIsTypingDone] = useState<boolean>(false);
+
+  const onTypingDone = () => {
+    const emojiEl = document.getElementById(emojiId);
+
+    if (!emojiEl) {
+      return;
+    }
+
+    emojiEl.classList.add("wave");
+  };
 
   return (
     <Container maxWidth="container.md">
@@ -41,16 +53,62 @@ const Hero: VFC<HeroProps> = ({ links }) => {
               lineHeight="110%"
               textAlign="center"
             >
+              <style>
+                {`
+                  .wave {
+                    animation-name: wave-animation;
+                    animation-duration: 2.5s;
+                    animation-iteration-count: 1;
+                    transform-origin: 70% 70%;
+                    display: inline-block;
+                  }
+
+                  @keyframes wave-animation {
+                    0% {
+                      transform: rotate(0deg);
+                    }
+                    10% {
+                      transform: rotate(14deg);
+                    }
+                    20% {
+                      transform: rotate(-8deg);
+                    }
+                    30% {
+                      transform: rotate(14deg);
+                    }
+                    40% {
+                      transform: rotate(-4deg);
+                    }
+                    50% {
+                      transform: rotate(10deg);
+                    }
+                    60% {
+                      transform: rotate(0deg);
+                    }
+                    100% {
+                      transform: rotate(0deg);
+                    }
+                  }
+                `}
+              </style>
               <Typist
                 startDelay={200}
                 avgTypingDelay={70}
                 cursor={{
                   blink: true,
                 }}
+                onTypingDone={onTypingDone}
               >
                 {t("hero.greeting")}
+                <Text
+                  pl={2}
+                  as="span"
+                  className={`emoji-wave-hand ${isTypingDone ? "wave" : ""}`}
+                  id={emojiId}
+                >
+                  👋
+                </Text>
               </Typist>
-              <VisuallyHidden>{t("hero.greeting")}</VisuallyHidden>
             </Heading>
             <Text
               fontSize={{ base: "md", sm: "lg", md: "xl" }}
