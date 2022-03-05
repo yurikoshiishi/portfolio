@@ -103,7 +103,7 @@ const Header = () => {
       { to: "projects", text: t("Projects") },
       { to: "contact", text: t("Contact") },
     ],
-    [t, lang]
+    [t]
   );
 
   const handleDrawerToggle = () => {

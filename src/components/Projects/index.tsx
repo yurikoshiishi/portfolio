@@ -55,7 +55,7 @@ const Projects = () => {
           "https://github.com/yurikoshiishi/nextjs-express-postgresql-example-app",
       },
     ],
-    [t, lang]
+    [t]
   );
 
   return (

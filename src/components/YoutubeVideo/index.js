@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { useEffect, useRef } from "react";
 import { Box, makeStyles } from "@material-ui/core";
 
@@ -38,9 +39,9 @@ const YouTubeVideo = React.forwardRef((props, ref) => {
       // If script is already there, load the video directly
       loadVideo();
     }
-  }, []);
+  }, [loadVideo]);
 
-  const loadVideo = () => {
+  const loadVideo = useCallback(() => {
     player.current = new window.YT.Player(`youtube-video-${videoId}`, {
       videoId: videoId,
       playerVars: { autoplay: 1, loop: 1, playlist: videoId },
@@ -48,7 +49,7 @@ const YouTubeVideo = React.forwardRef((props, ref) => {
         onReady: onPlayerReady,
       },
     });
-  };
+  }, [videoId]);
 
   const onPlayerReady = (e) => {
     e.target.playVideo();

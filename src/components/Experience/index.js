@@ -11,7 +11,7 @@ const Experience = () => {
 
   const EXPERIENCE_ITEMS = useMemo(
     () => generateExperienceTranslations(t),
-    [t, lang]
+    [t]
   );
 
   return (
