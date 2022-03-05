@@ -4,52 +4,52 @@ import {
   CircularProgress,
   TextField,
   makeStyles,
-} from '@material-ui/core';
-import React, {useState} from 'react';
-import Section from '../Section';
-import {Formik, Form, Field} from 'formik';
-import * as yup from 'yup';
-import {sendContactForm} from '../../apis';
-import useTranslation from 'next-translate/useTranslation';
-import Alert from './Alert';
-import MyContact from './MyContact';
+} from "@material-ui/core";
+import React, { useState } from "react";
+import Section from "../Section";
+import { Formik, Form, Field } from "formik";
+import * as yup from "yup";
+import { sendContactForm } from "../../apis";
+import useTranslation from "next-translate/useTranslation";
+import Alert from "./Alert";
+import MyContact from "./MyContact";
 
 const validationSchema = yup.object().shape({
-  email: yup.string().email('Must be a valid email').required('Required'),
+  email: yup.string().email("Must be a valid email").required("Required"),
   name: yup.string(),
   subject: yup.string(),
-  message: yup.string().required('Required'),
+  message: yup.string().required("Required"),
 });
 
 const FIELD_CONFIG = {
-  variant: 'filled',
-  margin: 'dense',
+  variant: "filled",
+  margin: "dense",
   fullWidth: true,
 };
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column',
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
     },
   },
   form: {
     flexGrow: 1,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       marginBottom: theme.spacing(4),
-      alignSelf: 'stretch',
+      alignSelf: "stretch",
     },
   },
   button: {
-    width: '200px',
-    height: '36px',
-    [theme.breakpoints.down('xs')]: {
-      width: '100%',
-      display: 'block',
-      margin: '0 auto',
+    width: "200px",
+    height: "36px",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      display: "block",
+      margin: "0 auto",
     },
   },
 }));
@@ -59,15 +59,15 @@ const Contact = () => {
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
-  const {t} = useTranslation('common');
+  const { t } = useTranslation("common");
 
   const handleSendContactForm = async (formData, resetForm) => {
     setLoading(true);
     setError(false);
     setSuccess(false);
     try {
-      const {data} = await sendContactForm({...formData});
-      if (data.status === 'success') {
+      const { data } = await sendContactForm({ ...formData });
+      if (data.status === "success") {
         setSuccess(true);
         resetForm();
       }
@@ -79,21 +79,21 @@ const Contact = () => {
   };
 
   return (
-    <Section title={t('Contact')}>
+    <Section title={t("Contact")}>
       <div className={classes.root}>
         <Formik
           validationSchema={validationSchema}
-          initialValues={{email: '', name: '', subject: '', message: ''}}
-          onSubmit={(data, {resetForm}) =>
+          initialValues={{ email: "", name: "", subject: "", message: "" }}
+          onSubmit={(data, { resetForm }) =>
             handleSendContactForm(data, resetForm)
           }
         >
-          {({values, errors, touched, handleSubmit}) => (
+          {({ values, errors, touched, handleSubmit }) => (
             <Form className={classes.form}>
               <Box>
                 <Field
                   name="email"
-                  label={t('Email')}
+                  label={t("Email")}
                   as={TextField}
                   required
                   type="email"
@@ -102,8 +102,8 @@ const Contact = () => {
                   error={errors.email && touched.email}
                   helperText={
                     errors.email && touched.email
-                      ? t('Required. Please enter a valid email.')
-                      : ''
+                      ? t("Required. Please enter a valid email.")
+                      : ""
                   }
                 />
               </Box>
@@ -112,7 +112,7 @@ const Contact = () => {
                   name="name"
                   type="text"
                   autoComplete="name"
-                  label={t('Name')}
+                  label={t("Name")}
                   as={TextField}
                   {...FIELD_CONFIG}
                 />
@@ -120,7 +120,7 @@ const Contact = () => {
               <Box>
                 <Field
                   name="subject"
-                  label={t('Subject')}
+                  label={t("Subject")}
                   type="text"
                   autoComplete="off"
                   as={TextField}
@@ -130,7 +130,7 @@ const Contact = () => {
               <Box mb={3}>
                 <Field
                   name="message"
-                  label={t('Body')}
+                  label={t("Body")}
                   type="text"
                   autoComplete="off"
                   as={TextField}
@@ -141,7 +141,7 @@ const Contact = () => {
                   rowsMax={30}
                   error={errors.message && touched.message}
                   helperText={
-                    errors.message && touched.message ? t('Required.') : ''
+                    errors.message && touched.message ? t("Required.") : ""
                   }
                 />
               </Box>
@@ -162,7 +162,7 @@ const Contact = () => {
                 }
                 className={classes.button}
               >
-                {isLoading ? <CircularProgress size={20} /> : t('Send Message')}
+                {isLoading ? <CircularProgress size={20} /> : t("Send Message")}
               </Button>
             </Form>
           )}

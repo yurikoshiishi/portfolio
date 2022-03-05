@@ -1,35 +1,35 @@
-import React, {useState} from 'react';
-import {Modal, Button, makeStyles} from '@material-ui/core';
-import YouTubeVideo from '../YoutubeVideo';
-import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
-import useTranslation from 'next-translate/useTranslation';
+import React, { useState } from "react";
+import { Modal, Button, makeStyles } from "@material-ui/core";
+import YouTubeVideo from "../YoutubeVideo";
+import PlayArrowOutlinedIcon from "@material-ui/icons/PlayArrowOutlined";
+import useTranslation from "next-translate/useTranslation";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   modalContent: {
-    maxWidth: '940px',
-    width: '100%',
-    height: '100%',
-    margin: '0 auto',
-    display: 'table',
-    outline: 'none',
-    '& .inner': {
-      display: 'table-cell',
-      verticalAlign: 'middle',
-      width: '100%',
-      height: '100%',
+    maxWidth: "940px",
+    width: "100%",
+    height: "100%",
+    margin: "0 auto",
+    display: "table",
+    outline: "none",
+    "& .inner": {
+      display: "table-cell",
+      verticalAlign: "middle",
+      width: "100%",
+      height: "100%",
     },
   },
 }));
 
-const VideoModal = ({videoId}) => {
+const VideoModal = ({ videoId }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const {t} = useTranslation('common');
+  const { t } = useTranslation("common");
 
   const handleOpen = () => {
     setOpen(true);
@@ -47,7 +47,7 @@ const VideoModal = ({videoId}) => {
         onClick={handleOpen}
         startIcon={<PlayArrowOutlinedIcon />}
       >
-        {t('play video')}
+        {t("play video")}
       </Button>
       <Modal
         open={open}

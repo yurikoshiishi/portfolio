@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {Button, Menu, MenuItem} from '@material-ui/core';
-import TranslateOutlinedIcon from '@material-ui/icons/TranslateOutlined';
-import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-import {useRouter} from 'next/dist/client/router';
+import React, { useState } from "react";
+import { Button, Menu, MenuItem } from "@material-ui/core";
+import TranslateOutlinedIcon from "@material-ui/icons/TranslateOutlined";
+import ExpandMoreOutlinedIcon from "@material-ui/icons/ExpandMoreOutlined";
+import { useRouter } from "next/dist/client/router";
 
 const LANGUAGE_MAP = {
-  en: 'English',
-  ja: '日本語',
+  en: "English",
+  ja: "日本語",
 };
 
 const ChangeLanguage = () => {
@@ -22,7 +22,7 @@ const ChangeLanguage = () => {
   };
 
   const handleChangeLanguage = (language) => {
-    router.push('/', undefined, {
+    router.push("/", undefined, {
       locale: language,
     });
     handleClose();
@@ -37,7 +37,7 @@ const ChangeLanguage = () => {
         startIcon={<TranslateOutlinedIcon />}
         endIcon={<ExpandMoreOutlinedIcon />}
       >
-        {LANGUAGE_MAP[router.locale] ? LANGUAGE_MAP[router.locale] : 'Language'}
+        {LANGUAGE_MAP[router.locale] ? LANGUAGE_MAP[router.locale] : "Language"}
       </Button>
       <Menu
         id="simple-menu"
@@ -47,8 +47,8 @@ const ChangeLanguage = () => {
         onClose={handleClose}
         disableScrollLock={true}
       >
-        <MenuItem onClick={() => handleChangeLanguage('en')}>English</MenuItem>
-        <MenuItem onClick={() => handleChangeLanguage('ja')}>日本語</MenuItem>
+        <MenuItem onClick={() => handleChangeLanguage("en")}>English</MenuItem>
+        <MenuItem onClick={() => handleChangeLanguage("ja")}>日本語</MenuItem>
       </Menu>
     </>
   );

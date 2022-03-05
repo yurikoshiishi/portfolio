@@ -1,3 +1,3 @@
-import {functions} from '../firebase';
+import { functions } from "../firebase";
 
-export const sendContactForm = functions.httpsCallable('sendContactForm');
+export const sendContactForm = functions.httpsCallable("sendContactForm");

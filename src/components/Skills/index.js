@@ -1,6 +1,6 @@
-import {Grid} from '@material-ui/core';
-import React from 'react';
-import useTranslation from 'next-translate/useTranslation';
+import { Grid } from "@material-ui/core";
+import React from "react";
+import useTranslation from "next-translate/useTranslation";
 import {
   CssIcon,
   FirebaseIcon,
@@ -14,29 +14,29 @@ import {
   ReactIcon,
   ReduxIcon,
   TypeScriptIcon,
-} from '../Icons';
-import Section from '../Section';
-import SkillItem from './SkillItem';
+} from "../Icons";
+import Section from "../Section";
+import SkillItem from "./SkillItem";
 
 const SKILL_ITEMS = [
-  {text: 'JavaScript', icon: <JavaScriptIcon />},
-  {text: 'TypeScript', icon: <TypeScriptIcon />},
-  {text: 'React', icon: <ReactIcon />},
-  {text: 'Redux', icon: <ReduxIcon />},
-  {text: 'Next.js', icon: <NextJSIcon />},
-  {text: 'Node.js', icon: <NodeIcon />},
-  {text: 'PostgreSQL', icon: <PostgreSQLIcon />},
-  {text: 'Firebase', icon: <FirebaseIcon />},
-  {text: 'HTML', icon: <HtmlIcon />},
-  {text: 'CSS', icon: <CssIcon />},
-  {text: 'Git', icon: <GitIcon />},
-  {text: 'GitHub', icon: <GitHubIcon />},
+  { text: "JavaScript", icon: <JavaScriptIcon /> },
+  { text: "TypeScript", icon: <TypeScriptIcon /> },
+  { text: "React", icon: <ReactIcon /> },
+  { text: "Redux", icon: <ReduxIcon /> },
+  { text: "Next.js", icon: <NextJSIcon /> },
+  { text: "Node.js", icon: <NodeIcon /> },
+  { text: "PostgreSQL", icon: <PostgreSQLIcon /> },
+  { text: "Firebase", icon: <FirebaseIcon /> },
+  { text: "HTML", icon: <HtmlIcon /> },
+  { text: "CSS", icon: <CssIcon /> },
+  { text: "Git", icon: <GitIcon /> },
+  { text: "GitHub", icon: <GitHubIcon /> },
 ];
 
 const Skills = () => {
-  const {t} = useTranslation('common');
+  const { t } = useTranslation("common");
   return (
-    <Section title={t('Skills')}>
+    <Section title={t("Skills")}>
       <Grid container spacing={1}>
         {SKILL_ITEMS.map((item) => (
           <Grid key={item.text} item xs={4} sm={3}>

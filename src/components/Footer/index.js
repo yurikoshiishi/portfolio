@@ -1,18 +1,18 @@
-import React from 'react';
-import {Divider, makeStyles} from '@material-ui/core';
-import Copyright from './Copyright';
+import React from "react";
+import { Divider, makeStyles } from "@material-ui/core";
+import Copyright from "./Copyright";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginLeft: theme.spacing(-5),
     marginRight: theme.spacing(-5),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       marginLeft: theme.spacing(-2),
       marginRight: theme.spacing(-2),
     },
   },
   container: {
-    textAlign: 'center',
+    textAlign: "center",
     padding: theme.spacing(1, 0, 0.5),
   },
 }));

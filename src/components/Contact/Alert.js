@@ -1,54 +1,54 @@
-import React, {useMemo} from 'react';
-import {makeStyles, Typography} from '@material-ui/core';
-import WarningOutlinedIcon from '@material-ui/icons/WarningOutlined';
-import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
-import useTranslation from 'next-translate/useTranslation';
+import React, { useMemo } from "react";
+import { makeStyles, Typography } from "@material-ui/core";
+import WarningOutlinedIcon from "@material-ui/icons/WarningOutlined";
+import CheckCircleOutlinedIcon from "@material-ui/icons/CheckCircleOutlined";
+import useTranslation from "next-translate/useTranslation";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    borderRadius: '4px',
+    borderRadius: "4px",
     padding: theme.spacing(2),
-    display: 'flex',
-    alignItems: 'flex-start',
-    '& svg': {
+    display: "flex",
+    alignItems: "flex-start",
+    "& svg": {
       marginRight: theme.spacing(2),
-      display: 'flex',
+      display: "flex",
     },
   },
   error: {
-    borderRadius: '6px',
-    backgroundColor: 'rgb(253, 236, 234)',
-    color: 'rgb(102, 60, 0)',
-    '& svg': {
+    borderRadius: "6px",
+    backgroundColor: "rgb(253, 236, 234)",
+    color: "rgb(102, 60, 0)",
+    "& svg": {
       color: theme.palette.error.main,
     },
   },
   success: {
-    borderRadius: '6px',
-    backgroundColor: 'rgb(237, 247, 237)',
-    color: 'rgb(30, 70, 32)',
+    borderRadius: "6px",
+    backgroundColor: "rgb(237, 247, 237)",
+    color: "rgb(30, 70, 32)",
 
-    '& svg': {
+    "& svg": {
       color: theme.palette.success.main,
     },
   },
 }));
 
-const Alert = ({type}) => {
+const Alert = ({ type }) => {
   const classes = useStyles();
-  const {t} = useTranslation('common');
+  const { t } = useTranslation("common");
 
   const TYPE_MAP = useMemo(
     () => ({
       error: {
         text: t(
-          'An unexpected error occurred while sending a message. Please try again.'
+          "An unexpected error occurred while sending a message. Please try again."
         ),
         icon: <WarningOutlinedIcon />,
       },
       success: {
         text: t(
-          'Thank you for contacting. I will get back to you within 48 hours.'
+          "Thank you for contacting. I will get back to you within 48 hours."
         ),
         icon: <CheckCircleOutlinedIcon />,
       },

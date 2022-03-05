@@ -410,9 +410,9 @@ export const NextJSIcon = () => (
     aria-hidden="true"
     focusable="false"
     style={{
-      msTransform: 'rotate(360deg)',
-      WebkitTransform: 'rotate(360deg)',
-      transform: 'rotate(360deg)',
+      msTransform: "rotate(360deg)",
+      WebkitTransform: "rotate(360deg)",
+      transform: "rotate(360deg)",
     }}
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 512 309"

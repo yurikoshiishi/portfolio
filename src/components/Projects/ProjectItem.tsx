@@ -1,68 +1,68 @@
-import React from 'react';
-import {makeStyles, Chip, Divider, Button, Box} from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import CallMade from '@material-ui/icons/CallMade';
-import useTranslation from 'next-translate/useTranslation';
-import {GitHubIcon} from '../Icons';
-import VideoModal from './VideoModal';
+import React from "react";
+import { makeStyles, Chip, Divider, Button, Box } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import CallMade from "@material-ui/icons/CallMade";
+import useTranslation from "next-translate/useTranslation";
+import { GitHubIcon } from "../Icons";
+import VideoModal from "./VideoModal";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'relative',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    position: "relative",
     padding: theme.spacing(2),
-    border: '2px solid',
-    borderColor: '#E7EDF3',
+    border: "2px solid",
+    borderColor: "#E7EDF3",
     borderRadius: 16,
-    transition: '0.4s',
-    overflow: 'hidden',
-    '&:hover': {
-      borderColor: '#5B9FED',
+    transition: "0.4s",
+    overflow: "hidden",
+    "&:hover": {
+      borderColor: "#5B9FED",
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       padding: theme.spacing(1),
     },
   },
   imageContainer: {
     marginBottom: theme.spacing(2),
-    borderRadius: '10px',
-    overflow: 'hidden',
+    borderRadius: "10px",
+    overflow: "hidden",
     border: `1px solid ${theme.palette.divider}`,
-    '& img': {
-      display: 'block',
-      width: '100%',
+    "& img": {
+      display: "block",
+      width: "100%",
     },
   },
   textContainer: {
     marginBottom: theme.spacing(2),
-    '& h3': {
+    "& h3": {
       marginBottom: theme.spacing(1),
     },
   },
   descriptions: {
     paddingLeft: theme.spacing(1),
-    '& li': {
-      listStyle: 'disc inside',
+    "& li": {
+      listStyle: "disc inside",
       lineHeight: 1.2,
       marginBottom: theme.spacing(1),
     },
-    '& span': {
+    "& span": {
       lineHeight: 1.2,
     },
   },
   chipContainer: {
     margin: theme.spacing(2, 0),
-    '& .MuiChip-root': {
+    "& .MuiChip-root": {
       marginRight: theme.spacing(0.5),
       marginBottom: theme.spacing(1),
     },
   },
   buttonContainer: {
-    '& svg': {
-      width: '20px',
-      height: '20px',
+    "& svg": {
+      width: "20px",
+      height: "20px",
     },
   },
 }));
@@ -87,13 +87,13 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({
   githubUrl,
 }) => {
   const classes = useStyles();
-  const {t} = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <div className={classes.card}>
       <div className={classes.imageContainer}>
         <a
-          href={projectUrl ? projectUrl : githubUrl ? githubUrl : '#'}
+          href={projectUrl ? projectUrl : githubUrl ? githubUrl : "#"}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -142,7 +142,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {t('see live')}
+                  {t("see live")}
                 </Button>
               )}
             </Box>
@@ -158,7 +158,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({
             target="_blank"
             rel="noopener noreferrer"
           >
-            {t('view source')}
+            {t("view source")}
           </Button>
         </div>
       </Box>

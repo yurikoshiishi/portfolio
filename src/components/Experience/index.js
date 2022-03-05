@@ -1,13 +1,13 @@
-import React, {useMemo} from 'react';
-import useTranslation from 'next-translate/useTranslation';
-import Section from '../Section';
-import ExperienceItem from './ExperienceItem';
+import React, { useMemo } from "react";
+import useTranslation from "next-translate/useTranslation";
+import Section from "../Section";
+import ExperienceItem from "./ExperienceItem";
 
 const EXPERIENCE_ITEM_LENGTH = 3;
 const JOB_DESCRIPTIONS_LENGTHS = [4, 3, 3];
 
 const Experience = () => {
-  const {t, lang} = useTranslation('common');
+  const { t, lang } = useTranslation("common");
 
   const EXPERIENCE_ITEMS = useMemo(
     () => generateExperienceTranslations(t),
@@ -15,7 +15,7 @@ const Experience = () => {
   );
 
   return (
-    <Section title={t('Experience')}>
+    <Section title={t("Experience")}>
       <div>
         {EXPERIENCE_ITEMS.map((exp, i) => (
           <ExperienceItem key={exp.time} {...exp} isFirst={i === 0} />

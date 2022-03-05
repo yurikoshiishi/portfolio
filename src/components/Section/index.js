@@ -1,9 +1,9 @@
-import React from 'react';
-import Title from './Title';
-import {Box} from '@material-ui/core';
+import React from "react";
+import Title from "./Title";
+import { Box } from "@material-ui/core";
 
 const Section = (props) => {
-  const {title, children} = props;
+  const { title, children } = props;
 
   return (
     <Box component="section" mb={7}>

@@ -1,61 +1,61 @@
-import React from 'react';
-import {Avatar, makeStyles, Typography, Button} from '@material-ui/core';
-import useTranslation from 'next-translate/useTranslation';
-import {Link} from 'react-scroll';
+import React from "react";
+import { Avatar, makeStyles, Typography, Button } from "@material-ui/core";
+import useTranslation from "next-translate/useTranslation";
+import { Link } from "react-scroll";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: theme.spacing(5),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(6, 2),
-      flexDirection: 'column',
+      flexDirection: "column",
     },
   },
   avatarContainer: {
     margin: theme.spacing(0, 4),
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
       marginBottom: theme.spacing(3),
     },
-    '& .MuiAvatar-root': {
-      width: '225px',
-      height: '225px',
+    "& .MuiAvatar-root": {
+      width: "225px",
+      height: "225px",
       border: `2px solid ${theme.palette.divider}`,
-      [theme.breakpoints.down('sm')]: {
-        width: '175px',
-        height: '175px',
-        margin: '0 auto',
+      [theme.breakpoints.down("sm")]: {
+        width: "175px",
+        height: "175px",
+        margin: "0 auto",
       },
-      [theme.breakpoints.down('xs')]: {
-        width: '125px',
-        height: '125px',
+      [theme.breakpoints.down("xs")]: {
+        width: "125px",
+        height: "125px",
       },
     },
   },
   textContainer: {
-    '& h1': {
+    "& h1": {
       marginBottom: theme.spacing(2),
     },
-    [theme.breakpoints.down('sm')]: {
-      '& .name': {
-        textAlign: 'center',
+    [theme.breakpoints.down("sm")]: {
+      "& .name": {
+        textAlign: "center",
       },
     },
   },
   buttonContainer: {
     marginTop: theme.spacing(3),
-    '& .MuiButton-root': {
-      [theme.breakpoints.down('sm')]: {
-        display: 'block',
-        textAlign: 'center',
+    "& .MuiButton-root": {
+      [theme.breakpoints.down("sm")]: {
+        display: "block",
+        textAlign: "center",
       },
-      '&:first-child': {
+      "&:first-child": {
         marginRight: theme.spacing(1),
-        [theme.breakpoints.down('sm')]: {
-          marginRight: '0',
+        [theme.breakpoints.down("sm")]: {
+          marginRight: "0",
           marginBottom: theme.spacing(2),
         },
       },
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EntryContent = () => {
   const classes = useStyles();
-  const {t} = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <div className={classes.root}>
@@ -75,14 +75,14 @@ const EntryContent = () => {
       <div className={classes.textContainer}>
         <div className="name">
           <Typography variant="body1" color="textSecondary">
-            {t('Web Developer')}
+            {t("Web Developer")}
           </Typography>
           <Typography variant="h1" color="textPrimary">
-            {t('Yuri Koshiishi')}
+            {t("Yuri Koshiishi")}
           </Typography>
         </div>
         <Typography variant="body2" color="textSecondary">
-          {t('profile.description')}
+          {t("profile.description")}
         </Typography>
         <div className={classes.buttonContainer}>
           <Button
@@ -94,7 +94,7 @@ const EntryContent = () => {
             duration={400}
             to="skills"
           >
-            {t('See more')}
+            {t("See more")}
           </Button>
           <Button
             variant="outlined"
@@ -105,7 +105,7 @@ const EntryContent = () => {
             duration={400}
             to="contact"
           >
-            {t('Contact me')}
+            {t("Contact me")}
           </Button>
         </div>
       </div>

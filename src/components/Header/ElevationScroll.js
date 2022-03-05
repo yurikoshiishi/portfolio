@@ -1,8 +1,8 @@
-import React from 'react';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import React from "react";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 
 function ElevationScroll(props) {
-  const {children} = props;
+  const { children } = props;
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,

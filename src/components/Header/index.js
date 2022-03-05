@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, { useState, useMemo } from "react";
 import {
   Box,
   Toolbar,
@@ -12,96 +12,96 @@ import {
   List,
   ListItem,
   ListItemText,
-} from '@material-ui/core';
-import {Link} from 'react-scroll';
-import ChangeLanguage from '../ChangeLanguage';
-import MenuIcon from '@material-ui/icons/Menu';
-import ElevationScroll from './ElevationScroll';
-import useTranslation from 'next-translate/useTranslation';
+} from "@material-ui/core";
+import { Link } from "react-scroll";
+import ChangeLanguage from "../ChangeLanguage";
+import MenuIcon from "@material-ui/icons/Menu";
+import ElevationScroll from "./ElevationScroll";
+import useTranslation from "next-translate/useTranslation";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: theme.spacing(0, 2),
-    [theme.breakpoints.down('xs')]: {
-      padding: '0',
+    [theme.breakpoints.down("xs")]: {
+      padding: "0",
     },
   },
   appBar: {
     padding: theme.spacing(0, 2),
-    transition: 'all 0.2s ease',
-    '&.MuiPaper-elevation0': {
-      background: 'transparent',
-      '& .MuiButton-root': {
-        color: 'rgba(255,255,255,0.85)',
+    transition: "all 0.2s ease",
+    "&.MuiPaper-elevation0": {
+      background: "transparent",
+      "& .MuiButton-root": {
+        color: "rgba(255,255,255,0.85)",
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down("xs")]: {
         background: theme.palette.background.paper,
-        '& .MuiButton-root': {
+        "& .MuiButton-root": {
           color: theme.palette.text.primary,
         },
       },
     },
 
-    '&.MuiPaper-elevation2': {
-      borderBottom: 'none',
+    "&.MuiPaper-elevation2": {
+      borderBottom: "none",
       background: theme.palette.background.paper,
     },
-    [theme.breakpoints.down('xs')]: {
-      borderBottom: 'none',
+    [theme.breakpoints.down("xs")]: {
+      borderBottom: "none",
       background: theme.palette.background.paper,
     },
   },
   desktopLinkContainer: {
-    '& a': {
+    "& a": {
       marginRight: theme.spacing(1),
-      '&:last-child': {
-        marginRight: '0',
+      "&:last-child": {
+        marginRight: "0",
       },
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down("sm")]: {
         marginRight: theme.spacing(0.5),
-        '& .MuiButton-root': {
-          fontSize: '12px',
-          textTransform: 'none',
+        "& .MuiButton-root": {
+          fontSize: "12px",
+          textTransform: "none",
         },
       },
     },
   },
   mobileLinkContainer: {
-    '& ul': {
-      width: '100%',
-      '& a.active .MuiListItemText-root .MuiTypography-root': {
+    "& ul": {
+      width: "100%",
+      "& a.active .MuiListItemText-root .MuiTypography-root": {
         color: theme.palette.primary.main,
       },
     },
   },
   link: {
-    transition: '0.2s',
-    '&.active': {
-      '& .MuiButton-root': {
+    transition: "0.2s",
+    "&.active": {
+      "& .MuiButton-root": {
         color: theme.palette.primary.main,
       },
     },
   },
   drawerPaper: {
-    width: '75%',
+    width: "75%",
   },
 }));
 
 const Header = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const {t, lang} = useTranslation('common');
+  const { t, lang } = useTranslation("common");
 
   const LINKS = useMemo(
     () => [
-      {to: 'about', text: t('About')},
-      {to: 'skills', text: t('Skills')},
-      {to: 'experience', text: t('Experience')},
-      {to: 'projects', text: t('Projects')},
-      {to: 'contact', text: t('Contact')},
+      { to: "about", text: t("About") },
+      { to: "skills", text: t("Skills") },
+      { to: "experience", text: t("Experience") },
+      { to: "projects", text: t("Projects") },
+      { to: "contact", text: t("Contact") },
     ],
     [t, lang]
   );
@@ -115,7 +115,7 @@ const Header = () => {
   };
 
   const container =
-    typeof window !== 'undefined' ? () => window.document.body : undefined;
+    typeof window !== "undefined" ? () => window.document.body : undefined;
 
   return (
     <ElevationScroll>
@@ -154,7 +154,7 @@ const Header = () => {
               <Drawer
                 container={container}
                 variant="temporary"
-                anchor={'right'}
+                anchor={"right"}
                 open={open}
                 onClose={handleDrawerToggle}
                 ModalProps={{

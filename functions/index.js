@@ -1,20 +1,20 @@
-const functions = require('firebase-functions');
-const sgMail = require('@sendgrid/mail');
+const functions = require("firebase-functions");
+const sgMail = require("@sendgrid/mail");
 const gmailEmail = functions.config().gmail.email;
 
 sgMail.setApiKey(functions.config().sendgrid.key);
 
-const REGION = 'asia-northeast1';
+const REGION = "asia-northeast1";
 
 exports.sendContactForm = functions
   .region(REGION)
   .https.onCall(async (data, context) => {
-    const {email, name, subject, message} = data;
+    const { email, name, subject, message } = data;
 
     if (!message || !email) {
       throw new functions.https.HttpsError(
-        'invalid-argument',
-        'message information is not provided',
+        "invalid-argument",
+        "message information is not provided",
         data
       );
     }
@@ -23,21 +23,21 @@ exports.sendContactForm = functions
       const msg = {
         to: gmailEmail,
         from: {
-          email: 'noreply@yurikoshiishi.com',
-          name: name ? name : 'Anonymous User',
+          email: "noreply@yurikoshiishi.com",
+          name: name ? name : "Anonymous User",
         },
-        subject: subject ? subject : 'No Subject',
+        subject: subject ? subject : "No Subject",
         text: message,
         html: message,
       };
 
       await sgMail.send(msg);
-      return {status: 'success'};
+      return { status: "success" };
     } catch (err) {
       console.log(err);
       throw new functions.https.HttpsError(
-        'internal-error',
-        'encountered an unexpected error while sending email',
+        "internal-error",
+        "encountered an unexpected error while sending email",
         err
       );
     }

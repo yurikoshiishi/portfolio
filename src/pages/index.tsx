@@ -1,14 +1,14 @@
-import React from 'react';
-import {Element} from 'react-scroll';
-import Card from '../components/Card';
-import Container from '../components/Container';
-import EntryContent from '../components/EntryContent';
-import Header from '../components/Header';
-import Skills from '../components/Skills';
-import Projects from '../components/Projects';
-import Contact from '../components/Contact';
-import Experience from '../components/Experience';
-import Footer from '../components/Footer';
+import React from "react";
+import { Element } from "react-scroll";
+import Card from "../components/Card";
+import Container from "../components/Container";
+import EntryContent from "../components/EntryContent";
+import Header from "../components/Header";
+import Skills from "../components/Skills";
+import Projects from "../components/Projects";
+import Contact from "../components/Contact";
+import Experience from "../components/Experience";
+import Footer from "../components/Footer";
 
 const IndexPage = () => (
   <Container>

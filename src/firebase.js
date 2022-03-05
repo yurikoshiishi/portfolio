@@ -1,5 +1,5 @@
-import firebase from 'firebase/app';
-import 'firebase/functions';
+import firebase from "firebase/app";
+import "firebase/functions";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,7 +14,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const REGION = 'asia-northeast1';
+const REGION = "asia-northeast1";
 
 export default firebase;
 export const functions = firebase.app().functions(REGION);

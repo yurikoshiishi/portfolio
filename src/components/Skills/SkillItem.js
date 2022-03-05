@@ -1,21 +1,21 @@
-import React from 'react';
-import {makeStyles, Typography} from '@material-ui/core';
+import React from "react";
+import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     padding: theme.spacing(2),
-    '& svg': {
-      width: '45px',
-      height: '45px',
+    "& svg": {
+      width: "45px",
+      height: "45px",
       marginBottom: theme.spacing(1),
     },
   },
 }));
 
-const SkillItem = ({icon, text}) => {
+const SkillItem = ({ icon, text }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
