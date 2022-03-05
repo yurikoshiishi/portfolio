@@ -101,7 +101,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
               >
                 {t("hero.greeting")}
                 <Text
-                  pl={2}
+                  px={1.5}
                   as="span"
                   className={`emoji-wave-hand ${isTypingDone ? "wave" : ""}`}
                   id={emojiId}
