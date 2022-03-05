@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Element} from 'react-scroll';
 import Card from '../components/Card';
 import Container from '../components/Container';
@@ -9,29 +9,38 @@ import Projects from '../components/Projects';
 import Contact from '../components/Contact';
 import Experience from '../components/Experience';
 import Footer from '../components/Footer';
+import {Thanos} from '../services/thanos';
 
-const IndexPage = () => (
-  <Container>
-    <Header />
-    <Card>
-      <Element name="about">
-        <EntryContent />
-      </Element>
-      <Element name="skills">
-        <Skills />
-      </Element>
-      <Element name="experience">
-        <Experience />
-      </Element>
-      <Element name="projects">
-        <Projects />
-      </Element>
-      <Element name="contact">
-        <Contact />
-      </Element>
-      <Footer />
-    </Card>
-  </Container>
-);
+const IndexPage = () => {
+  useEffect(() => {
+    const thanos = new Thanos();
+    //@ts-ignore
+    window.thanos = thanos;
+  }, []);
+
+  return (
+    <Container>
+      <Header />
+      <Card>
+        <Element name="about">
+          <EntryContent />
+        </Element>
+        <Element name="skills">
+          <Skills />
+        </Element>
+        <Element name="experience">
+          <Experience />
+        </Element>
+        <Element name="projects">
+          <Projects />
+        </Element>
+        <Element name="contact">
+          <Contact />
+        </Element>
+        <Footer />
+      </Card>
+    </Container>
+  );
+};
 
 export default IndexPage;
