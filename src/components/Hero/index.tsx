@@ -36,7 +36,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
 
   return (
     <Container maxWidth="container.md">
-      <Box py={14}>
+      <Box py={{ base: 10, sm: 14 }}>
         <Center>
           <VStack spacing={8}>
             <Image
@@ -49,7 +49,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
             <Heading
               letterSpacing="-0.05em"
               fontWeight={600}
-              fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
+              fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
               lineHeight="110%"
               textAlign="center"
             >
