@@ -38,9 +38,7 @@ const Header: React.VFC<HeaderProps> = () => {
               minW={0}
               rightIcon={<ChevronDownIcon />}
             >
-              <Text color="gray.200" fontSize="sm">
-                Language: {localeToLangMap[lang]}
-              </Text>
+              <Text fontSize="sm">Language: {localeToLangMap[lang]}</Text>
             </MenuButton>
             <MenuList>
               <MenuOptionGroup value={lang}>
