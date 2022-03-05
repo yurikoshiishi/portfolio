@@ -9,6 +9,8 @@ import Projects from "../components/Projects";
 import Contact from "../components/Contact";
 import Experience from "../components/Experience";
 import Footer from "../components/Footer";
+import loadNamespaces from "next-translate/loadNamespaces";
+import { GetStaticProps } from "next";
 
 const IndexPage = () => (
   <Container>
@@ -33,5 +35,16 @@ const IndexPage = () => (
     </Card>
   </Container>
 );
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await loadNamespaces({
+        locale,
+        pathname: "/",
+      })),
+    },
+  };
+};
 
 export default IndexPage;
