@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="theme-color" content="#000000" />
           <link rel="icon" href="/favicon.ico" />
-          <link rel="apple-touch-icon" href="/logo192.png" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
