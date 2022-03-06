@@ -9,6 +9,7 @@ import {
   Text,
   HStack,
   IconButton,
+  useColorMode,
 } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
 import Typist from "react-typist";
@@ -21,6 +22,7 @@ interface HeroProps {
 const emojiId = `emoji-hand-${new Date().getTime()}`;
 
 const Hero: VFC<HeroProps> = ({ links }) => {
+  const { colorMode } = useColorMode();
   const { t } = useTranslation("common");
 
   const onTypingDone = () => {
@@ -112,7 +114,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
             <Text
               fontSize={{ base: "md", sm: "lg", md: "xl" }}
               textAlign="center"
-              color="gray.500"
+              color={colorMode === "dark" ? "gray.300" : "gray.800"}
             >
               {t("hero.description")}
             </Text>
