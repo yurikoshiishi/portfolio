@@ -1,4 +1,4 @@
-import React, { useState, VFC } from "react";
+import React, { VFC } from "react";
 import {
   Image,
   Container,
@@ -22,7 +22,6 @@ const emojiId = `emoji-hand-${new Date().getTime()}`;
 
 const Hero: VFC<HeroProps> = ({ links }) => {
   const { t } = useTranslation("common");
-  const [isTypingDone, setIsTypingDone] = useState<boolean>(false);
 
   const onTypingDone = () => {
     const emojiEl = document.getElementById(emojiId);
@@ -103,7 +102,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                 <Text
                   px={1.5}
                   as="span"
-                  className={`emoji-wave-hand ${isTypingDone ? "wave" : ""}`}
+                  className="emoji-wave-hand"
                   id={emojiId}
                 >
                   👋
