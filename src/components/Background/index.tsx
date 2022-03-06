@@ -1,16 +1,14 @@
 import { useMediaQuery, useTheme } from "@chakra-ui/react";
 import React, { useMemo, VFC } from "react";
-import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface BackgroundProps {
   icons: React.FunctionComponent[];
 }
 
 const iconSize = 30;
-const gridPadding = 10;
+const translate = 100;
 
 const Background: VFC<BackgroundProps> = ({ icons }) => {
-  const { height, width } = useWindowSize();
   const theme = useTheme();
   const [isMedium, isLarge] = useMediaQuery([
     `(min-width: ${theme.breakpoints.md})`,
@@ -19,64 +17,60 @@ const Background: VFC<BackgroundProps> = ({ icons }) => {
 
   const shuffledIcons = useMemo(() => shuffle(icons), [icons]);
 
-  if (!height || !width) {
-    return null;
-  }
-
   const numberOfColumns = !isLarge && !isMedium ? 4 : 5;
   const numberOfRows = Math.ceil(icons.length / numberOfColumns);
 
   const windowSize = isLarge ? "lg" : isMedium ? "md" : "base";
-  const responsivePadding = calculatePadding(gridPadding, windowSize);
   const responsiveIconSize = calculateIconSize(iconSize, windowSize);
+  const responsiveTranslate = calculateTranslate(translate, windowSize);
 
   return (
-    <div>
+    <div className="container">
       <style jsx>
         {`
           .container {
             position: fixed;
             inset: 0;
+            display: flex;
+            flex-wrap: wrap;
+            z-index: -1;
+          }
+
+          .grid-item {
+            width: calc(100% / ${numberOfColumns});
+            height: calc(100% / ${numberOfRows});
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
 
           .icon {
-            position: fixed;
             width: ${responsiveIconSize}px;
             height: ${responsiveIconSize}px;
             opacity: 0.15;
-            z-index: -1;
           }
         `}
       </style>
       {shuffledIcons.map((icon, i) => {
-        const column = (i % numberOfColumns) + 1;
-        const row = Math.ceil((i + 1) / numberOfColumns);
-
-        const minLeft =
-          Math.floor((width / numberOfColumns) * (column - 1)) +
-          responsivePadding;
-        const maxLeft =
-          Math.floor((width / numberOfColumns) * column) -
-          responsivePadding -
-          responsiveIconSize;
-        const minTop =
-          Math.floor((height / numberOfRows) * (row - 1)) + responsivePadding;
-        const maxTop =
-          Math.floor((height / numberOfRows) * row) -
-          responsivePadding -
-          responsiveIconSize;
-
         return (
-          <div
-            key={i}
-            className="icon"
-            style={{
-              left: getRandomNumber(minLeft, maxLeft),
-              top: getRandomNumber(minTop, maxTop),
-              transform: `rotate(${getRandomNumber(-30, 30)}deg)`,
-            }}
-          >
-            {React.createElement(icon)}
+          <div className="grid-item" key={i}>
+            <div
+              className="icon"
+              style={{
+                transform: `rotate(${getRandomNumber(
+                  -30,
+                  30
+                )}deg) translate(${getRandomNumber(
+                  -responsiveTranslate,
+                  responsiveTranslate
+                )}%, ${getRandomNumber(
+                  -responsiveTranslate,
+                  responsiveTranslate
+                )}%)`,
+              }}
+            >
+              {React.createElement(icon)}
+            </div>
           </div>
         );
       })}
@@ -115,14 +109,14 @@ function calculateIconSize(baseSize: number, size: "base" | "md" | "lg") {
   }
 }
 
-function calculatePadding(basePadding: number, size: "base" | "md" | "lg") {
+function calculateTranslate(base: number, size: "base" | "md" | "lg") {
   switch (size) {
     case "base":
-      return basePadding;
+      return base;
     case "md":
-      return basePadding * 1.5;
+      return base * 1.25;
     case "lg":
-      return basePadding * 2;
+      return base * 1.5;
   }
 }
 
