@@ -1,45 +1,29 @@
-import React, {useEffect} from 'react';
-import {Element} from 'react-scroll';
-import Card from '../components/Card';
-import Container from '../components/Container';
-import EntryContent from '../components/EntryContent';
-import Header from '../components/Header';
-import Skills from '../components/Skills';
-import Projects from '../components/Projects';
-import Contact from '../components/Contact';
-import Experience from '../components/Experience';
-import Footer from '../components/Footer';
-import {Thanos} from '../services/thanos';
+import React from "react";
+import { Box, Flex } from "@chakra-ui/react";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import { useFontLoaded } from "../hooks/useFontLoaded";
+import { googleFonts } from "../theme";
+import { socialLinks, technologyIcons } from "../data";
+import Background from "../components/Background";
 
 const IndexPage = () => {
-  useEffect(() => {
-    const thanos = new Thanos();
-    //@ts-ignore
-    window.thanos = thanos;
-  }, []);
+  const isFontLoaded = useFontLoaded(googleFonts);
+
+  if (!isFontLoaded) {
+    return null;
+  }
 
   return (
-    <Container>
-      <Header />
-      <Card>
-        <Element name="about">
-          <EntryContent />
-        </Element>
-        <Element name="skills">
-          <Skills />
-        </Element>
-        <Element name="experience">
-          <Experience />
-        </Element>
-        <Element name="projects">
-          <Projects />
-        </Element>
-        <Element name="contact">
-          <Contact />
-        </Element>
-        <Footer />
-      </Card>
-    </Container>
+    <>
+      <Flex height="100%" direction="column" alignItems="center">
+        <Header />
+        <Box flex={1}>
+          <Hero links={socialLinks} />
+        </Box>
+      </Flex>
+      <Background icons={technologyIcons} />
+    </>
   );
 };
 
