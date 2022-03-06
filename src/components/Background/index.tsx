@@ -26,8 +26,6 @@ const Background: VFC<BackgroundProps> = ({ icons }) => {
   const numberOfColumns = !isLarge && !isMedium ? 4 : 5;
   const numberOfRows = Math.ceil(icons.length / numberOfColumns);
 
-  console.log(numberOfRows);
-
   const windowSize = isLarge ? "lg" : isMedium ? "md" : "base";
   const responsivePadding = calculatePadding(gridPadding, windowSize);
   const responsiveIconSize = calculateIconSize(iconSize, windowSize);
