@@ -19,7 +19,7 @@ const IndexPage = () => {
   return (
     <>
       <Head>
-        <link rel="canonical" href={`${BASE_URL}`} />
+        <link rel="canonical" href={`${BASE_URL}/`} />
       </Head>
       <Flex height="100%" direction="column" alignItems="center">
         <Header />
