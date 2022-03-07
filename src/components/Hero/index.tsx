@@ -37,7 +37,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
 
   return (
     <Container maxWidth="container.md">
-      <Box py={{ base: 10, sm: 14 }}>
+      <Box py={{ base: 10, sm: 14, md: 20, lg: 24 }}>
         <Center>
           <VStack spacing={8}>
             <Image
