@@ -3,6 +3,7 @@ module.exports = {
   locales: ["en", "ja"],
   fallbackLng: "en",
   returnEmptyString: false,
+  localeDetection: false,
   keySeparator: false, // we do not use keys in form messages.welcome
   pages: {
     "*": ["common"],

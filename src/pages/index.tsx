@@ -6,6 +6,8 @@ import { useFontLoaded } from "../hooks/useFontLoaded";
 import { googleFonts } from "../theme";
 import { socialLinks, technologyIcons } from "../data";
 import Background from "../components/Background";
+import Head from "next/head";
+import { BASE_URL } from "../constants";
 
 const IndexPage = () => {
   const isFontLoaded = useFontLoaded(googleFonts);
@@ -16,6 +18,9 @@ const IndexPage = () => {
 
   return (
     <>
+      <Head>
+        <link rel="canonical" href={`${BASE_URL}`} />
+      </Head>
       <Flex height="100%" direction="column" alignItems="center">
         <Header />
         <Box flex={1}>
