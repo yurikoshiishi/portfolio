@@ -36,6 +36,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
   };
 
   const responsiveHeadingFontSize = getHeadingFontSizeForLang(lang);
+  const avgTypingDelay = lang === "ja" ? 110 : 70;
 
   return (
     <Container maxWidth="container.md">
@@ -96,7 +97,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
               </style>
               <Typist
                 startDelay={200}
-                avgTypingDelay={70}
+                avgTypingDelay={avgTypingDelay}
                 cursor={{
                   blink: true,
                 }}
