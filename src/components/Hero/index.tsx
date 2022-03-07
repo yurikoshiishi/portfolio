@@ -23,7 +23,7 @@ const emojiId = `emoji-hand-${new Date().getTime()}`;
 
 const Hero: VFC<HeroProps> = ({ links }) => {
   const { colorMode } = useColorMode();
-  const { t } = useTranslation("common");
+  const { t, lang } = useTranslation("common");
 
   const onTypingDone = () => {
     const emojiEl = document.getElementById(emojiId);
@@ -34,6 +34,8 @@ const Hero: VFC<HeroProps> = ({ links }) => {
 
     emojiEl.classList.add("wave");
   };
+
+  const responsiveHeadingFontSize = getHeadingFontSizeForLang(lang);
 
   return (
     <Container maxWidth="container.md">
@@ -50,7 +52,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
             <Heading
               letterSpacing="-0.05em"
               fontWeight={600}
-              fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+              fontSize={responsiveHeadingFontSize}
               lineHeight="110%"
               textAlign="center"
             >
@@ -139,5 +141,15 @@ const Hero: VFC<HeroProps> = ({ links }) => {
     </Container>
   );
 };
+
+function getHeadingFontSizeForLang(lang: string) {
+  switch (lang) {
+    case "ja":
+      return { base: "xl", sm: "4xl", md: "5xl" };
+
+    default:
+      return { base: "2xl", sm: "4xl", md: "6xl" };
+  }
+}
 
 export default Hero;
