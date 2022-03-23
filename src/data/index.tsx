@@ -1,27 +1,5 @@
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
 import { FiMail } from "react-icons/fi";
-// import {
-//   CSSIcon,
-//   DockerIcon,
-//   ExpressIcon,
-//   FirebaseIcon,
-//   GitIcon,
-//   GithubIcon,
-//   HTMLIcon,
-//   JavaScriptIcon,
-//   JestIcon,
-//   MaterialUIIcon,
-//   NextJsIcon,
-//   NodeJsIcon,
-//   PostgreSQLIcon,
-//   ReactIcon,
-//   ReduxIcon,
-//   SassIcon,
-//   TailwindIcon,
-//   TypeScriptIcon,
-//   VSCodeIcon,
-//   WebpackIcon,
-// } from "../components/icons";
 import CSSIcon from "../components/icons/CSSIcon";
 import DockerIcon from "../components/icons/DockerIcon";
 import ExpressIcon from "../components/icons/ExpressIcon";
