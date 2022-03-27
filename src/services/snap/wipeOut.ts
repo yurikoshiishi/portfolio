@@ -1,19 +1,23 @@
 import { Chance } from "chance";
 import html2canvas from "html2canvas";
+import { SNAP_CLASSNAMES } from "./constants";
 
 const CANVAS_COUNT = 40;
 
 const chance = new Chance();
 
-export async function applySnapEffect(originalElement: HTMLElement) {
+export async function wipeOut(originalElement: HTMLElement) {
   const canvas = await html2canvas(originalElement, {
     backgroundColor: null, //transparent
-    width: parseInt(getComputedStyle(originalElement).width),
-    height: parseInt(getComputedStyle(originalElement).height),
   });
   const ctx = canvas.getContext("2d");
 
   if (!ctx) {
+    return;
+  }
+
+  if (!canvas.width) {
+    console.warn("canvas width is 0");
     return;
   }
 
@@ -34,6 +38,12 @@ export async function applySnapEffect(originalElement: HTMLElement) {
     a[i + 3] = rawPixelArr[i + 3];
   }
 
+  originalElement.style.position = "relative";
+
+  const dustClassNameForElement = `${SNAP_CLASSNAMES.dust}-${Math.random()
+    .toString(16)
+    .slice(2)}`;
+
   // Create a new canvas with the imageDataArray based on canvas count
   for (let i = 0; i < CANVAS_COUNT; i++) {
     const newCanvas = newCanvasFromImageData(
@@ -41,26 +51,29 @@ export async function applySnapEffect(originalElement: HTMLElement) {
       canvas.width,
       canvas.height
     );
-    newCanvas.classList.add("dust");
+    newCanvas.classList.add(dustClassNameForElement);
 
-    //TODO: is offset the right property?
     newCanvas.style.position = "absolute";
-    newCanvas.style.left = `${originalElement.offsetLeft}px`;
-    newCanvas.style.top = `${originalElement.offsetTop}px`;
+    newCanvas.style.inset = "0";
     newCanvas.style.width = canvas.style.width;
     newCanvas.style.height = canvas.style.height;
     newCanvas.style.zIndex = "1";
-    document.body.appendChild(newCanvas);
+    newCanvas.style.visibility = "visible";
+
+    // document.body.appendChild(newCanvas);
+    originalElement.appendChild(newCanvas);
   }
 
   // hide original element before starting animation
-  originalElement.style.visibility = "hidden";
+  originalElement.classList.add(SNAP_CLASSNAMES.wiped_out);
 
   //apply animation
-  const dusts = document.querySelectorAll<HTMLElement>(".dust");
+  const dusts = document.querySelectorAll<HTMLElement>(
+    `.${dustClassNameForElement}`
+  );
   dusts.forEach((dust, index) => {
     setTimeout(() => {
-      animateTransform(
+      animateTransformAndFadeOut(
         dust,
         100,
         -100,
@@ -98,7 +111,7 @@ function weightedRandom(peak: number) {
   return chance.weighted(seq, prob);
 }
 
-function animateTransform(
+function animateTransformAndFadeOut(
   element: HTMLElement,
   translateX: number,
   translateY: number,
