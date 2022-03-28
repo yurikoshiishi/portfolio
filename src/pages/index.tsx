@@ -6,22 +6,18 @@ import { useFontLoaded } from "../hooks/useFontLoaded";
 import { googleFonts } from "../theme";
 import { socialLinks, technologyIcons } from "../data";
 import Background from "../components/Background";
-import Head from "next/head";
-import { BASE_URL } from "../constants";
+import IndexTemplate from "../components/templates/IndexTemplate";
 
 const IndexPage = () => {
   const isFontLoaded = useFontLoaded(googleFonts);
   const { colorMode } = useColorMode();
 
   if (!isFontLoaded) {
-    return null;
+    return <IndexTemplate />;
   }
 
   return (
-    <>
-      <Head>
-        <link rel="canonical" href={`${BASE_URL}/`} />
-      </Head>
+    <IndexTemplate>
       <Box
         height="100%"
         position="relative"
@@ -38,7 +34,7 @@ const IndexPage = () => {
         </Flex>
         <Background icons={technologyIcons} />
       </Box>
-    </>
+    </IndexTemplate>
   );
 };
 

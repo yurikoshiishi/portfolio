@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React, { AnimationEventHandler, HTMLProps, useState, VFC } from "react";
 
 type GauntletProps = Omit<
@@ -26,7 +25,7 @@ type GauntletProps = Omit<
 
 type GauntletType = "idle" | "snap" | "time";
 
-const GAUNTLET_IMAGE_PATHS: { [key in GauntletType]: string } = {
+export const GAUNTLET_IMAGE_PATHS: { [key in GauntletType]: string } = {
   idle: "/assets/snap/thanos_idle.png",
   snap: "/assets/snap/thanos_snap.png",
   time: "/assets/snap/thanos_time.png",
@@ -94,11 +93,6 @@ const Gauntlet: VFC<GauntletProps> = ({
       onAnimationStart={handleAnimationStart}
       onAnimationEnd={handleAnimationEnd}
     >
-      <Head>
-        {Object.values(GAUNTLET_IMAGE_PATHS).map((path) => (
-          <link key={path} rel="preload" as="image" href={path} />
-        ))}
-      </Head>
       <style>
         {`
                 .gauntlet {
