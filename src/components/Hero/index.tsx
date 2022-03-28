@@ -1,6 +1,5 @@
-import React, { VFC } from "react";
+import React, { useState, VFC } from "react";
 import {
-  Image,
   Container,
   VStack,
   Center,
@@ -10,29 +9,31 @@ import {
   HStack,
   IconButton,
   useColorMode,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
 import Typist from "react-typist";
 import { SocialLink } from "../../data";
+import { snap, undo } from "../../services/snap";
+import Gauntlet from "../Gauntlet";
 
 interface HeroProps {
   links: SocialLink[];
 }
 
-const emojiId = `emoji-hand-${new Date().getTime()}`;
-
 const Hero: VFC<HeroProps> = ({ links }) => {
   const { colorMode } = useColorMode();
   const { t, lang } = useTranslation("common");
+  const [isTypingDone, setIsTypingDone] = useState<boolean>(false);
+  const [shouldWave, setShouldWave] = useState<boolean>(false);
+  const headingHeight = useBreakpointValue({ base: 40, sm: 60, md: 80 });
 
   const onTypingDone = () => {
-    const emojiEl = document.getElementById(emojiId);
+    setIsTypingDone(true);
 
-    if (!emojiEl) {
-      return;
-    }
-
-    emojiEl.classList.add("wave");
+    setTimeout(() => {
+      setShouldWave(true);
+    }, 50);
   };
 
   const responsiveHeadingFontSize = getHeadingFontSizeForLang(lang);
@@ -43,19 +44,24 @@ const Hero: VFC<HeroProps> = ({ links }) => {
       <Box py={{ base: 10, sm: 14, md: 20, lg: 24 }}>
         <Center>
           <VStack spacing={8}>
-            <Image
-              fit="cover"
-              boxSize="150px"
+            <Box
+              className="snap-target"
               borderRadius="full"
-              src="/assets/avatar.jpg"
-              alt="Yuri Koshiishi"
-            />
+              boxSize={150}
+              backgroundImage="/assets/avatar.jpg"
+              backgroundPosition="center"
+              backgroundRepeat="no-repeat"
+              backgroundSize="cover"
+            ></Box>
             <Heading
+              minH={`${headingHeight}px`}
               letterSpacing="-0.05em"
               fontWeight={600}
               fontSize={responsiveHeadingFontSize}
               lineHeight="110%"
               textAlign="center"
+              display="flex"
+              alignItems="flex-end"
             >
               <style>
                 {`
@@ -63,7 +69,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                     animation-name: wave-animation;
                     animation-duration: 2.5s;
                     animation-iteration-count: 1;
-                    transform-origin: 70% 70%;
+                    transform-origin: 60% 200%;
                     display: inline-block;
                   }
 
@@ -72,19 +78,19 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                       transform: rotate(0deg);
                     }
                     10% {
-                      transform: rotate(14deg);
+                      transform: rotate(-7.5deg);
                     }
                     20% {
-                      transform: rotate(-8deg);
+                      transform: rotate(7.5deg);
                     }
                     30% {
-                      transform: rotate(14deg);
+                      transform: rotate(-5deg);
                     }
                     40% {
-                      transform: rotate(-4deg);
+                      transform: rotate(5deg);
                     }
                     50% {
-                      transform: rotate(10deg);
+                      transform: rotate(-5deg);
                     }
                     60% {
                       transform: rotate(0deg);
@@ -99,20 +105,30 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                 startDelay={200}
                 avgTypingDelay={avgTypingDelay}
                 cursor={{
-                  blink: true,
+                  show: false,
                 }}
                 onTypingDone={onTypingDone}
               >
                 {t("hero.greeting")}
-                <Text
-                  px={1.5}
-                  as="span"
-                  className="emoji-wave-hand"
-                  id={emojiId}
-                >
-                  👋
-                </Text>
               </Typist>
+              {isTypingDone && (
+                <Gauntlet
+                  size={headingHeight}
+                  className={shouldWave ? "wave" : undefined}
+                  onAnimationStart={(e, { type, animationDuration }) => {
+                    type === "snap"
+                      ? //NOTE: snap takes some time to execute, thus calling it between animation start and end
+                        setTimeout(
+                          () => snap(".snap-target"),
+                          animationDuration * 0.5
+                        )
+                      : undefined;
+                  }}
+                  onAnimationEnd={(e, { type }) =>
+                    type === "time" ? undo() : undefined
+                  }
+                />
+              )}
             </Heading>
             <Text
               fontSize={{ base: "md", sm: "lg", md: "xl" }}
