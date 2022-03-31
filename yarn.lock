@@ -1145,6 +1145,14 @@ base64-arraybuffer@^1.0.2:
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-1.0.2.tgz#1c37589a7c4b0746e34bd1feb951da2df01c1bdc"
   integrity sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==
 
+blip-js@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/blip-js/-/blip-js-1.0.3.tgz#d2b49aa177d71283d16f8255440b897cf7df86c0"
+  integrity sha512-eXXyTrfanB7E+H5BXRV3JB96jOnXpu7r/w5sqzZYvoZxyq3kLaWIAFT/77M96ijLClvzkdpY4mgb2ML1rxqZ3A==
+  dependencies:
+    chance "^1.1.8"
+    html2canvas "^1.4.1"
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"

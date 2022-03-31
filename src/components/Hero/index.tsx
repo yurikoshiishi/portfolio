@@ -14,7 +14,7 @@ import {
 import useTranslation from "next-translate/useTranslation";
 import Typist from "react-typist";
 import { SocialLink } from "../../data";
-import { snap, undo } from "../../services/snap";
+import { snap, undo } from "blip-js";
 import Gauntlet from "../Gauntlet";
 
 interface HeroProps {

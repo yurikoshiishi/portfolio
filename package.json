@@ -9,6 +9,7 @@
     "@emotion/styled": "^11",
     "@fontsource/montserrat": "^4.5.5",
     "@fontsource/noto-sans-jp": "^4.5.4",
+    "blip-js": "^1.0.3",
     "chance": "^1.1.8",
     "fontfaceobserver": "^2.1.0",
     "framer-motion": "^6",
