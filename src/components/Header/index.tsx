@@ -1,17 +1,17 @@
+import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Flex,
   Button,
-  useColorMode,
   Container,
+  Flex,
   Menu,
   MenuButton,
-  MenuList,
-  Text,
-  MenuOptionGroup,
   MenuItemOption,
+  MenuList,
+  MenuOptionGroup,
+  Text,
+  useColorMode,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import useTranslation from "next-translate/useTranslation";
 import i18nConfig from "../../../i18n";
 
@@ -27,7 +27,7 @@ const Header: React.VFC<HeaderProps> = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Container maxWidth="container.xl">
+    <Container maxWidth="container.xl" zIndex="sticky">
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Box>
           <Menu>
