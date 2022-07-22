@@ -12,6 +12,7 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
+import useTranslation from "next-translate/useTranslation";
 import i18nConfig from "../../../i18n";
 
 interface HeaderProps {}
@@ -22,6 +23,7 @@ const localeToLangMap: { [key: string]: string } = {
 };
 
 const Header: React.VFC<HeaderProps> = () => {
+  const { lang } = useTranslation();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -36,11 +38,10 @@ const Header: React.VFC<HeaderProps> = () => {
               minW={0}
               rightIcon={<ChevronDownIcon />}
             >
-              {/* TODO: lang */}
-              <Text fontSize="sm">Language: {localeToLangMap["en"]}</Text>
+              <Text fontSize="sm">Language: {localeToLangMap[lang]}</Text>
             </MenuButton>
             <MenuList>
-              <MenuOptionGroup value="en">
+              <MenuOptionGroup value={lang}>
                 {i18nConfig.locales.map((locale) => (
                   <MenuItemOption
                     value={locale}

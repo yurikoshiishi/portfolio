@@ -1,19 +1,20 @@
+import React, { useState, VFC } from "react";
 import {
-  Box,
-  Center,
   Container,
+  VStack,
+  Center,
+  Box,
   Heading,
+  Text,
   HStack,
   IconButton,
-  Text,
-  useBreakpointValue,
   useColorMode,
-  VStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
-import { snap, undo } from "blip-js";
-import { useState, VFC } from "react";
+import useTranslation from "next-translate/useTranslation";
 import Typist from "react-typist";
 import { SocialLink } from "../../data";
+import { snap, undo } from "blip-js";
 import Gauntlet from "../Gauntlet";
 
 interface HeroProps {
@@ -22,6 +23,7 @@ interface HeroProps {
 
 const Hero: VFC<HeroProps> = ({ links }) => {
   const { colorMode } = useColorMode();
+  const { t, lang } = useTranslation("common");
   const [isTypingDone, setIsTypingDone] = useState<boolean>(false);
   const [shouldWave, setShouldWave] = useState<boolean>(false);
   const headingHeight = useBreakpointValue({ base: 40, sm: 60, md: 80 });
@@ -34,9 +36,6 @@ const Hero: VFC<HeroProps> = ({ links }) => {
     }, 50);
   };
 
-  // TODO: lang
-  const lang = ["en", "ja"][0];
-  const t = (text: string) => text;
   const responsiveHeadingFontSize = getHeadingFontSizeForLang(lang);
   const avgTypingDelay = lang === "ja" ? 110 : 70;
 
