@@ -1,6 +1,7 @@
 import "@fontsource/montserrat";
 import "@fontsource/noto-sans-jp";
 import "react-typist/dist/Typist.css";
+import "../styles/base.scss";
 import "../styles/index.css";
 
 import { ChakraProvider } from "@chakra-ui/react";
