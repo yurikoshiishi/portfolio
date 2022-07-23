@@ -1,13 +1,12 @@
-import "../styles/index.css";
 import "@fontsource/montserrat";
 import "@fontsource/noto-sans-jp";
 import "react-typist/dist/Typist.css";
+import "../styles/index.css";
 
-import React from "react";
-import Head from "next/head";
-import I18nProvider from "next-translate/I18nProvider";
-import { useRouter } from "next/router";
 import { ChakraProvider } from "@chakra-ui/react";
+import I18nProvider from "next-translate/I18nProvider";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { theme } from "../theme";
 
 function App({ Component, pageProps }: any) {
