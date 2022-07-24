@@ -33,7 +33,7 @@ export function getScriptSrc({
   initialColorMode: init,
   storageKey: key,
 }: ColorModeScriptProps) {
-  const localStorageScript = `(function(){try{var a=function(a){var c="(prefers-color-scheme: dark)",d=window.matchMedia(c).matches?"dark":"light",b="system"===a?d:a;return document.documentElement.dataset.theme=b,b},d="${init}",b="${key}",c=localStorage.getItem(b);c?a(c):localStorage.setItem(b,a(d))}catch(e){}}()`;
+  const localStorageScript = `(function(){try{var a=function(a){var c="(prefers-color-scheme: dark)",d=window.matchMedia(c).matches?"dark":"light",b="system"===a?d:a;return document.documentElement.dataset.theme=b,b},d="${init}",b="${key}",c=localStorage.getItem(b);c?a(c):localStorage.setItem(b,a(d))}catch(e){}})()`;
 
   return `!${localStorageScript}`.trim();
 }
