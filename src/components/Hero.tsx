@@ -116,7 +116,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                 />
               )}
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-center text-gray-800 dark:text-gray-400">
+            <p className="text-base sm:text-lg md:text-xl text-center text-gray-600 dark:text-gray-400">
               {t("hero.description")}
             </p>
             <div className="flex items-center justify-center gap-6">
