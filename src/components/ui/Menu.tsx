@@ -4,7 +4,7 @@ import { joinClassNames } from "@/lib/style-helper";
 import { useEffect, useRef, useState, VFC } from "react";
 
 interface MenuProps {
-  buttonVariant?: ButtonProps["variant"];
+  buttonVariant?: ButtonProps<"button">["variant"];
   text: string;
   items: MenuItem[];
 }

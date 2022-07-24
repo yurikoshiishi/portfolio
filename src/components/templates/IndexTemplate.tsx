@@ -33,14 +33,17 @@ const IndexTemplate: React.FC<IndexTemplateProps> = ({ children }) => {
         background={colorMode === "dark" ? "gray.800" : "white"}
       >
         {isFontLoaded && (
-          <Flex height="100%" direction="column" alignItems="center">
-            <Header />
-            <Box flex={1}>
-              <Hero links={socialLinks} />
-            </Box>
-          </Flex>
+          <>
+            <Flex height="100%" direction="column" alignItems="center">
+              <Header />
+              <Box flex={1}>
+                <Hero links={socialLinks} />
+              </Box>
+            </Flex>
+            {/* TODO: display this before font loaded, with a SSG compatible way */}
+            <Background icons={technologyIcons} />
+          </>
         )}
-        <Background icons={technologyIcons} />
       </Box>
     </>
   );

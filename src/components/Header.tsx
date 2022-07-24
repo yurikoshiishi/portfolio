@@ -1,7 +1,8 @@
+import MoonIcon from "@/components/icons/MoonIcon";
+import SunIcon from "@/components/icons/SunIcon";
 import Button from "@/components/ui/Button";
 import Menu from "@/components/ui/Menu";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Flex, useColorMode } from "@chakra-ui/react";
+import { useColorMode } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
 import i18nConfig from "../../i18n";
 
@@ -27,11 +28,11 @@ const Header: React.VFC<HeaderProps> = () => {
             href: `/${locale}`,
           }))}
         />
-        <Flex alignItems="center">
-          <Button onClick={toggleColorMode}>
+        <Button onClick={toggleColorMode}>
+          <span className="w-4 h-4">
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-          </Button>
-        </Flex>
+          </span>
+        </Button>
       </div>
     </div>
   );

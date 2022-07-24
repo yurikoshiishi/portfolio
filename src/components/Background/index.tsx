@@ -25,15 +25,16 @@ const Background: VFC<BackgroundProps> = ({ icons }) => {
   const responsiveTranslate = calculateTranslate(translate, windowSize);
 
   return (
-    <div className="container">
+    <div className="bg-container">
       <style jsx>
         {`
-          .container {
+          .bg-container {
             position: fixed;
             inset: 0;
             display: flex;
             flex-wrap: wrap;
             z-index: -1;
+            width: 100%;
           }
 
           .grid-item {
