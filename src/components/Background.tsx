@@ -16,7 +16,7 @@ const Background: VFC<BackgroundProps> = ({ iconNames }) => {
             className="w-1/4 md:w-1/5 h-1/5 md:h-1/4 flex items-center justify-center"
             key={i}
           >
-            <style jsx global>
+            <style>
               {`
                 #bg-container .bg-icon-${i} {
                   transform: rotate(${getRandomNumber(-30, 30)}deg)

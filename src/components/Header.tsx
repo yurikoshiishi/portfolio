@@ -3,8 +3,6 @@ import SunIcon from "@/components/icons/SunIcon";
 import Button from "@/components/ui/Button";
 import Menu from "@/components/ui/Menu";
 import { useColorMode } from "@/contexts/color-mode";
-import useTranslation from "next-translate/useTranslation";
-import i18nConfig from "../../i18n";
 
 interface HeaderProps {}
 
@@ -14,7 +12,7 @@ const localeToLangMap: { [key: string]: string } = {
 };
 
 const Header: React.VFC<HeaderProps> = () => {
-  const { lang } = useTranslation();
+  const lang = "en";
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -23,9 +21,9 @@ const Header: React.VFC<HeaderProps> = () => {
         <Menu
           text={`Language: ${localeToLangMap[lang]}`}
           buttonVariant="outline"
-          items={i18nConfig.locales.map((locale) => ({
+          items={["en", "ja"].map((locale) => ({
             text: localeToLangMap[locale],
-            href: `/${locale}`,
+            onClick: () => console.log(`/${locale}`),
           }))}
         />
         <Button onClick={toggleColorMode}>

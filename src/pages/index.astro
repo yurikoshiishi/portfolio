@@ -1,0 +1,38 @@
+---
+import Background from "@/components/Background";
+import { GAUNTLET_IMAGE_PATHS } from "@/components/Gauntlet";
+import IndexTemplate from "@/components/templates/IndexTemplate";
+import { BASE_URL } from "@/constants";
+import { ColorModeProvider, colorModeStorageKey } from "@/contexts/color-mode";
+import { shuffledIconNames } from "@/data";
+import { ColorModeScript } from "@/pages/_document";
+---
+
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Yuri Koshiishi | Portfolio</title>
+    <meta name="description"
+        content="Thank you for visiting Yuri Koshiishi Portfolio. Please feel free to contact me anytime." />
+
+    <link rel="canonical" href={`${BASE_URL}/`} />
+
+    {Object.values(GAUNTLET_IMAGE_PATHS).map((path) => (
+    <link rel="preload" as="image" href={path} />
+    ))}
+</head>
+
+<body>
+    <ColorModeScript initialColorMode="light" storageKey={colorModeStorageKey} />
+    <ColorModeProvider>
+        <IndexTemplate client:load iconNames={shuffledIconNames} />;
+        <Background iconNames={shuffledIconNames} />
+    </ColorModeProvider>
+</body>
+
+</html>
