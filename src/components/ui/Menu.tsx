@@ -17,7 +17,6 @@ type MenuItem = MenuItemAction & {
 
 const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -29,8 +28,6 @@ const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
     document.addEventListener("click", isClickedOutside, true);
 
     function isClickedOutside(e: MouseEvent) {
-      e.preventDefault();
-
       const clicked = e.target;
 
       if (!(clicked instanceof Node)) {
@@ -38,12 +35,12 @@ const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
         return;
       }
 
-      if (
-        !wrapperRef.current?.contains(clicked) ||
-        buttonRef.current?.contains(clicked)
-      ) {
-        setIsOpen(false);
+      //let the onClick handler on the button do the work
+      if (buttonRef.current?.contains(clicked)) {
+        return;
       }
+
+      setIsOpen(false);
     }
 
     return () => {
@@ -56,7 +53,7 @@ const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
   };
 
   return (
-    <div ref={wrapperRef} className="relative">
+    <div className="relative">
       <Button
         ref={buttonRef}
         variant={buttonVariant}
@@ -76,13 +73,13 @@ const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
       >
         <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
           {items.map((item, i) => {
+            const className =
+              "block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white transition-colors duration-200";
+
             if ("href" in item) {
               return (
                 <li key={i}>
-                  <a
-                    href={item.href}
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
+                  <a href={item.href} className={className}>
                     {item.text}
                   </a>
                 </li>
@@ -91,10 +88,7 @@ const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
 
             if ("onClick" in item) {
               <li key={i}>
-                <button
-                  onClick={item.onClick}
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
+                <button onClick={item.onClick} className={className}>
                   {item.text}
                 </button>
               </li>;
