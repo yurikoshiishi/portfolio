@@ -3,7 +3,7 @@ import { joinClassNames } from "@/lib/style-helper";
 import { VFC } from "react";
 
 export interface IconButtonProps
-  extends Omit<ButtonProps<"button">, "rightIcon"> {}
+  extends Omit<ButtonProps<"button" | "a">, "rightIcon"> {}
 
 const IconButton: VFC<IconButtonProps> = ({
   variant = "solid",

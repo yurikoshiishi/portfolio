@@ -118,7 +118,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                 <IconButton
                   key={link.href}
                   href={link.href}
-                  as="button"
+                  as="a"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`link ${link.name}`}
