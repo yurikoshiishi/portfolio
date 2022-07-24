@@ -18,7 +18,7 @@ const Header: React.VFC<HeaderProps> = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <div className="max-w-7xl w-full px-4 h-16 py-4">
+    <div className="max-w-7xl w-full px-4 h-16 py-4 z-10 relative">
       <div className="flex items-center justify-between">
         <Menu
           text={`Language: ${localeToLangMap[lang]}`}
