@@ -4,7 +4,6 @@ type GauntletProps = Omit<
   HTMLProps<HTMLDivElement>,
   "onClick" | "onAnimationStart" | "onAnimationEnd"
 > & {
-  size?: number;
   onClick?: (type: GauntletType) => void;
   onAnimationStart?: (
     e: React.AnimationEvent,
@@ -40,7 +39,6 @@ const GAUNTLET_ANIMATION_NAMES: { [key in GauntletType]: GauntletType } = {
 const GAUNTLET_ANIMATION_DURATION_IN_MS = 2000;
 
 const Gauntlet: VFC<GauntletProps> = ({
-  size = 80,
   onAnimationStart,
   onAnimationEnd,
   onClick,
@@ -97,8 +95,6 @@ const Gauntlet: VFC<GauntletProps> = ({
         {`
                 .gauntlet {
                     display: inline-block;
-                    width: ${size}px;
-                    height: ${size}px;
                     background-image: url('${GAUNTLET_IMAGE_PATHS.idle}');
                     background-size: cover;
                     cursor: pointer;

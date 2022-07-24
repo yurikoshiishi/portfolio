@@ -1,32 +1,20 @@
-import React, { useState, VFC } from "react";
-import {
-  Container,
-  VStack,
-  Center,
-  Box,
-  Heading,
-  Text,
-  HStack,
-  IconButton,
-  useColorMode,
-  useBreakpointValue,
-} from "@chakra-ui/react";
-import useTranslation from "next-translate/useTranslation";
-import Typist from "react-typist";
-import { SocialLink } from "../../data";
+import IconButton from "@/components/ui/IconButton";
+import { joinClassNames } from "@/lib/style-helper";
 import { snap, undo } from "blip-js";
-import Gauntlet from "../Gauntlet";
+import useTranslation from "next-translate/useTranslation";
+import { useState, VFC } from "react";
+import Typist from "react-typist";
+import { SocialLink } from "../data";
+import Gauntlet from "./Gauntlet";
 
 interface HeroProps {
   links: SocialLink[];
 }
 
 const Hero: VFC<HeroProps> = ({ links }) => {
-  const { colorMode } = useColorMode();
   const { t, lang } = useTranslation("common");
   const [isTypingDone, setIsTypingDone] = useState<boolean>(false);
   const [shouldWave, setShouldWave] = useState<boolean>(false);
-  const headingHeight = useBreakpointValue({ base: 40, sm: 60, md: 80 });
 
   const onTypingDone = () => {
     setIsTypingDone(true);
@@ -36,32 +24,22 @@ const Hero: VFC<HeroProps> = ({ links }) => {
     }, 50);
   };
 
-  const responsiveHeadingFontSize = getHeadingFontSizeForLang(lang);
   const avgTypingDelay = lang === "ja" ? 110 : 70;
 
   return (
-    <Container maxWidth="container.md">
-      <Box py={{ base: 10, sm: 14, md: 20, lg: 24 }}>
-        <Center>
-          <VStack spacing={8}>
-            <Box
-              className="snap-target"
-              borderRadius="full"
-              boxSize={150}
-              backgroundImage="/assets/avatar.jpg"
-              backgroundPosition="center"
-              backgroundRepeat="no-repeat"
-              backgroundSize="cover"
-            ></Box>
-            <Heading
-              minH={`${headingHeight}px`}
-              letterSpacing="-0.05em"
-              fontWeight={600}
-              fontSize={responsiveHeadingFontSize}
-              lineHeight="110%"
-              textAlign="center"
-              display="flex"
-              alignItems="flex-end"
+    <div className="max-w-3xl">
+      <div className=" py-10 sm:py-14 md:py-20 lg:py-24">
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-center gap-8">
+            <div
+              className="snap-target rounded-full w-[150px] h-[150px] bg-no-repeat bg-cover bg-center"
+              style={{ backgroundImage: "url(/assets/avatar.jpg)" }}
+            ></div>
+            <h2
+              className={joinClassNames(
+                "-tracking-wider font-semibold text-center flex items-end dark:text-gray-50 min-h-[40px] sm:min-h-[60px] md:min-h-[80px]",
+                getHeadingFontSizeForLang(lang)
+              )}
             >
               <style>
                 {`
@@ -113,8 +91,10 @@ const Hero: VFC<HeroProps> = ({ links }) => {
               </Typist>
               {isTypingDone && (
                 <Gauntlet
-                  size={headingHeight}
-                  className={shouldWave ? "wave" : undefined}
+                  className={joinClassNames(
+                    " w-10 h-10 sm:w-[60px] sm:h-[60]px md:w-20 md:h-20",
+                    shouldWave ? "wave" : undefined
+                  )}
                   onAnimationStart={(e, { type, animationDuration }) => {
                     type === "snap"
                       ? //NOTE: snap takes some time to execute, thus calling it between animation start and end
@@ -129,15 +109,11 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                   }
                 />
               )}
-            </Heading>
-            <Text
-              fontSize={{ base: "md", sm: "lg", md: "xl" }}
-              textAlign="center"
-              color={colorMode === "dark" ? "gray.300" : "gray.800"}
-            >
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-center text-gray-800 dark:text-gray-400">
               {t("hero.description")}
-            </Text>
-            <HStack spacing={6}>
+            </p>
+            <div className="flex items-center justify-center gap-6">
               {links.map((link) => (
                 <IconButton
                   key={link.href}
@@ -145,27 +121,26 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                   as="a"
                   target="_blank"
                   rel="noopener noreferrer"
-                  size="lg"
                   aria-label={`link ${link.name}`}
                 >
                   {link.icon}
                 </IconButton>
               ))}
-            </HStack>
-          </VStack>
-        </Center>
-      </Box>
-    </Container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
 function getHeadingFontSizeForLang(lang: string) {
   switch (lang) {
     case "ja":
-      return { base: "xl", sm: "4xl", md: "5xl" };
+      return "text-xl sm:text-4xl md:text-5xl";
 
     default:
-      return { base: "2xl", sm: "4xl", md: "6xl" };
+      return "text-2xl sm:text-4xl md:text-6xl";
   }
 }
 

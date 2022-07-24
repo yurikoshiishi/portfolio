@@ -1,41 +1,37 @@
-import React from "react";
-import { Box, Flex, useColorMode } from "@chakra-ui/react";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
-import { useFontLoaded } from "../hooks/useFontLoaded";
-import { googleFonts } from "../theme";
-import { socialLinks, technologyIcons } from "../data";
-import Background from "../components/Background";
+import { iconNames } from "@/data";
+import { InferGetStaticPropsType } from "next";
 import IndexTemplate from "../components/templates/IndexTemplate";
 
-const IndexPage = () => {
-  const isFontLoaded = useFontLoaded(googleFonts);
-  const { colorMode } = useColorMode();
+export default function Page(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
+  return <IndexTemplate {...props} />;
+}
 
-  if (!isFontLoaded) {
-    return <IndexTemplate />;
-  }
-
-  return (
-    <IndexTemplate>
-      <Box
-        height="100%"
-        position="relative"
-        zIndex={1}
-        // NOTE: setting bg here to override body bg, in order to prevent a bug in safari
-        // https://github.com/chakra-ui/chakra-ui/issues/5641
-        background={colorMode === "dark" ? "gray.800" : "white"}
-      >
-        <Flex height="100%" direction="column" alignItems="center">
-          <Header />
-          <Box flex={1}>
-            <Hero links={socialLinks} />
-          </Box>
-        </Flex>
-        <Background icons={technologyIcons} />
-      </Box>
-    </IndexTemplate>
-  );
+export const getStaticProps = () => {
+  return {
+    props: {
+      iconNames: shuffle(iconNames),
+    },
+  };
 };
 
-export default IndexPage;
+function shuffle(array: any[]) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
