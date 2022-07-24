@@ -1,7 +1,7 @@
 import IconButton from "@/components/ui/IconButton";
+import { useLanguage } from "@/contexts/language";
 import { joinClassNames } from "@/lib/style-helper";
 import { snap, undo } from "blip-js";
-import useTranslation from "next-translate/useTranslation";
 import { useState, VFC } from "react";
 import Typist from "react-typist";
 import { SocialLink } from "../data";
@@ -12,7 +12,7 @@ interface HeroProps {
 }
 
 const Hero: VFC<HeroProps> = ({ links }) => {
-  const { t, lang } = useTranslation("common");
+  const { t, lang } = useLanguage();
   const [isTypingDone, setIsTypingDone] = useState<boolean>(false);
   const [shouldWave, setShouldWave] = useState<boolean>(false);
 
@@ -25,6 +25,8 @@ const Hero: VFC<HeroProps> = ({ links }) => {
   };
 
   const avgTypingDelay = lang === "ja" ? 110 : 70;
+
+  console.log(lang);
 
   return (
     <div className="max-w-3xl">
@@ -79,16 +81,20 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                   }
                 `}
               </style>
-              <Typist
-                startDelay={200}
-                avgTypingDelay={avgTypingDelay}
-                cursor={{
-                  show: false,
-                }}
-                onTypingDone={onTypingDone}
-              >
-                {t("hero.greeting")}
-              </Typist>
+              {isTypingDone ? (
+                t("hero.greeting")
+              ) : (
+                <Typist
+                  startDelay={200}
+                  avgTypingDelay={avgTypingDelay}
+                  cursor={{
+                    show: false,
+                  }}
+                  onTypingDone={onTypingDone}
+                >
+                  {t("hero.greeting")}
+                </Typist>
+              )}
               {isTypingDone && (
                 <Gauntlet
                   className={joinClassNames(

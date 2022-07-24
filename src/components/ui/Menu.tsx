@@ -71,32 +71,34 @@ const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
             : "invisible opacity-0 scale-[0.8]"
         )}
       >
-        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
+        <div className="py-1 text-sm text-gray-700 dark:text-gray-200">
           {items.map((item, i) => {
             const className =
-              "block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white transition-colors duration-200";
+              "block w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white transition-colors duration-200 cursor-pointer";
 
             if ("href" in item) {
               return (
-                <li key={i}>
-                  <a href={item.href} className={className}>
-                    {item.text}
-                  </a>
-                </li>
+                <a key={i} className={className} href={item.href}>
+                  {item.text}
+                </a>
               );
             }
 
             if ("onClick" in item) {
-              <li key={i}>
-                <button onClick={item.onClick} className={className}>
+              return (
+                <button
+                  key={i}
+                  className={joinClassNames(className, "appearance-none")}
+                  onClick={item.onClick}
+                >
                   {item.text}
                 </button>
-              </li>;
+              );
             }
 
             return null;
           })}
-        </ul>
+        </div>
       </div>
     </div>
   );

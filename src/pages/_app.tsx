@@ -4,27 +4,15 @@ import "react-typist/dist/Typist.css";
 import "../styles/index.css";
 
 import { ColorModeProvider } from "@/contexts/color-mode";
-import I18nProvider from "next-translate/I18nProvider";
-import Head from "next/head";
-import { useRouter } from "next/router";
+import { LanguageProvider } from "@/contexts/language";
 
 function App({ Component, pageProps }: any) {
-  const router = useRouter();
-
   return (
-    <I18nProvider lang={router.locale} namespaces={pageProps._ns}>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Yuri Koshiishi | Portfolio</title>
-        <meta
-          name="description"
-          content="Thank you for visiting Yuri Koshiishi Portfolio. Please feel free to contact me anytime."
-        />
-      </Head>
+    <LanguageProvider>
       <ColorModeProvider>
         <Component {...pageProps} />
       </ColorModeProvider>
-    </I18nProvider>
+    </LanguageProvider>
   );
 }
 

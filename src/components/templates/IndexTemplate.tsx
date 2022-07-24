@@ -20,6 +20,11 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
   return (
     <>
       <Head>
+        <title>Yuri Koshiishi | Portfolio</title>
+        <meta
+          name="description"
+          content="Thank you for visiting Yuri Koshiishi Portfolio. Please feel free to contact me anytime."
+        />
         {Object.values(GAUNTLET_IMAGE_PATHS).map((path) => (
           <link key={path} rel="preload" as="image" href={path} />
         ))}

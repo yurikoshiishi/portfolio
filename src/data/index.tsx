@@ -47,3 +47,20 @@ export const iconNames = [
   "vscode",
   "webpack",
 ];
+
+export const translations = {
+  en: {
+    hero: {
+      greeting: "Hi, I'm Yuri Koshiishi",
+      description:
+        "a Frontend Developer / Web Producer who's passionate about web technologies and building the best user experience.",
+    },
+  },
+  ja: {
+    hero: {
+      greeting: "こんにちは、輿石ゆうりです",
+      description:
+        "Web技術に関心があり、最適なUXを作り上げることに夢中な、フロントエンドエンジニアおよびWebプロデューサーです。",
+    },
+  },
+};
