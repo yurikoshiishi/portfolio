@@ -6,7 +6,6 @@ import { BASE_URL } from "@/constants";
 import { socialLinks } from "@/data";
 import { useFontLoaded } from "@/hooks/useFontLoaded";
 import { googleFonts } from "@/theme";
-import { Box, useColorMode } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 
@@ -16,7 +15,6 @@ interface IndexTemplateProps {
 
 const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
   const isFontLoaded = useFontLoaded(googleFonts);
-  const { colorMode } = useColorMode();
 
   return (
     <>
@@ -26,14 +24,7 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
         ))}
         <link rel="canonical" href={`${BASE_URL}/`} />
       </Head>
-      <Box
-        height="100%"
-        position="relative"
-        zIndex={1}
-        // NOTE: setting bg here to override body bg, in order to prevent a bug in safari
-        // https://github.com/chakra-ui/chakra-ui/issues/5641
-        background={colorMode === "dark" ? "gray.800" : "white"}
-      >
+      <div className="h-full relative z-[1] bg-white dark:bg-gray-800">
         {isFontLoaded ? (
           <div className="h-full flex flex-col items-center">
             <Header />
@@ -47,7 +38,7 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
           </div>
         )}
         <Background iconNames={iconNames} />
-      </Box>
+      </div>
     </>
   );
 };

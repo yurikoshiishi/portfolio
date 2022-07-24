@@ -2,7 +2,7 @@ import MoonIcon from "@/components/icons/MoonIcon";
 import SunIcon from "@/components/icons/SunIcon";
 import Button from "@/components/ui/Button";
 import Menu from "@/components/ui/Menu";
-import { useColorMode } from "@chakra-ui/react";
+import { useColorMode } from "@/contexts/color-mode";
 import useTranslation from "next-translate/useTranslation";
 import i18nConfig from "../../i18n";
 
