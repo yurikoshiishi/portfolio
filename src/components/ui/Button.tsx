@@ -51,12 +51,12 @@ export function buttonBaseClassNames(variant: ButtonVariant) {
   switch (variant) {
     case "outline":
       base.push(
-        "border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-600 dark:hover:bg-gray-800"
+        "border border-gray-300 hover:bg-gray-100 dark:border-whiteAlpha-300 dark:hover:border-whiteAlpha-300 dark:hover:bg-whiteAlpha-200"
       );
       break;
     case "solid":
       base.push(
-        "bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+        "bg-gray-100 hover:bg-gray-200 dark:bg-whiteAlpha-200 dark:hover:bg-whiteAlpha-300"
       );
       break;
   }

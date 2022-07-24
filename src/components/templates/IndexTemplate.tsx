@@ -2,6 +2,7 @@ import Background from "@/components/Background";
 import { GAUNTLET_IMAGE_PATHS } from "@/components/Gauntlet";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import LoadingIcon from "@/components/icons/LoadingIcon";
 import { BASE_URL } from "@/constants";
 import { socialLinks } from "@/data";
 import { useFontLoaded } from "@/hooks/useFontLoaded";
@@ -24,7 +25,7 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
         ))}
         <link rel="canonical" href={`${BASE_URL}/`} />
       </Head>
-      <div className="h-full relative z-[1] bg-white dark:bg-gray-800">
+      <div className="h-full relative z-[1]">
         {isFontLoaded ? (
           <div className="h-full flex flex-col items-center">
             <Header />
@@ -33,8 +34,8 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
             </div>
           </div>
         ) : (
-          <div className="w-screen h-screen flex items-center justify-center">
-            <img src="/assets/puff.svg" alt="Loading" width={45} height={45} />
+          <div className="w-screen h-screen flex items-center justify-center text-gray-900 dark:text-white">
+            <LoadingIcon />
           </div>
         )}
         <Background iconNames={iconNames} />
