@@ -32,7 +32,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
     <div className="max-w-3xl px-4">
       <div className=" py-10 sm:py-14 md:py-20 lg:py-24">
         <div className="flex items-center justify-center">
-          <div className="flex flex-col items-center gap-8">
+          <div className="flex flex-col items-center gap-6 sm:gap-8">
             <div
               className="snap-target rounded-full w-[150px] h-[150px] bg-no-repeat bg-cover bg-center"
               style={{ backgroundImage: "url(/assets/avatar.jpg)" }}
