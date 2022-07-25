@@ -41,7 +41,9 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
           </div>
         ) : (
           <div className="w-screen h-screen flex items-center justify-center text-gray-900 dark:text-white">
-            <LoadingIcon />
+            <div className=" w-10">
+              <LoadingIcon />
+            </div>
           </div>
         )}
       </div>
