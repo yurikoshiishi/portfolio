@@ -43,8 +43,8 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
             <LoadingIcon />
           </div>
         )}
-        <Background iconNames={iconNames} />
       </div>
+      <Background iconNames={iconNames} />
     </>
   );
 };
