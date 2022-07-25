@@ -29,7 +29,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
   console.log(lang);
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-3xl px-4">
       <div className=" py-10 sm:py-14 md:py-20 lg:py-24">
         <div className="flex items-center justify-center">
           <div className="flex flex-col items-center gap-8">
