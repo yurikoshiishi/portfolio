@@ -34,7 +34,7 @@ export const iconNames = [
   "github",
   "html",
   "javascript",
-  "jest",
+  "jestLogo",
   "mui",
   "nextjs",
   "nodejs",
