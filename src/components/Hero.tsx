@@ -26,8 +26,6 @@ const Hero: VFC<HeroProps> = ({ links }) => {
 
   const avgTypingDelay = lang === "ja" ? 110 : 70;
 
-  console.log(lang);
-
   return (
     <div className="max-w-3xl px-4">
       <div className=" py-10 sm:py-14 md:py-20 lg:py-24">
