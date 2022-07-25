@@ -1,0 +1,52 @@
+$numberOfIcons: 20;
+$rotateBase: 30;
+$translateBase: 100;
+
+$breakpoints: (
+  "sm": "480px",
+  "md": "768px",
+  "lg": "992px",
+  "xl": "1280px",
+  "2xl": "1536px",
+);
+
+@function randomNum($min, $max) {
+  $rand: random();
+  $randomNum: $min + floor($rand * (($max - $min) + 1));
+
+  @return $randomNum;
+}
+
+#bg-container {
+  @for $num from 1 through $numberOfIcons {
+    .bg-icon-#{$num} {
+      transform: rotate(#{randomNum(-$rotateBase, $rotateBase)}deg)
+        translate(
+          #{randomNum(-$translateBase, $translateBase)}#{"%"},
+          #{randomNum(-$translateBase, $translateBase)}#{"%"}
+        );
+
+      @media screen and (min-width: map-get($breakpoints, "md")) {
+        $rotate: $rotateBase * 1.25;
+        $translate: $translateBase * 1.25;
+
+        transform: rotate(#{randomNum(-$rotate, $rotate)}deg)
+          translate(
+            #{randomNum(-$translate, $translate)}#{"%"},
+            #{randomNum(-$translate, $translate)}#{"%"}
+          );
+      }
+
+      @media screen and (min-width: map-get($breakpoints, "lg")) {
+        $rotate: $rotateBase * 1.5;
+        $translate: $translateBase * 1.5;
+
+        transform: rotate(#{randomNum(-$rotate, $rotate)}deg)
+          translate(
+            #{randomNum(-$translate, $translate)}#{"%"},
+            #{randomNum(-$translate, $translate)}#{"%"}
+          );
+      }
+    }
+  }
+}

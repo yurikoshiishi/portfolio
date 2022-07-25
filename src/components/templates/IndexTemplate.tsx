@@ -3,6 +3,7 @@ import { GAUNTLET_IMAGE_PATHS } from "@/components/Gauntlet";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import LoadingIcon from "@/components/icons/LoadingIcon";
+import StaticContent from "@/components/StaticContent";
 import { BASE_URL } from "@/constants";
 import { socialLinks } from "@/data";
 import { useFontLoaded } from "@/hooks/useFontLoaded";
@@ -44,7 +45,9 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
           </div>
         )}
       </div>
-      <Background iconNames={iconNames} />
+      <StaticContent>
+        <Background iconNames={iconNames} />
+      </StaticContent>
     </>
   );
 };
