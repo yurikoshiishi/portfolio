@@ -45,7 +45,12 @@ export const LanguageProvider: React.FC = ({ children }) => {
     const data = langStorage.get();
 
     if (!data) {
-      //TODO: detect lang
+      const browserLang = navigator?.languages[0] || navigator?.language;
+
+      if (isValidLang(browserLang)) {
+        setLang(browserLang);
+      }
+
       return;
     }
 
