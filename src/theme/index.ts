@@ -1,4 +1,4 @@
-export const googleFonts: string[] = ["Montserrat", "Noto Sans JP"];
+export const googleFonts: string[] = ["Montserrat"];
 
 export const breakpoints = {
   sm: "480px",
