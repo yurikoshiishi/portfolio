@@ -7,9 +7,9 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: [
-        "Montserrat",
-        "Noto Sans JP",
+        "system-ui",
         "-apple-system",
+        "BlinkMacSystemFont",
         "Helvetica Neue",
         "Arial",
         "Hiragino Kaku Gothic ProN",

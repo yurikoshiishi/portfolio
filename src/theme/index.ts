@@ -1,5 +1,3 @@
-export const googleFonts: string[] = ["Montserrat"];
-
 export const breakpoints = {
   sm: "480px",
   md: "768px",

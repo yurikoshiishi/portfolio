@@ -37,7 +37,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
             ></div>
             <h2
               className={joinClassNames(
-                "-tracking-wider font-semibold text-center flex items-end dark:text-gray-50 min-h-[40px] sm:min-h-[60px] md:min-h-[80px]",
+                "tracking-tight font-semibold text-center flex items-end dark:text-gray-50 min-h-[40px] sm:min-h-[60px] md:min-h-[80px]",
                 getHeadingFontSizeForLang(lang)
               )}
             >

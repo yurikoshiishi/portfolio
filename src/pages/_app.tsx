@@ -1,4 +1,3 @@
-import "@fontsource/montserrat";
 import "react-typist/dist/Typist.css";
 import "../styles/Background.scss";
 import "../styles/index.css";
