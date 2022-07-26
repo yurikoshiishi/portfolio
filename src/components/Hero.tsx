@@ -119,7 +119,12 @@ const Hero: VFC<HeroProps> = ({ links }) => {
               <div className="h-[40px] sm:h-[60px] md:h-[80px]" />
             )}
 
-            <p className="text-base sm:text-lg md:text-xl text-center text-gray-600 dark:text-gray-400">
+            <p
+              className={joinClassNames(
+                "text-base sm:text-lg md:text-xl text-center text-gray-600 dark:text-gray-400",
+                isLangSet ? "visible" : "invisible"
+              )}
+            >
               {t("hero.description")}
             </p>
             <div className="flex items-center justify-center gap-6">

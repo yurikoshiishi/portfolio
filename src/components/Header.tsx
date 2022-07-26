@@ -13,20 +13,22 @@ const langMap: { [key: string]: string } = {
 };
 
 const Header: React.VFC<HeaderProps> = () => {
-  const { lang, setLanguage } = useLanguage();
+  const { lang, setLanguage, isLangSet } = useLanguage();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <div className="max-w-7xl w-full px-4 h-16 py-4 z-10 relative">
       <div className="flex items-center justify-between">
-        <Menu
-          text={`Language: ${langMap[lang]}`}
-          buttonVariant="outline"
-          items={LANGUAGES.map((lang) => ({
-            text: langMap[lang],
-            onClick: () => setLanguage(lang),
-          }))}
-        />
+        <div className={isLangSet ? "visible" : "invisible"}>
+          <Menu
+            text={`Language: ${langMap[lang]}`}
+            buttonVariant="outline"
+            items={LANGUAGES.map((lang) => ({
+              text: langMap[lang],
+              onClick: () => setLanguage(lang),
+            }))}
+          />
+        </div>
         <Button onClick={toggleColorMode}>
           <span className="w-4 h-4">
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
