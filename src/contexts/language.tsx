@@ -15,12 +15,14 @@ type TranslationKey = DeepestPath<
 
 type LanguageValue = {
   lang: Lang;
+  isLangSet: boolean;
   setLanguage: (lang: Lang) => void;
   t: (key: TranslationKey) => string;
 };
 
 const LanguageContext = createContext<LanguageValue>({
   lang: "en",
+  isLangSet: false,
   setLanguage: () => {},
   t: () => "",
 });
@@ -36,6 +38,7 @@ function isValidLang(value: any): value is Lang {
 
 export const LanguageProvider: React.FC = ({ children }) => {
   const [lang, setLang] = useState<Lang>("en");
+  const [isLangSet, setIsLangSet] = useState<boolean>(false);
 
   useEffect(() => {
     if (!window.localStorage) {
@@ -49,13 +52,23 @@ export const LanguageProvider: React.FC = ({ children }) => {
 
       if (isValidLang(browserLang)) {
         setLang(browserLang);
+        setIsLangSet(true);
       }
 
       return;
     }
 
     setLang(data);
+    setIsLangSet(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const timeout = setTimeout(() => {
+      setIsLangSet(true);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   const setLanguage = (lang: Lang) => {
@@ -80,6 +93,7 @@ export const LanguageProvider: React.FC = ({ children }) => {
     <LanguageContext.Provider
       value={{
         lang,
+        isLangSet,
         setLanguage,
         t,
       }}
