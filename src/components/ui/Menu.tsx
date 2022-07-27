@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, VFC } from "react";
 
 interface MenuProps {
   buttonVariant?: ButtonProps<"button">["variant"];
-  text: string;
+  children: React.ReactNode;
   items: MenuItem[];
 }
 
@@ -15,7 +15,7 @@ type MenuItem = MenuItemAction & {
   text: string;
 };
 
-const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
+const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", children, items }) => {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -60,7 +60,7 @@ const Menu: VFC<MenuProps> = ({ buttonVariant = "solid", text, items }) => {
         onClick={onClickButton}
         rightIcon={<ChevronDownIcon />}
       >
-        {text}
+        {children}
       </Button>
       <div
         ref={menuRef}

@@ -5,6 +5,7 @@
   "dependencies": {
     "blip-js": "^1.0.3",
     "next": "^12.1.0",
+    "next-i18next": "^11.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.3.1",

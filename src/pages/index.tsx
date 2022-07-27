@@ -1,5 +1,6 @@
 import { iconNames } from "@/data";
-import { InferGetStaticPropsType } from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import IndexTemplate from "../components/templates/IndexTemplate";
 
 export default function Page(
@@ -8,10 +9,11 @@ export default function Page(
   return <IndexTemplate {...props} />;
 }
 
-export const getStaticProps = () => {
+export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
   return {
     props: {
       iconNames: shuffle(iconNames),
+      ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
     },
   };
 };

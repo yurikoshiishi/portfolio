@@ -3,3 +3,5 @@ export const BASE_URL =
   process.env.NODE_ENV === "production"
     ? "https://yurikoshiishi.com"
     : `http://localhost:${PORT}`;
+
+export const LANGUAGES = ["en", "ja"];
