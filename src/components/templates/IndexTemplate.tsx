@@ -1,4 +1,5 @@
 import Background from "@/components/Background";
+import { GAUNTLET_IMAGE_PATHS } from "@/components/Gauntlet";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import StaticContent from "@/components/StaticContent";
@@ -21,6 +22,7 @@ const IndexTemplate: React.VFC<IndexTemplateProps> = ({ iconNames }) => {
           content="Thank you for visiting Yuri Koshiishi Portfolio. Please feel free to contact me anytime."
         />
         <link rel="preload" href="/assets/avatar.jpg" as="image" />
+        <link rel="preload" href={GAUNTLET_IMAGE_PATHS.idle} as="image" />
         <link rel="canonical" href={`${BASE_URL}/`} />
       </Head>
       <div className="h-full relative z-[1]">

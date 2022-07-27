@@ -30,7 +30,7 @@ type GauntletProps = Omit<
 
 type GauntletType = "idle" | "snap" | "time";
 
-const GAUNTLET_IMAGE_PATHS: { [key in GauntletType]: string } = {
+export const GAUNTLET_IMAGE_PATHS: { [key in GauntletType]: string } = {
   idle: "/assets/snap/thanos_idle.png",
   snap: "/assets/snap/thanos_snap.png",
   time: "/assets/snap/thanos_time.png",
@@ -53,7 +53,7 @@ const Gauntlet: VFC<GauntletProps> = ({
   const [type, setType] = useState<GauntletType>("idle");
 
   useEffect(() => {
-    Object.values(GAUNTLET_IMAGE_PATHS).forEach((path) => {
+    [GAUNTLET_IMAGE_PATHS.snap, GAUNTLET_IMAGE_PATHS.time].forEach((path) => {
       const image = new Image();
       image.src = path;
     });
