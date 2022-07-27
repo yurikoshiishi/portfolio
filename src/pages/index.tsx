@@ -1,3 +1,4 @@
+import { LANGUAGES } from "@/constants";
 import { iconNames } from "@/data";
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -13,7 +14,9 @@ export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
   return {
     props: {
       iconNames: shuffle(iconNames),
-      ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
+      ...(locale
+        ? await serverSideTranslations(locale, ["common"], null, LANGUAGES)
+        : {}),
     },
   };
 };
