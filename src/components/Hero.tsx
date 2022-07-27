@@ -92,6 +92,7 @@ const Hero: VFC<HeroProps> = ({ links }) => {
                 t("hero.greeting")
               ) : (
                 <Typist
+                  key={language}
                   startDelay={200}
                   avgTypingDelay={avgTypingDelay}
                   cursor={{
