@@ -1,4 +1,10 @@
-import React, { AnimationEventHandler, HTMLProps, useState, VFC } from "react";
+import React, {
+  AnimationEventHandler,
+  HTMLProps,
+  useEffect,
+  useState,
+  VFC,
+} from "react";
 
 type GauntletProps = Omit<
   HTMLProps<HTMLDivElement>,
@@ -24,7 +30,7 @@ type GauntletProps = Omit<
 
 type GauntletType = "idle" | "snap" | "time";
 
-export const GAUNTLET_IMAGE_PATHS: { [key in GauntletType]: string } = {
+const GAUNTLET_IMAGE_PATHS: { [key in GauntletType]: string } = {
   idle: "/assets/snap/thanos_idle.png",
   snap: "/assets/snap/thanos_snap.png",
   time: "/assets/snap/thanos_time.png",
@@ -45,6 +51,13 @@ const Gauntlet: VFC<GauntletProps> = ({
   ...props
 }) => {
   const [type, setType] = useState<GauntletType>("idle");
+
+  useEffect(() => {
+    Object.values(GAUNTLET_IMAGE_PATHS).forEach((path) => {
+      const image = new Image();
+      image.src = path;
+    });
+  }, []);
 
   const handleClick = () => {
     let nextType: GauntletType = "idle";

@@ -43,7 +43,15 @@ const Hero: VFC<HeroProps> = ({ links }) => {
             <div
               className="snap-target rounded-full w-[150px] h-[150px] bg-no-repeat bg-cover bg-center"
               style={{ backgroundImage: "url(/assets/avatar.jpg)" }}
-            ></div>
+            >
+              <img
+                src="/assets/avatar.jpg"
+                alt="profile iamge"
+                //@ts-ignore
+                fetchpriority="high"
+                className="hidden"
+              />
+            </div>
             <h2
               className={joinClassNames(
                 "tracking-tight font-semibold text-center flex items-end dark:text-gray-50 min-h-[40px] sm:min-h-[60px] md:min-h-[80px]",
