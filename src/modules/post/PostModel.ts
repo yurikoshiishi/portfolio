@@ -53,3 +53,17 @@ export function createPost(entry: Entry<PostFields>): Post {
     mainImage: entry.fields.mainImage.fields,
   };
 }
+
+const LETTERS_PER_MINUTE = 500;
+
+export function getReadTimeInMinute(content: string) {
+  const sanitized = content
+    .replace(/[\s\n]/g, "") // remove spaces
+    .replace(/(<([^>]+)>)/gi, "") // remove html tags
+    .replace(
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi,
+      ""
+    ); // remove urls
+
+  return Math.round((sanitized.length ?? 0) / LETTERS_PER_MINUTE);
+}
