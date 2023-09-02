@@ -1,15 +1,16 @@
 import TechIconSprite from "@/components/icons/TechIconSprite";
+import { iconNames } from "@/data";
 import React, { VFC } from "react";
 
-interface BackgroundProps {
-  iconNames: string[];
-}
+interface BackgroundProps {}
 
-const Background: VFC<BackgroundProps> = ({ iconNames }) => {
+const shuffledIconNames = shuffle(iconNames);
+
+const Background: VFC<BackgroundProps> = () => {
   return (
     <div id="bg-container" className="fixed inset-0 flex flex-wrap z-[-1]">
       <TechIconSprite />
-      {iconNames.map((name, i) => {
+      {shuffledIconNames.map((name, i) => {
         return (
           <div
             className="w-1/4 md:w-1/5 h-1/5 md:h-1/4 flex items-center justify-center"
@@ -26,5 +27,25 @@ const Background: VFC<BackgroundProps> = ({ iconNames }) => {
     </div>
   );
 };
+
+function shuffle(array: any[]) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
 
 export default React.memo(Background);

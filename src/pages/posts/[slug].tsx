@@ -1,3 +1,6 @@
+import Background from "@/components/Background";
+import Header from "@/components/layouts/Header";
+import StaticContent from "@/components/StaticContent";
 import { formatISO } from "@/lib/date-helper";
 import { markdownToHtml } from "@/lib/markdown";
 import { getReadTimeInMinute, Post } from "@/modules/post/PostModel";
@@ -15,27 +18,33 @@ export default function Page({
   html,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div className="flex justify-center py-10 lg:py-20 w-full px-4">
-      <main className="max-w-full">
-        <article className="prose prose-slate lg:prose-lg dark:prose-invert">
-          <header>
-            <h1>{post.title}</h1>
-            <div className="flex gap-2 items-center">
-              <time dateTime={post.updatedAt || post.createdAt}>
-                {formatISO(post.updatedAt || post.createdAt)}
-              </time>
-              <span>-</span>
-              <span>{getReadTimeInMinute(post.content)} min read</span>
-            </div>
-          </header>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: html,
-            }}
-          />
-        </article>
-      </main>
-    </div>
+    <>
+      <Header />
+      <div className="flex justify-center py-10 lg:py-20 w-full px-4">
+        <main className="max-w-full">
+          <article className="prose prose-slate lg:prose-lg dark:prose-invert">
+            <header>
+              <h1>{post.title}</h1>
+              <div className="flex gap-2 items-center">
+                <time dateTime={post.updatedAt || post.createdAt}>
+                  {formatISO(post.updatedAt || post.createdAt)}
+                </time>
+                <span>-</span>
+                <span>{getReadTimeInMinute(post.content)} min read</span>
+              </div>
+            </header>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: html,
+              }}
+            />
+          </article>
+        </main>
+      </div>
+      <StaticContent>
+        <Background />
+      </StaticContent>
+    </>
   );
 }
 
@@ -75,6 +84,7 @@ export const getStaticProps = async ({
 
 export const getStaticPaths = async (): Promise<GetStaticPathsResult> => {
   const posts = await postRepository.getAll();
+  console.log(posts);
   return {
     paths: posts.map((post) => ({
       params: {
