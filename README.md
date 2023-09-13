@@ -1,5 +1,5 @@
 # Portfolio
 
-Portfolio website build with Next.js
+Portfolio website built with Vite, Pixi.js, Tailwind.
 
 [https://yurikoshiishi.com/](https://yurikoshiishi.com/)

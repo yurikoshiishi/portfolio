@@ -35,3 +35,5 @@ out
 .eslintcache
 
 tsconfig.tsbuildinfo
+
+dist
