@@ -1,0 +1,199 @@
+@mixin aspectRatio($width, $height) {
+  aspect-ratio: $width / $height;
+
+  @supports not (aspect-ratio: auto) {
+    position: relative;
+
+    &::before {
+      content: "";
+      float: left;
+      padding-top: calc(($height / $width) * 100%);
+    }
+    &::after {
+      content: "";
+      clear: both;
+      display: block;
+    }
+    > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #000000;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @supports (height: 100svh) {
+    height: 100svh;
+  }
+}
+
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.game-container {
+  @include aspectRatio(256, 224);
+
+  max-width: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (min-width: 640px) {
+    max-width: calc(640px * 0.8);
+  }
+  @media screen and (min-width: 640px) and (min-height: 560px) {
+    max-width: 640px;
+  }
+  @media screen and (min-width: 1024px) and (min-height: 560px) {
+    max-width: calc(1024px * 0.8);
+  }
+  @media screen and (min-width: 1024px) and (min-height: 896px) {
+    max-width: 1024px;
+  }
+  @media screen and (min-width: 1280px) and (min-height: 896px) {
+    max-width: calc(1280px * 0.8);
+  }
+  @media screen and (min-width: 1280px) and (min-height: 1120px) {
+    max-width: 1280px;
+  }
+}
+
+#game {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+html:not([data-touch-screen]) {
+  #game-controller {
+    display: none;
+  }
+}
+
+#game-controller {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  touch-action: none;
+
+  button.arrow {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-user-drag: none;
+
+    svg {
+      width: 30px;
+      height: 30px;
+      opacity: 0.6;
+      stroke: #fff;
+    }
+
+    &.pressed {
+      background-color: rgba(255, 255, 255, 0.1);
+
+      svg {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
+}
+
+.contact-header {
+  max-width: 1280px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contact-link-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .contact-link-item {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.16);
+    }
+  }
+}

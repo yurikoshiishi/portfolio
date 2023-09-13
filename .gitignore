@@ -33,3 +33,7 @@ data/assets
 out
 
 .eslintcache
+
+tsconfig.tsbuildinfo
+
+dist

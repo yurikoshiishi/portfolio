@@ -1,9 +1,0 @@
-{
-  "extends": ["next", "next/core-web-vitals"],
-  "plugins": ["unused-imports"],
-  "rules": {
-    "@next/next/no-img-element": 0,
-    "react/jsx-curly-brace-presence": "error",
-    "unused-imports/no-unused-imports": "error"
-  }
-}
