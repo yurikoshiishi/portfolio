@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const game = new Game({
     gameCanvas: document.querySelector("#game") as HTMLCanvasElement,
     backgroundCanvas: document.querySelector(
-      "#background"
+      "#background",
     ) as HTMLCanvasElement,
   });
 

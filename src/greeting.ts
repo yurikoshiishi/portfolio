@@ -20,7 +20,7 @@ export class Greeting extends Text {
         fontSize: 30,
         fontWeight: "400",
         fill: "#fff",
-      })
+      }),
     );
     this.game = game;
     this.technologyController = technologyController;

@@ -66,8 +66,8 @@ export class Technology extends Sprite {
           this.texture.frame.y +
             (rowIndex * this.texture.height) / EXPLOSION_GRID_COUNT_IN_LINE,
           this.texture.width / EXPLOSION_GRID_COUNT_IN_LINE,
-          this.texture.height / EXPLOSION_GRID_COUNT_IN_LINE
-        )
+          this.texture.height / EXPLOSION_GRID_COUNT_IN_LINE,
+        ),
       );
 
       const sprite = new Sprite(texture);

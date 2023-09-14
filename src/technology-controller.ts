@@ -53,7 +53,7 @@ export class TechnologyController {
     const columnWidth = this.size + this.spacing;
     const columnHeight = this.size + this.spacing;
     const numberOfRows = Math.floor(
-      NUMBER_OF_TECHNOLOGIES / this.numberOfColumn
+      NUMBER_OF_TECHNOLOGIES / this.numberOfColumn,
     );
     const rowWidth = this.numberOfColumn * columnWidth;
     const gridHeight = numberOfRows * columnHeight;
@@ -106,7 +106,7 @@ export class TechnologyController {
     const columnWidth = this.size + this.spacing;
     const columnHeight = this.size + this.spacing;
     const numberOfRows = Math.floor(
-      NUMBER_OF_TECHNOLOGIES / this.numberOfColumn
+      NUMBER_OF_TECHNOLOGIES / this.numberOfColumn,
     );
     const rowWidth = this.numberOfColumn * columnWidth;
     const gridHeight = numberOfRows * columnHeight;
@@ -161,7 +161,7 @@ export class TechnologyController {
 
           return map;
         },
-        {}
+        {},
       ),
     });
 

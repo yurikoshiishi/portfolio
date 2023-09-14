@@ -45,7 +45,7 @@ export class BulletController {
 
   collideWith(entity: Entity) {
     const bulletThatHitSpriteIndex = this.bullets.findIndex((bullet) =>
-      bullet.collideWith(entity)
+      bullet.collideWith(entity),
     );
 
     if (bulletThatHitSpriteIndex >= 0) {
