@@ -4,6 +4,7 @@ import { Background } from "./background";
 import { BulletController } from "./bullet-controller";
 import { Greeting } from "./greeting";
 import { Player } from "./player";
+import { StartMessage } from "./start-message";
 import { TechnologyController } from "./technology-controller";
 
 export type Device = "mobile" | "tablet" | "desktop" | "largeDesktop";
@@ -55,6 +56,8 @@ export class Game {
   player: Player | null;
   technologyController: TechnologyController | null;
   greeting: Greeting | null;
+  startMessage: StartMessage | null;
+  isKeyPressed: boolean;
   isFinished: boolean;
 
   constructor({ gameCanvas, backgroundCanvas }: GameProps) {
@@ -68,6 +71,8 @@ export class Game {
     this.player = null;
     this.technologyController = null;
     this.greeting = null;
+    this.startMessage = null;
+    this.isKeyPressed = false;
     this.isFinished = false;
     this.app = new Application({
       backgroundAlpha: 0,
@@ -118,6 +123,25 @@ export class Game {
       fontFace: assets.font.pressStart2p,
     });
     this.app.stage.addChild(this.greeting);
+
+    // TODO: refactor touch screen checking
+    if (!this.player.touchController.hasTouchScreen()) {
+      this.startMessage = new StartMessage({
+        game: this,
+        technologyController: this.technologyController,
+        fontFace: assets.font.pressStart2p,
+      });
+      this.app.stage.addChild(this.startMessage);
+
+      const waitForKeyPress = () => {
+        if (this.isKeyPressed) {
+          this.startMessage?.hideAndDestroy();
+          this.app.ticker.remove(waitForKeyPress);
+          this.startMessage = null;
+        }
+      };
+      this.app.ticker.add(waitForKeyPress);
+    }
   }
 
   finish() {
@@ -170,6 +194,13 @@ export class Game {
     this.player?.onDeviceChange();
     this.technologyController?.onDeviceChange();
     this.greeting?.onDeviceChange();
+
+    if (this.startMessage && this.player?.touchController.hasTouchScreen()) {
+      this.app.stage.removeChild(this.startMessage);
+      this.startMessage = null;
+    } else {
+      this.startMessage?.onDeviceChange();
+    }
   }
 }
 

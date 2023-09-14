@@ -101,6 +101,7 @@ export class Player extends Sprite {
   }
 
   onTouchStart = (direction: Direction) => {
+    this.game.isKeyPressed = true;
     // auto shoot in mobile devices
     this.autoShoot = true;
 
@@ -130,6 +131,8 @@ export class Player extends Sprite {
   };
 
   keydown = (event: KeyboardEvent) => {
+    this.game.isKeyPressed = true;
+
     if (event.code == "ArrowRight") {
       this.rightPressed = true;
     }
