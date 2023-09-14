@@ -131,15 +131,16 @@ export class Player extends Sprite {
   };
 
   keydown = (event: KeyboardEvent) => {
-    this.game.isKeyPressed = true;
-
     if (event.code == "ArrowRight") {
+      this.game.isKeyPressed = true;
       this.rightPressed = true;
     }
     if (event.code == "ArrowLeft") {
+      this.game.isKeyPressed = true;
       this.leftPressed = true;
     }
     if (event.code == "Space") {
+      this.game.isKeyPressed = true;
       this.shootPressed = true;
     }
   };
