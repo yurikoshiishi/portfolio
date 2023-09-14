@@ -12,7 +12,7 @@
     "pixi.js": "^7.2.4"
   },
   "devDependencies": {
-    "prettier": "^2.5.1",
+    "prettier": "^3.0.3",
     "sass": "1.32",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
