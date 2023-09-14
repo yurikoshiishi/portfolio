@@ -34,7 +34,7 @@ export class Background {
         x: (xPercent / 100) * this.game.backgroundApp.screen.width,
         y: Math.random() * this.game.backgroundApp.screen.height,
         xPercent,
-        velocityY: Math.max(0.05, Math.random() / 3),
+        velocityY: Math.max(0.05, Math.random() / 5),
         alpha: Math.random() + 0.3,
       });
 
@@ -73,7 +73,7 @@ export class Background {
           x: (xPercent / 100) * this.game.backgroundApp.screen.width,
           y: Math.random() * this.game.backgroundApp.screen.height,
           xPercent,
-          velocityY: Math.max(0.05, Math.random() / 3),
+          velocityY: Math.max(0.05, Math.random() / 5),
           alpha: Math.random() + 0.3,
         });
 
@@ -84,7 +84,7 @@ export class Background {
     } else if (this.stars.length > this.numberOfStars) {
       const starsToRemove = this.stars.splice(
         this.numberOfStars,
-        this.numberOfStars
+        this.numberOfStars,
       );
 
       starsToRemove.forEach((star) => {
