@@ -86,18 +86,11 @@ export class Technology extends Sprite {
     let speed = 0.1;
     let alpha = 1;
 
-    this.app.ticker.add(() => {
+    const explode = () => {
       speed += 0.02;
       alpha -= Math.random() * 0.01;
       sprites.forEach((sprite, i) => {
-        const global = sprite.getGlobalPosition(undefined, true);
-        if (
-          global.x < 0 ||
-          global.x > this.app.screen.width ||
-          global.y < 0 ||
-          global.y > this.app.screen.height ||
-          alpha < 0
-        ) {
+        if (alpha <= 0) {
           sprite.destroy();
           sprites.splice(i, 1);
           return;
@@ -106,7 +99,14 @@ export class Technology extends Sprite {
         sprite.y += speed * Math.random() * (Math.random() < 0.5 ? -1 : 1);
         sprite.alpha = alpha;
       });
-    });
+
+      if (!sprites.length) {
+        this.app.ticker.remove(explode);
+        container.destroy();
+      }
+    };
+
+    this.app.ticker.add(explode);
 
     this.destroy();
   }
