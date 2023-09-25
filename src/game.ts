@@ -41,6 +41,8 @@ const GAME_SIZES: Record<Device, { width: number; height: number }> = {
   },
 };
 
+const FPS = 60;
+
 type GameProps = {
   gameCanvas: HTMLCanvasElement;
   backgroundCanvas: HTMLCanvasElement;
@@ -88,6 +90,9 @@ export class Game {
       resizeTo: window,
       autoDensity: true,
     });
+    this.app.ticker.maxFPS = FPS;
+    this.backgroundApp.ticker.maxFPS = FPS;
+
     this.background = new Background({ game: this });
 
     // TODO: show loading
