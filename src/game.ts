@@ -90,7 +90,9 @@ export class Game {
       resizeTo: window,
       autoDensity: true,
     });
+    this.app.ticker.minFPS = FPS;
     this.app.ticker.maxFPS = FPS;
+    this.backgroundApp.ticker.minFPS = FPS;
     this.backgroundApp.ticker.maxFPS = FPS;
 
     this.background = new Background({ game: this });
