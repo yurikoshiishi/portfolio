@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yurikoshiishi.com/sitemap.xml
