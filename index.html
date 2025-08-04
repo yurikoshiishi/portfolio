@@ -3,123 +3,192 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="dark" name="color-scheme" />
-    <meta name="theme-color" content="#000000" />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.json" />
-    <title>Yuri Koshiishi | Portfolio</title>
-    <meta
-      name="description"
-      content="Thank you for visiting Yuri Koshiishi Portfolio. Please feel free to contact me anytime."
-    />
-    <link rel="preload" href="fonts/PressStart2P-Regular.ttf" as="font" />
-    <link rel="preload" href="assets/spaceship.png" as="image" />
-    <link rel="preload" href="assets/spritesheet.png" as="image" />
-    <link rel="stylesheet" href="src/style.scss" />
-    <script defer type="module" src="/src/main.ts"></script>
+    <title>Yuri Koshiishi - Web Developer</title>
+    <style>
+      @import "./src/style.css";
+    </style>
   </head>
   <body>
-    <div id="app">
-      <header class="contact-header">
-        <div class="contact-link-group">
-          <a
-            class="contact-link-item"
-            href="https://github.com/yurikoshiishi"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="link to github"
-            ><svg
-              stroke="currentColor"
-              fill="currentColor"
-              stroke-width="0"
-              viewBox="0 0 1024 1024"
-              height="24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9a127.5 127.5 0 0 1 38.1 91v112.5c.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z"
-              ></path>
-            </svg>
-          </a>
-          <a
-            class="contact-link-item"
-            href="https://linkedin.com/in/yurikoshiishi"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="link to linkedin"
-            ><svg
-              stroke="currentColor"
-              fill="currentColor"
-              stroke-width="0"
-              viewBox="0 0 1024 1024"
-              height="24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zM349.3 793.7H230.6V411.9h118.7v381.8zm-59.3-434a68.8 68.8 0 1 1 68.8-68.8c-.1 38-30.9 68.8-68.8 68.8zm503.7 434H675.1V608c0-44.3-.8-101.2-61.7-101.2-61.7 0-71.2 48.2-71.2 98v188.9H423.7V411.9h113.8v52.2h1.6c15.8-30 54.5-61.7 112.3-61.7 120.2 0 142.3 79.1 142.3 181.9v209.4z"
-              ></path>
-            </svg>
-          </a>
-          <a
-            class="contact-link-item"
-            href="mailto:yuri.koshiishi@gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="link to email"
-            ><svg
-              stroke="currentColor"
-              fill="none"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              height="24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-              ></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-          </a>
-        </div>
-      </header>
-      <canvas id="background" role="presentation"></canvas>
-      <div class="game-container">
-        <canvas
-          id="game"
-          role="img"
-          aria-label="Interactive game showcasing Yuri Koshiishi's programming skills."
-        >
-          <div class="js-disabled">
-            <h2>
-              Interactive skill showcase of Yuri Koshiishi,<br />
-              featuring expertise in:
-            </h2>
-            <ul>
-              <li>
-                Web Frontend: HTML, CSS, JavaScript, TypeScript, React, Next.js,
-                Redux, Material UI, Tailwind CSS, Sass
-              </li>
-              <li>Mobile: React Native, Dart, Flutter</li>
-              <li>Backend: Node.js, Express</li>
-              <li>Database: PostgreSQL, SQLite, Firebase Firestore</li>
-              <li>Tooling: Jest, Webpack, Docker</li>
-              <li>Others: Git, Bash, GitHub</li>
-            </ul>
-            <p>
-              <i
-                >This interactive game requires a browser with canvas
-                support.</i
-              >
+    <div class="max-w-container mx-auto py-5xl px-lg">
+      <main class="stack gap-3xl">
+        <!-- Bio Section -->
+        <section>
+          <h1 class="heading-lg mb-sm">Yuri Koshiishi</h1>
+          <p class="text-sm font-medium text-tertiary mb-lg">
+            Web Developer & Producer
+          </p>
+          <p class="body-lg">
+            <ruby lang="ja">東京<rp>(</rp><rt>Tokyo</rt><rp>)</rp></ruby>-based
+            developer who enjoys building things - web, mobile apps, whatever
+            needs building. Always learning something new.
+          </p>
+        </section>
+
+        <!-- About Section -->
+        <section>
+          <div class="flex items-center gap-lg mb-xl sm:gap-md">
+            <span class="badge">01</span>
+            <h2 class="overline-md">About</h2>
+          </div>
+          <div class="stack gap-lg">
+            <p class="body">
+              I build digital solutions that solve real pain points - whether
+              that's creating smoother user experiences, optimizing performance,
+              or just making complex workflows simpler for people to navigate.
+              There's something satisfying about writing code that actually does
+              what you want it to do.
+            </p>
+            <p class="body">
+              Most of my work is frontend-focused, where the details really
+              matter. Clean, maintainable code is non-negotiable, but so is
+              getting the UX right - those small interactions and transitions
+              that make an app feel polished rather than clunky. I also enjoy
+              diving into mobile development when projects call for it.
             </p>
           </div>
-        </canvas>
-      </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section>
+          <div class="flex items-center gap-lg mb-xl sm:gap-md">
+            <span class="badge">02</span>
+            <h2 class="overline-md">Technologies</h2>
+          </div>
+          <div class="flex flex-wrap gap-sm">
+            <span class="tag">JavaScript</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">React Native</span>
+            <span class="tag">Expo</span>
+            <span class="tag">Sass</span>
+            <span class="tag">Tailwind</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">Fastify</span>
+            <span class="tag">Express</span>
+            <span class="tag">Jest</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Webpack</span>
+            <span class="tag">Vite</span>
+            <span class="tag">Git</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Adobe Analytics</span>
+            <span class="tag">Adobe Target</span>
+          </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section>
+          <div class="flex items-center gap-lg mb-xl sm:gap-md">
+            <span class="badge">03</span>
+            <h2 class="overline-md">Experience</h2>
+          </div>
+          <div class="stack gap-xl">
+            <div class="relative pl-lg border-l-2 border-subtle">
+              <div class="mb-lg">
+                <h3
+                  class="text-base font-semibold text-primary mb-sm md:text-base"
+                >
+                  Web Producer
+                </h3>
+                <div class="text-base font-medium text-tertiary mb-xs">
+                  Adobe, Tokyo Japan
+                </div>
+                <div class="text-sm text-muted">2022 - Present</div>
+              </div>
+              <p class="body">
+                Implement A/B testing and personalization experiences on
+                adobe.com using JavaScript, HTML, and CSS. Develop internal
+                tools that automate workflows for web producers and product
+                managers.
+              </p>
+            </div>
+            <div class="relative pl-lg border-l-2 border-subtle">
+              <div class="mb-lg">
+                <h3
+                  class="text-base font-semibold text-primary mb-sm md:text-base"
+                >
+                  Web Developer
+                </h3>
+                <div class="text-base font-medium text-tertiary mb-xs">
+                  Freelance, Tokyo Japan
+                </div>
+                <div class="text-sm text-muted">2020 - 2022</div>
+              </div>
+              <p class="body">
+                Built web applications using React and serverless architectures.
+                Developed a media site and its content management system with
+                Next.js and Firebase. Led migration from Gulp to Webpack.
+              </p>
+            </div>
+            <div class="relative pl-lg border-l-2 border-subtle">
+              <div class="mb-lg">
+                <h3
+                  class="text-base font-semibold text-primary mb-sm md:text-base"
+                >
+                  E-Commerce Specialist
+                </h3>
+                <div class="text-base font-medium text-tertiary mb-xs">
+                  Dome Corporation, Tokyo Japan
+                </div>
+                <div class="text-sm text-muted">2018 - 2020</div>
+              </div>
+              <p class="body">
+                Optimized e-commerce user experiences through A/B testing and
+                conversion rate improvements. Developed custom landing pages and
+                campaign implementations using Adobe Target, HTML, CSS, and
+                JavaScript.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section>
+          <div class="flex items-center gap-lg mb-xl sm:gap-md">
+            <span class="badge">04</span>
+            <h2 class="overline-md">Connect</h2>
+          </div>
+          <div class="stack gap-lg">
+            <p class="body">
+              Feel free to reach out if you want to talk about projects, share
+              ideas, or just say hi.
+            </p>
+            <div class="flex gap-md">
+              <a href="mailto:hello@yurikoshiishi.com" class="link text-base">
+                Email
+              </a>
+              <a
+                href="https://www.linkedin.com/in/yurikoshiishi"
+                class="link text-base"
+                target="_blank"
+                rel="noopener"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://github.com/yurikoshiishi"
+                class="link text-base"
+                target="_blank"
+                rel="noopener"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
+    <footer class="border-t">
+      <div class="max-w-container mx-auto py-md px-lg">
+        <p class="text-sm text-muted">
+          Built with care in Tokyo. &copy; Yuri Koshiishi.
+        </p>
+      </div>
+    </footer>
+    <script>
+      console.log("tom is a genius");
+    </script>
   </body>
 </html>
