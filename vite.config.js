@@ -35,6 +35,7 @@ export default defineConfig({
               normalizeWhitespace: true,
               minifySelectors: true,
               minifyParams: true,
+              normalizeTimingFunctions: false,
             },
           ],
         }),
