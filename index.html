@@ -2,194 +2,387 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yuri Koshiishi - Web Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yuri Koshiishi — Web Developer, Tokyo</title>
     <meta
       name="description"
-      content="Tokyo-based developer who enjoys building things."
+      content="Yuri Koshiishi — building things on the web, in Tokyo."
     />
     <style>
-      @import "./src/style.css";
+      :root {
+        --bg: oklch(0.165 0.006 50);
+        --fg: oklch(0.905 0.012 75);
+        --fg-dim: oklch(0.66 0.01 60);
+        --fg-faint: oklch(0.46 0.008 50);
+        --line: color-mix(in oklab, var(--fg) 13%, transparent);
+        --accent: oklch(0.63 0.15 27);
+
+        --sans:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+          "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        --mono:
+          ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo,
+          Consolas, monospace;
+        --jp: "Hiragino Mincho ProN", "Yu Mincho", "MS Mincho", serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--sans);
+        line-height: 1.5;
+        min-height: 100svh;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ::selection {
+        background: color-mix(in oklab, var(--accent) 70%, black);
+        color: var(--fg);
+      }
+
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 9;
+        pointer-events: none;
+        opacity: 0.03;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      .tokyo-bg {
+        position: fixed;
+        right: clamp(-14px, -1vw, 0px);
+        bottom: clamp(-18px, -2vh, -6px);
+        z-index: 0;
+        font-family: var(--jp);
+        font-size: clamp(140px, 30vw, 360px);
+        line-height: 0.8;
+        color: transparent;
+        -webkit-text-stroke: 1px color-mix(in oklab, var(--fg) 6%, transparent);
+        pointer-events: none;
+        user-select: none;
+        letter-spacing: 0.02em;
+      }
+
+      .page {
+        position: relative;
+        z-index: 2;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 640px;
+        padding: clamp(64px, 12vh, 140px) clamp(24px, 6vw, 40px);
+        margin: 0 auto;
+      }
+
+      .sep {
+        opacity: 0.5;
+      }
+
+      /* ---------- intro fade ---------- */
+      .up {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes up {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ---------- header ---------- */
+      .name {
+        font-size: clamp(28px, 5vw, 40px);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+      .name .dot {
+        color: var(--accent);
+      }
+
+      .meta {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--fg-faint);
+      }
+      .meta .role {
+        color: var(--fg-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+      .meta .clock {
+        font-variant-numeric: tabular-nums;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .meta .clock .pulse {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        position: relative;
+        flex: none;
+      }
+      .meta .clock .pulse::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 1px solid var(--accent);
+        animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+      @keyframes ping {
+        0% {
+          transform: scale(0.6);
+          opacity: 0.7;
+        }
+        80%,
+        100% {
+          transform: scale(2.4);
+          opacity: 0;
+        }
+      }
+      .meta .clock .jc {
+        color: var(--accent);
+      }
+
+      /* ---------- intro prose ---------- */
+      .intro {
+        margin-top: clamp(34px, 6vh, 56px);
+        max-width: 46ch;
+        font-size: clamp(16px, 2vw, 18px);
+        line-height: 1.72;
+        color: var(--fg-dim);
+      }
+      .intro strong {
+        color: var(--fg);
+        font-weight: 500;
+      }
+      .intro ruby {
+        font-family: var(--jp);
+        color: var(--fg);
+        ruby-position: over;
+        ruby-align: center;
+      }
+      .intro ruby rt {
+        font-family: var(--mono);
+        font-size: 0.52em;
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: 0.04em;
+        color: var(--fg-dim);
+        transform: translateY(1px);
+      }
+
+      /* ---------- links ---------- */
+      .links {
+        margin-top: clamp(40px, 7vh, 64px);
+        display: flex;
+        flex-direction: column;
+      }
+      .links .lbl {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--fg-faint);
+        margin-bottom: 18px;
+      }
+      .row {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        padding: 13px 0;
+        border-top: 1px solid var(--line);
+      }
+      .row:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .row .arrow {
+        font-family: var(--mono);
+        color: var(--fg-faint);
+        transition:
+          color 0.35s ease,
+          transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        flex: none;
+      }
+      .row .nm {
+        font-size: 16px;
+        font-weight: 500;
+        position: relative;
+      }
+      .row .nm::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        height: 1px;
+        width: 100%;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .row .url {
+        margin-left: auto;
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.02em;
+        color: var(--fg-faint);
+        transition: color 0.35s ease;
+      }
+      .row:hover .nm {
+        color: var(--accent);
+      }
+      .row:hover .nm::after {
+        transform: scaleX(1);
+      }
+      .row:hover .arrow {
+        color: var(--accent);
+        transform: translate(2px, -2px);
+      }
+      .row:hover .url {
+        color: var(--fg-dim);
+      }
+
+      /* ---------- footer ---------- */
+      footer {
+        margin-top: clamp(48px, 9vh, 90px);
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--fg-faint);
+      }
+
+      @media (max-width: 560px) {
+        .row .url {
+          display: none;
+        }
+        .meta {
+          gap: 10px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+        }
+        .up {
+          opacity: 1;
+          transform: none;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="max-w-container mx-auto py-5xl px-lg">
-      <main class="stack gap-3xl">
-        <!-- Bio Section -->
-        <section>
-          <h1 class="heading-lg mb-sm">Yuri Koshiishi</h1>
-          <p class="text-sm font-medium text-tertiary mb-lg">
-            Web Developer & Producer
-          </p>
-          <p class="body-lg">
-            <ruby lang="ja">東京<rp>(</rp><rt>Tokyo</rt><rp>)</rp></ruby>-based
-            developer who enjoys building things - web, mobile apps, whatever
-            needs building. Always learning something new.
-          </p>
-        </section>
+    <div class="grain"></div>
+    <div class="tokyo-bg" aria-hidden="true">東京</div>
 
-        <!-- About Section -->
-        <section>
-          <div class="flex items-center gap-lg mb-xl sm:gap-md">
-            <span class="badge">01</span>
-            <h2 class="overline-md">About</h2>
-          </div>
-          <div class="stack gap-lg">
-            <p class="body">
-              I build software that solves real pain points, whether that's
-              creating smoother user experiences, optimizing performance, or
-              just making complex workflows simpler for people to navigate.
-            </p>
-            <p class="body">
-              I spend a lot of time on the frontend work where user experience
-              really matters, but I work across the full stack when needed. I
-              care about writing maintainable code and getting the details right
-              so interfaces feel intuitive. I also enjoy diving into mobile
-              development when projects call for it.
-            </p>
-          </div>
-        </section>
+    <main class="page" data-screen-label="Home">
+      <h1 class="name up" style="animation-delay: 0.05s">
+        Yuri Koshiishi<span class="dot">.</span>
+      </h1>
 
-        <!-- Skills Section -->
-        <section>
-          <div class="flex items-center gap-lg mb-xl sm:gap-md">
-            <span class="badge">02</span>
-            <h2 class="overline-md">Technologies</h2>
-          </div>
-          <div class="flex flex-wrap gap-sm">
-            <span class="tag">JavaScript</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">React</span>
-            <span class="tag">Next.js</span>
-            <span class="tag">React Native</span>
-            <span class="tag">Expo</span>
-            <span class="tag">Sass</span>
-            <span class="tag">Tailwind</span>
-            <span class="tag">Node.js</span>
-            <span class="tag">Fastify</span>
-            <span class="tag">Express</span>
-            <span class="tag">Jest</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">Firebase</span>
-            <span class="tag">Webpack</span>
-            <span class="tag">Vite</span>
-            <span class="tag">Git</span>
-            <span class="tag">Figma</span>
-            <span class="tag">Adobe Analytics</span>
-            <span class="tag">Adobe Target</span>
-          </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section>
-          <div class="flex items-center gap-lg mb-xl sm:gap-md">
-            <span class="badge">03</span>
-            <h2 class="overline-md">Experience</h2>
-          </div>
-          <div class="stack gap-xl">
-            <div class="relative pl-lg border-l-2 border-subtle">
-              <div class="mb-lg">
-                <h3
-                  class="text-base font-semibold text-primary mb-sm md:text-base"
-                >
-                  Web Producer
-                </h3>
-                <div class="text-base font-medium text-tertiary mb-xs">
-                  Adobe, Tokyo Japan
-                </div>
-                <div class="text-sm text-muted">2022 - Present</div>
-              </div>
-              <p class="body">
-                Implement A/B testing and personalization experiences on
-                adobe.com using JavaScript, HTML, and CSS. Develop internal
-                tools that automate workflows for web producers and product
-                managers.
-              </p>
-            </div>
-            <div class="relative pl-lg border-l-2 border-subtle">
-              <div class="mb-lg">
-                <h3
-                  class="text-base font-semibold text-primary mb-sm md:text-base"
-                >
-                  Web Developer
-                </h3>
-                <div class="text-base font-medium text-tertiary mb-xs">
-                  Freelance, Tokyo Japan
-                </div>
-                <div class="text-sm text-muted">2020 - 2022</div>
-              </div>
-              <p class="body">
-                Built web applications using React and serverless architectures.
-                Developed a media site and its content management system with
-                Next.js and Firebase. Led migration from Gulp to Webpack.
-              </p>
-            </div>
-            <div class="relative pl-lg border-l-2 border-subtle">
-              <div class="mb-lg">
-                <h3
-                  class="text-base font-semibold text-primary mb-sm md:text-base"
-                >
-                  E-Commerce Specialist
-                </h3>
-                <div class="text-base font-medium text-tertiary mb-xs">
-                  Dome Corporation, Tokyo Japan
-                </div>
-                <div class="text-sm text-muted">2018 - 2020</div>
-              </div>
-              <p class="body">
-                Optimized e-commerce user experiences through A/B testing and
-                conversion rate improvements. Developed custom landing pages and
-                campaign implementations using Adobe Target, HTML, CSS, and
-                JavaScript.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section>
-          <div class="flex items-center gap-lg mb-xl sm:gap-md">
-            <span class="badge">04</span>
-            <h2 class="overline-md">Connect</h2>
-          </div>
-          <div class="stack gap-lg">
-            <p class="body">
-              Feel free to reach out if you want to talk about projects, share
-              ideas, or just say hi.
-            </p>
-            <div class="flex gap-md">
-              <a href="mailto:hello@yurikoshiishi.com" class="link text-base">
-                Email
-              </a>
-              <a
-                href="https://www.linkedin.com/in/yurikoshiishi"
-                class="link text-base"
-                target="_blank"
-                rel="noopener"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="https://github.com/yurikoshiishi"
-                class="link text-base"
-                target="_blank"
-                rel="noopener"
-              >
-                GitHub
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-    <footer class="border-t">
-      <div class="max-w-container mx-auto py-md px-lg">
-        <p class="text-sm text-muted">
-          Built with care in Tokyo. &copy; Yuri Koshiishi.
-        </p>
+      <div class="meta up" style="animation-delay: 0.13s">
+        <span class="role">Web Developer</span>
+        <span class="sep">/</span>
+        <span class="clock"
+          ><span class="pulse"></span><span id="time">--:--</span>
+          <span class="jc">JST</span></span
+        >
       </div>
-    </footer>
+
+      <p class="intro up" style="animation-delay: 0.22s">
+        I'm a developer based in <ruby>東京<rt>Tokyo</rt></ruby> who likes
+        making things: websites, apps, little tools, whatever an idea needs. I
+        care about <strong>the details you feel but never notice</strong>, and
+        I'm always poking at something new. Building, exploring, learning as I
+        go.
+      </p>
+
+      <nav class="links up" style="animation-delay: 0.32s">
+        <div class="lbl">Elsewhere</div>
+        <a
+          class="row"
+          href="https://github.com/yurikoshiishi"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="arrow">↗</span><span class="nm">GitHub</span
+          ><span class="url">github.com/yurikoshiishi</span>
+        </a>
+        <a
+          class="row"
+          href="https://www.linkedin.com/in/yurikoshiishi/"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="arrow">↗</span><span class="nm">LinkedIn</span
+          ><span class="url">in/yurikoshiishi</span>
+        </a>
+        <a class="row" href="mailto:hello@yurikoshiishi.com">
+          <span class="arrow">↗</span><span class="nm">Email</span
+          ><span class="url">say hello</span>
+        </a>
+      </nav>
+
+      <footer class="up" style="animation-delay: 0.42s">
+        <span>Built quietly in Tokyo</span>
+        <span class="sep">·</span>
+        <span>&copy; <span id="year"></span></span>
+      </footer>
+    </main>
+
     <script>
+      (function () {
+        const yearEl = document.getElementById("year");
+        yearEl.textContent = new Date().getFullYear();
+
+        const timeEl = document.getElementById("time");
+
+        function jst() {
+          const now = new Date();
+          const t = new Date(
+            now.getTime() + now.getTimezoneOffset() * 60000 + 9 * 3600000,
+          );
+
+          timeEl.textContent = pad(t.getHours()) + ":" + pad(t.getMinutes());
+        }
+
+        function pad(n) {
+          return (n < 10 ? "0" : "") + n;
+        }
+
+        jst();
+        setInterval(jst, 1000 * 20);
+      })();
+
       console.log("tom is a genius");
     </script>
   </body>
