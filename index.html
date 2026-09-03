@@ -2,28 +2,183 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>Yuri Koshiishi — Web Developer, Tokyo</title>
     <meta
       name="description"
       content="Tokyo-based developer who enjoys building things."
     />
     <style>
-      :root {
-        --bg: oklch(0.165 0.006 50);
-        --fg: oklch(0.905 0.012 75);
-        --fg-dim: oklch(0.66 0.01 60);
-        --fg-faint: oklch(0.46 0.008 50);
-        --line: color-mix(in oklab, var(--fg) 13%, transparent);
-        --accent: oklch(0.63 0.15 27);
+      /* ============================================================
+         Copperplate Gothic Std — the two cuts the card is set in.
+         "AB" optical size, 30 (Regular) and 31 (Bold).
+         ============================================================ */
+      @font-face {
+        font-family: "Copperplate Gothic Std";
+        src: url("/fonts/Copperplate-Gothic-Std-30-AB.woff") format("woff");
+        font-weight: 400;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Copperplate Gothic Std";
+        src: url("/fonts/Copperplate-Gothic-Std-31-AB.woff") format("woff");
+        font-weight: 700;
+        font-style: normal;
+        font-display: block;
+      }
 
-        --sans:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
-          "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-        --mono:
-          ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo,
-          Consolas, monospace;
-        --jp: "Hiragino Mincho ProN", "Yu Mincho", "MS Mincho", serif;
+      :root {
+        /* ---- the room. One shape, two grounds, chosen by the device.
+               A flat ground with the faintest sweep to a slightly deeper
+               tone at the edges — the way a lit cyclorama falls off. That
+               is the whole room. No light source in the field, no colour
+               story, nothing to read.
+               LIGHT is the default and the one the card is designed for.
+               True white where it counts: the field immediately around the
+               card is #fff, so the stock's warmth is finally legible as the
+               thing Bateman is talking about — against a dark ground an
+               off-white just reads as white. Flat #fff edge to edge reads
+               as an unstyled page; the sweep is what makes it a lit
+               surface instead.
+               DARK is the same room with the lamps down. Neutral, and
+               deliberately so: an earlier pass built the film's actual set
+               out of a cool key and mahogany panelling, and a room with a
+               colour story in it competes with the object standing in it.
+               The stock never changes with the theme. The card is the
+               card. ---- */
+        --room: #fff;
+        --room-sweep: #efedea;
+
+        /* The radii are set so the falloff lands inside the viewport. */
+        --room-layers: radial-gradient(
+          64% 54% at 50% 43%,
+          var(--room) 0%,
+          var(--room) 52%,
+          color-mix(in oklab, var(--room-sweep) 30%, var(--room)) 78%,
+          color-mix(in oklab, var(--room-sweep) 70%, var(--room)) 92%,
+          var(--room-sweep) 100%
+        );
+
+        /* The cast shadow. Its strength is a property of the room, not of
+           the card: the same shadow that reads as a soft drop on near-black
+           is an opaque slab on white. Pure black is the giveaway — a real
+           studio shadow on white paper is a warm grey. The blur radii are
+           fractions of the card width, read by the script on resize. */
+        --sh-ink: 34 29 25;
+        --sh-amb: 0.08;
+        --sh-core: 0.035;
+        --sh-amb-blur: 0.008;
+        --sh-core-blur: 0.004;
+
+        /* Grain. Overlay against a white backdrop is a no-op — it returns
+           white — so a white room needs it to darken instead. */
+        --grain-blend: multiply;
+        --grain-op: 0.017;
+
+        /* ---- the stock. Tone taken from the film frame rather than the
+               letterpress photograph: bright, smooth, faintly warm — the
+               warmth measured, not felt. The film card sits at a chroma of
+               roughly 0.01 and dead neutral in hue; this one is held near
+               0.005 in oklch so it reads off-white and not cream. Every
+               light and shade that lands on it below is neutral, because
+               a warm tint multiplied through the stock filter and the
+               shade layer compounds into orange. ---- */
+        --paper: #f6f4ef;
+        --ink: #3a352f; /* warm charcoal, well short of black */
+        --edge-back: #cbc8c2;
+        --edge-front: #fcfbf8;
+
+        /* ---- card geometry ---- */
+        /* US proportions, presented at about twice a real card so the
+           type can be read at arm's length from the screen. */
+        --gutter-x: max(
+          clamp(18px, 4vw, 28px),
+          env(safe-area-inset-left, 0px),
+          env(safe-area-inset-right, 0px)
+        );
+        --cw: min(
+          calc(100vw - var(--gutter-x) - var(--gutter-x)),
+          7in,
+          calc((100svh - 96px) * 1.75)
+        );
+        --ch: calc(var(--cw) / 1.75);
+        --th: calc(var(--cw) * 0.008); /* "the tasteful thickness of it" */
+
+        /* ---- font metrics (re-measured at runtime for the real face) ---- */
+        --capr: 0.728; /* cap height / em, regular */
+        --capr-b: 0.728; /* cap height / em, bold    */
+        --bo: 0.728; /* line-box top -> baseline, em, regular */
+        --bo-b: 0.728; /* line-box top -> baseline, em, bold    */
+
+        /* ---- light + tilt ----
+               Everything below is rewritten by the script on .stage, not
+               here, so a turn of the card invalidates the stage subtree
+               and nothing else. --lx/--ly are settled once at load because
+               changing the face gradient angle would repaint the whole card. */
+        --rx: 0deg;
+        --ry: 0deg;
+        --lx: -0.35; /* light direction, card-local, unit-ish */
+        --ly: -0.94;
+        --ox: -0.22; /* hotspot offset from centre, in card widths/heights */
+        --oy: -0.32;
+        --eb-t: 1.12;
+        --eb-b: 0.72;
+        --eb-l: 1.05;
+        --eb-r: 0.78;
+        --wm: 0; /* watermark reveal, 0 at rest, 1 when turned */
+
+        /* ---- Type. --cap and --bl are fractions of the card height: cap
+               height and baseline, both solved against tmp/ref-replica-1.png
+               so the blocks sit exactly where the prop's do. --tr is
+               tracking in em, set by eye for this card's own words. ---- */
+        --cap-email: 0.03498;
+        --bl-email: 0.12197;
+        --tr-email: 0.012;
+
+        --cap-firm: 0.0406;
+        --bl-firm: 0.13326;
+        --tr-firm: -0.006;
+
+        --cap-dept: 0.02932;
+        --bl-dept: 0.17861;
+        --tr-dept: 0.01;
+
+        --cap-name: 0.04259;
+        --bl-name: 0.49037;
+        --tr-name: -0.086;
+
+        --cap-title: 0.03385;
+        --bl-title: 0.55354;
+        --tr-title: -0.09;
+
+        --cap-addr: 0.03165;
+        --bl-addr: 0.86411;
+        --tr-addr: -0.018;
+
+        --cap-link: 0.03189;
+        --bl-link: 0.91438;
+        --tr-link: 0.018;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --room: #1e1e1e;
+          --room-sweep: #0d0d0d;
+
+          /* deeper and tighter than on white, and it can afford to be black */
+          --sh-ink: 0 0 0;
+          --sh-amb: 0.16;
+          --sh-core: 0.07;
+          --sh-amb-blur: 0.006;
+          --sh-core-blur: 0.003;
+
+          --grain-blend: overlay;
+          --grain-op: 0.026;
+        }
       }
 
       * {
@@ -34,24 +189,33 @@
       html {
         -webkit-text-size-adjust: 100%;
       }
+      .filter-defs {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
 
       body {
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        line-height: 1.5;
         min-height: 100svh;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
+        background: var(--room);
+        color: var(--paper);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        overflow: hidden;
       }
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      ::selection {
-        background: color-mix(in oklab, var(--accent) 70%, black);
-        color: var(--fg);
+      /* ============================================================
+         The room
+         ============================================================ */
+      .room {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        isolation: isolate;
+        background: var(--room-layers);
       }
 
       .grain {
@@ -59,331 +223,1194 @@
         inset: 0;
         z-index: 9;
         pointer-events: none;
-        opacity: 0.03;
-        mix-blend-mode: overlay;
+        /* overlay against a white backdrop is a no-op — it returns white —
+           so on a white room the grain has to darken instead. */
+        opacity: var(--grain-op);
+        mix-blend-mode: var(--grain-blend);
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       }
-      .tokyo-bg {
-        position: fixed;
-        right: clamp(-14px, -1vw, 0px);
-        bottom: clamp(-18px, -2vh, -6px);
-        z-index: 0;
-        font-family: var(--jp);
-        font-size: clamp(140px, 30vw, 360px);
-        line-height: 0.8;
-        color: transparent;
-        -webkit-text-stroke: 1px color-mix(in oklab, var(--fg) 6%, transparent);
-        pointer-events: none;
-        user-select: none;
-        letter-spacing: 0.02em;
-      }
 
-      .page {
+      /* ============================================================
+         Stage / card geometry
+         ============================================================ */
+      .stage {
         position: relative;
         z-index: 2;
-        min-height: 100svh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        max-width: 640px;
-        padding: clamp(64px, 12vh, 140px) clamp(24px, 6vw, 40px);
-        margin: 0 auto;
+        perspective: calc(var(--cw) * 1.55);
+        perspective-origin: 50% 48%;
       }
 
-      .sep {
-        opacity: 0.5;
+      .shadow-plane {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: visible;
+        pointer-events: none;
+        animation: shadow-rise 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
+      }
+      .shadow {
+        fill: rgb(var(--sh-ink));
+        shape-rendering: geometricPrecision;
+        transform-origin: center;
+        transform-box: fill-box;
+      }
+      .shadow-amb .shadow {
+        fill-opacity: var(--sh-amb-sample, 0);
+      }
+      .shadow-core .shadow {
+        fill-opacity: var(--sh-core);
       }
 
-      /* ---------- intro fade ---------- */
-      .up {
-        opacity: 0;
-        transform: translateY(12px);
-        animation: up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      .rise {
+        position: relative;
+        z-index: 1;
+        transform-style: preserve-3d;
+        animation: rise 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
       }
-      @keyframes up {
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translate3d(0, 4%, 0) scale(0.985);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes shadow-rise {
+        from {
+          opacity: 0;
+          transform: translateY(4%) scale(0.985);
+        }
         to {
           opacity: 1;
           transform: none;
         }
       }
 
-      /* ---------- header ---------- */
-      .name {
-        font-size: clamp(28px, 5vw, 40px);
-        font-weight: 600;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-      }
-      .name .dot {
-        color: var(--accent);
-      }
-
-      .meta {
-        margin-top: 12px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-        font-family: var(--mono);
-        font-size: 12px;
-        letter-spacing: 0.04em;
-        color: var(--fg-faint);
-      }
-      .meta .role {
-        color: var(--fg-dim);
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-      }
-      .meta .clock {
-        font-variant-numeric: tabular-nums;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .meta .clock .pulse {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--accent);
+      .card {
         position: relative;
-        flex: none;
-      }
-      .meta .clock .pulse::after {
-        content: "";
-        position: absolute;
-        inset: -4px;
-        border-radius: 50%;
-        border: 1px solid var(--accent);
-        animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-      }
-      @keyframes ping {
-        0% {
-          transform: scale(0.6);
-          opacity: 0.7;
-        }
-        80%,
-        100% {
-          transform: scale(2.4);
-          opacity: 0;
-        }
-      }
-      .meta .clock .jc {
-        color: var(--accent);
+        width: var(--cw);
+        height: var(--ch);
+        transform-style: preserve-3d;
+        transform: rotateX(var(--rx)) rotateY(var(--ry));
+        /* it is a printed object, not a document */
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        /* Keep one-finger card control while returning two-finger pinch zoom
+           to the browser. Safari cancels the pointer stream for the pinch. */
+        touch-action: pinch-zoom;
+        will-change: transform;
       }
 
-      /* ---------- intro prose ---------- */
-      .intro {
-        margin-top: clamp(34px, 6vh, 56px);
-        max-width: 46ch;
-        font-size: clamp(16px, 2vw, 18px);
-        line-height: 1.72;
-        color: var(--fg-dim);
-      }
-      .intro strong {
-        color: var(--fg);
-        font-weight: 500;
-      }
-      .intro ruby {
-        font-family: var(--jp);
-        color: var(--fg);
-        ruby-position: over;
-        ruby-align: center;
-      }
-      .intro ruby rt {
-        font-family: var(--mono);
-        font-size: 0.52em;
-        font-weight: 400;
-        line-height: 1.2;
-        letter-spacing: 0.04em;
-        color: var(--fg-dim);
-        transform: translateY(1px);
+      /* ---- the six faces of a real slab ---- */
+      .face,
+      .back,
+      .edge {
+        position: absolute;
+        backface-visibility: hidden;
       }
 
-      /* ---------- links ---------- */
-      .links {
-        margin-top: clamp(40px, 7vh, 64px);
-        display: flex;
-        flex-direction: column;
+      .face,
+      .back {
+        inset: 0;
+        background: var(--paper);
       }
-      .links .lbl {
-        font-family: var(--mono);
-        font-size: 11px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--fg-faint);
-        margin-bottom: 18px;
+      .face {
+        transform: translateZ(calc(var(--th) / 2));
+        overflow: hidden;
+        background: linear-gradient(
+          calc(atan2(var(--ly), var(--lx)) * 1rad + 90deg),
+          #f9f7f2 0%,
+          var(--paper) 50%,
+          #f0eee9 100%
+        );
       }
-      .row {
-        display: flex;
-        align-items: baseline;
-        gap: 16px;
-        padding: 13px 0;
-        border-top: 1px solid var(--line);
+      .back {
+        transform: translateZ(calc(var(--th) / -2)) rotateY(180deg);
+        background: color-mix(in srgb, var(--paper) 84%, #000);
       }
-      .row:last-child {
-        border-bottom: 1px solid var(--line);
-      }
-      .row .arrow {
-        font-family: var(--mono);
-        color: var(--fg-faint);
-        transition:
-          color 0.35s ease,
-          transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        flex: none;
-      }
-      .row .nm {
-        font-size: 16px;
-        font-weight: 500;
-        position: relative;
-      }
-      .row .nm::after {
-        content: "";
-        position: absolute;
+
+      /* Each edge folds forward out of the back plane, so the face that
+         survives backface culling is the one pointing outward. The cut is
+         the same stock as the front; only the light on it differs. */
+      .edge-t {
         left: 0;
-        bottom: -2px;
-        height: 1px;
+        top: 0;
         width: 100%;
-        background: var(--accent);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        height: var(--th);
+        transform-origin: 50% 0%;
+        transform: translateZ(calc(var(--th) / -2)) rotateX(90deg);
+        background: linear-gradient(
+          to bottom,
+          var(--edge-back) 0%,
+          color-mix(in srgb, var(--edge-front) 55%, var(--edge-back)) 42%,
+          var(--edge-front)
+        );
+        filter: brightness(var(--eb-t));
       }
-      .row .url {
-        margin-left: auto;
-        font-family: var(--mono);
-        font-size: 12px;
-        letter-spacing: 0.02em;
-        color: var(--fg-faint);
-        transition: color 0.35s ease;
+      .edge-b {
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: var(--th);
+        transform-origin: 50% 100%;
+        transform: translateZ(calc(var(--th) / -2)) rotateX(-90deg);
+        background: linear-gradient(
+          to top,
+          var(--edge-back) 0%,
+          color-mix(in srgb, var(--edge-front) 40%, var(--edge-back)) 50%,
+          var(--edge-front)
+        );
+        filter: brightness(var(--eb-b));
       }
-      .row:hover .nm {
-        color: var(--accent);
+      .edge-l {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: var(--th);
+        transform-origin: 0% 50%;
+        transform: translateZ(calc(var(--th) / -2)) rotateY(-90deg);
+        background: linear-gradient(
+          to right,
+          var(--edge-back) 0%,
+          color-mix(in srgb, var(--edge-front) 50%, var(--edge-back)) 45%,
+          var(--edge-front)
+        );
+        filter: brightness(var(--eb-l));
       }
-      .row:hover .nm::after {
-        transform: scaleX(1);
-      }
-      .row:hover .arrow {
-        color: var(--accent);
-        transform: translate(2px, -2px);
-      }
-      .row:hover .url {
-        color: var(--fg-dim);
+      .edge-r {
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: var(--th);
+        transform-origin: 100% 50%;
+        transform: translateZ(calc(var(--th) / -2)) rotateY(90deg);
+        background: linear-gradient(
+          to left,
+          var(--edge-back) 0%,
+          color-mix(in srgb, var(--edge-front) 50%, var(--edge-back)) 45%,
+          var(--edge-front)
+        );
+        filter: brightness(var(--eb-r));
       }
 
-      /* ---------- footer ---------- */
-      footer {
-        margin-top: clamp(48px, 9vh, 90px);
-        font-family: var(--mono);
-        font-size: 11px;
-        letter-spacing: 0.08em;
-        color: var(--fg-faint);
+      /* ============================================================
+         The stock. A flat fill with a faint noise overlay still reads
+         as a rectangle. The cotton is a height map, lit with the same
+         distant light as the type, and a multiply falloff actually
+         shades the face (soft-light on cream does almost nothing).
+         ============================================================ */
+      .layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
       }
 
-      @media (max-width: 560px) {
-        .row .url {
-          display: none;
-        }
-        .meta {
-          gap: 10px;
-        }
+      .stock {
+        background: var(--paper);
+        filter: url(#stock);
       }
+
+      .fibre {
+        z-index: 1;
+        opacity: calc(0.12 + 0.18 * var(--wm));
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02 0.014' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.55' intercept='0.22'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='720' height='720' filter='url(%23f)'/%3E%3C/svg%3E");
+        background-size: calc(var(--cw) * 1.15) calc(var(--cw) * 1.15);
+      }
+
+      /* The moving light. Each of these is an oversized ellipse pinned to
+         the centre of the card and slid about by transform alone. Moving
+         a gradient's centre re-paints the whole face every frame; moving
+         the layer that holds it does not touch paint at all. The sizes are
+         twice the old gradient radii, so the falloff is unchanged. */
+      .lt {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        pointer-events: none;
+        will-change: transform;
+        transform: translate3d(
+          calc(var(--ox) * var(--cw)),
+          calc(var(--oy) * var(--ch)),
+          0
+        );
+      }
+      .lt.inv {
+        transform: translate3d(
+          calc(var(--ox) * -1 * var(--cw)),
+          calc(var(--oy) * -1 * var(--ch)),
+          0
+        );
+      }
+
+      .sheen {
+        z-index: 1;
+        width: calc(var(--cw) * 1.56);
+        height: calc(var(--ch) * 2);
+        margin: calc(var(--ch) * -1) 0 0 calc(var(--cw) * -0.78);
+        background: radial-gradient(
+          closest-side at 50% 50%,
+          rgba(255, 255, 255, 0.38),
+          rgba(255, 255, 255, 0) 68%
+        );
+        mix-blend-mode: overlay;
+      }
+      /* Held light on purpose. Measured on a blank card against the #fff
+         room: at 0.1 this multiply took the stock from L 0.967 down to
+         0.92-0.94 in oklch, five to eight points under the room, and the
+         off-white read as light grey. At 0.04 the card sits about four
+         points under the room and reads as paper again. */
+      .shade {
+        z-index: 1;
+        width: calc(var(--cw) * 1.84);
+        height: calc(var(--ch) * 2.24);
+        margin: calc(var(--ch) * -1.12) 0 0 calc(var(--cw) * -0.92);
+        background: radial-gradient(
+          closest-side at 50% 50%,
+          rgba(56, 55, 54, 0.04),
+          rgba(56, 55, 54, 0) 74%
+        );
+        mix-blend-mode: multiply;
+      }
+      .gloss {
+        z-index: 3;
+        width: calc(var(--cw) * 1.28);
+        height: calc(var(--ch) * 1.76);
+        margin: calc(var(--ch) * -0.88) 0 0 calc(var(--cw) * -0.64);
+        background: radial-gradient(
+          closest-side at 50% 50%,
+          rgba(255, 255, 255, 0.18),
+          rgba(255, 255, 255, 0) 60%
+        );
+        mix-blend-mode: overlay;
+      }
+      /* A card's thickness does not darken a broad band of its face. Only
+         the microscopic roll at the cut catches a highlight on the side
+         toward the light and a hairline seam on the opposite side. These
+         strips stay narrow and only their opacity changes while turning. */
+      .rim {
+        --rim-size: max(1px, calc(var(--cw) * 0.0018));
+        z-index: 5;
+        position: absolute;
+        pointer-events: none;
+      }
+      .rim-t,
+      .rim-b {
+        left: 0;
+        width: 100%;
+        height: var(--rim-size);
+      }
+      .rim-l,
+      .rim-r {
+        top: 0;
+        width: var(--rim-size);
+        height: 100%;
+      }
+      .rim-t {
+        top: 0;
+        background:
+          linear-gradient(
+            to bottom,
+            rgb(255 255 255 / calc(0.16 * var(--rim-t-hi, 0))),
+            transparent
+          ),
+          linear-gradient(
+            to bottom,
+            rgb(47 44 41 / calc(0.1 * var(--rim-t-lo, 0))),
+            transparent
+          );
+      }
+      .rim-b {
+        bottom: 0;
+        background:
+          linear-gradient(
+            to top,
+            rgb(255 255 255 / calc(0.16 * var(--rim-b-hi, 0))),
+            transparent
+          ),
+          linear-gradient(
+            to top,
+            rgb(47 44 41 / calc(0.1 * var(--rim-b-lo, 0))),
+            transparent
+          );
+      }
+      .rim-l {
+        left: 0;
+        background:
+          linear-gradient(
+            to right,
+            rgb(255 255 255 / calc(0.16 * var(--rim-l-hi, 0))),
+            transparent
+          ),
+          linear-gradient(
+            to right,
+            rgb(47 44 41 / calc(0.1 * var(--rim-l-lo, 0))),
+            transparent
+          );
+      }
+      .rim-r {
+        right: 0;
+        background:
+          linear-gradient(
+            to left,
+            rgb(255 255 255 / calc(0.16 * var(--rim-r-hi, 0))),
+            transparent
+          ),
+          linear-gradient(
+            to left,
+            rgb(47 44 41 / calc(0.1 * var(--rim-r-lo, 0))),
+            transparent
+          );
+      }
+
+      /* ============================================================
+         The impression. CSS text-shadow can only fall around a glyph,
+         which reads as type hovering. So the punch is an SVG lighting
+         graph: the letter's alpha is a height map, surfaceScale is
+         negative (a well, not a bump), and every light is clipped back
+         to the glyph so nothing lands on the paper.
+         ============================================================ */
+      .type {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        mix-blend-mode: multiply;
+        filter: url(#press);
+      }
+
+      .l {
+        position: absolute;
+        margin: 0;
+        line-height: 1;
+        white-space: nowrap;
+        font-family: "Copperplate Gothic Std", Copperplate, serif;
+        font-weight: 400;
+        font-style: normal;
+        color: var(--ink);
+        top: calc(var(--bl) * var(--ch) - var(--bo) * 1em);
+        font-size: calc(var(--cap) / var(--capr) * var(--ch));
+        letter-spacing: calc(var(--tr) * 1em);
+      }
+      .l.b {
+        font-weight: 700;
+        top: calc(var(--bl) * var(--ch) - var(--bo-b) * 1em);
+        font-size: calc(var(--cap) / var(--capr-b) * var(--ch));
+      }
+
+      .l-left {
+        left: 6.15%;
+      }
+      .l-right {
+        right: calc(6% - var(--tr) * 1em);
+      }
+      .l-mid {
+        left: 50%;
+        transform: translateX(calc(-50% - var(--tr) * 0.5em));
+      }
+
+      .l-email {
+        --cap: var(--cap-email);
+        --bl: var(--bl-email);
+        --tr: var(--tr-email);
+      }
+      .l-firm {
+        --cap: var(--cap-firm);
+        --bl: var(--bl-firm);
+        --tr: var(--tr-firm);
+      }
+      .l-dept {
+        --cap: var(--cap-dept);
+        --bl: var(--bl-dept);
+        --tr: var(--tr-dept);
+      }
+      .l-name {
+        --cap: var(--cap-name);
+        --bl: var(--bl-name);
+        --tr: var(--tr-name);
+      }
+      .l-title {
+        --cap: var(--cap-title);
+        --bl: var(--bl-title);
+        --tr: var(--tr-title);
+      }
+      .l-addr {
+        --cap: var(--cap-addr);
+        --bl: var(--bl-addr);
+        --tr: var(--tr-addr);
+      }
+      .l-link {
+        --cap: var(--cap-link);
+        --bl: var(--bl-link);
+        --tr: var(--tr-link);
+      }
+
+      /* Nothing on the card may look like a web link. */
+      .l a {
+        color: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .l a:focus {
+        outline: none;
+      }
+      .l a:focus-visible {
+        outline: 1px solid rgba(58, 53, 47, 0.55);
+        outline-offset: 0.15em;
+        border-radius: 1px;
+      }
+
       @media (prefers-reduced-motion: reduce) {
-        *,
-        *::after {
-          animation-duration: 0.001ms !important;
-          animation-iteration-count: 1 !important;
-        }
-        .up {
-          opacity: 1;
-          transform: none;
+        .rise,
+        .shadow-plane {
+          animation: none;
         }
       }
     </style>
   </head>
   <body>
-    <div class="grain"></div>
-    <div class="tokyo-bg" aria-hidden="true">東京</div>
-
-    <main class="page" data-screen-label="Home">
-      <h1 class="name up" style="animation-delay: 0.05s">
-        Yuri Koshiishi<span class="dot">.</span>
-      </h1>
-
-      <div class="meta up" style="animation-delay: 0.13s">
-        <span class="role">Web Developer</span>
-        <span class="sep">/</span>
-        <span class="clock"
-          ><span class="pulse"></span><span id="time">--:--</span>
-          <span class="jc">JST</span></span
+    <svg class="filter-defs" aria-hidden="true">
+      <filter
+        id="press"
+        x="-3%"
+        y="-3%"
+        width="106%"
+        height="106%"
+        color-interpolation-filters="sRGB"
+      >
+        <!-- The lights below are the room light resolved into card space
+             at the resting pose. They used to be rewritten every frame,
+             which re-ran this whole graph — and the turbulence chain in
+             #stock — on each one. -->
+        <!-- ink gain: a hair of spread into the fibres -->
+        <feMorphology
+          operator="dilate"
+          radius="0.35"
+          in="SourceAlpha"
+          result="gain"
+        />
+        <!-- height map of the punch -->
+        <feGaussianBlur in="gain" stdDeviation="0.55" result="h" />
+        <!-- negative scale = a well, not a bump -->
+        <feDiffuseLighting
+          in="h"
+          surfaceScale="-1.7"
+          diffuseConstant="0.92"
+          lighting-color="#ffffff"
+          result="d"
         >
+          <feDistantLight id="pressD" azimuth="256.9" elevation="69.1" />
+        </feDiffuseLighting>
+        <feSpecularLighting
+          in="h"
+          surfaceScale="-1.7"
+          specularConstant="0.38"
+          specularExponent="22"
+          lighting-color="#fffefb"
+          result="s"
+        >
+          <feDistantLight id="pressS" azimuth="256.9" elevation="69.1" />
+        </feSpecularLighting>
+        <feComposite in="s" in2="gain" operator="in" result="s2" />
+        <feComposite
+          in="SourceGraphic"
+          in2="d"
+          operator="arithmetic"
+          k1="0.42"
+          k2="0.64"
+          k3="0"
+          k4="0"
+          result="lit"
+        />
+        <!-- clip: no light on the paper around the letter -->
+        <feComposite in="lit" in2="gain" operator="in" result="ink" />
+        <feComposite
+          in="ink"
+          in2="s2"
+          operator="arithmetic"
+          k1="0"
+          k2="1"
+          k3="0.38"
+          k4="0"
+        />
+      </filter>
+      <!-- The tooth. baseFrequency is deliberately far above the pixel grid.
+           Noise landing near one cycle per two device pixels beats against
+           the grid and the beat, not the noise, is what the eye sees: broad
+           irregular clumps, ボコボコ. Pushed well past that the aliasing
+           decorrelates into an even grain instead. Measured on a flat card,
+           blank stock, normalised to 1400px wide: dropping the frequency to
+           0.3 put 0.25% local contrast into the 6-12px band and it read as
+           plaster; at 1.7 the same band holds 0.07% while the tooth itself
+           keeps 0.94%. Low-passing the height map before lighting it is the
+           wrong instinct and measures worse (0.17%) — it takes away the
+           tooth and leaves the clumps. -->
+      <filter
+        id="stock"
+        x="0%"
+        y="0%"
+        width="100%"
+        height="100%"
+        color-interpolation-filters="sRGB"
+      >
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="1.7"
+          numOctaves="3"
+          seed="3"
+          result="fine"
+        />
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.016 0.010"
+          numOctaves="3"
+          seed="9"
+          result="flock"
+        />
+        <feBlend in="fine" in2="flock" mode="multiply" result="n" />
+        <feColorMatrix in="n" type="luminanceToAlpha" result="h" />
+        <feDiffuseLighting
+          in="h"
+          surfaceScale="0.9"
+          diffuseConstant="1"
+          lighting-color="#ffffff"
+          result="lit"
+        >
+          <feDistantLight id="stockD" azimuth="256.9" elevation="69.1" />
+        </feDiffuseLighting>
+        <feFlood flood-color="#f6f4ef" result="paper" />
+        <feBlend in="paper" in2="lit" mode="multiply" result="toned" />
+        <feComposite
+          in="toned"
+          in2="lit"
+          operator="arithmetic"
+          k1="0.25"
+          k2="0.85"
+          k3="0"
+          k4="0"
+        />
+      </filter>
+    </svg>
+
+    <div class="room">
+      <div class="stage" id="stage">
+        <svg
+          class="shadow-plane shadow-amb"
+          aria-hidden="true"
+          filter="url(#shadow-amb-filter)"
+        >
+          <defs>
+            <filter
+              id="shadow-amb-filter"
+              x="-30%"
+              y="-55%"
+              width="160%"
+              height="210%"
+              color-interpolation-filters="sRGB"
+            >
+              <feGaussianBlur
+                id="shadow-amb-blur"
+                in="SourceGraphic"
+                stdDeviation="24"
+              />
+            </filter>
+          </defs>
+          <g id="shadow-amb-samples">
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+            <polygon class="shadow"></polygon>
+          </g>
+        </svg>
+        <svg
+          class="shadow-plane shadow-core"
+          aria-hidden="true"
+          filter="url(#shadow-core-filter)"
+        >
+          <defs>
+            <filter
+              id="shadow-core-filter"
+              x="-30%"
+              y="-55%"
+              width="160%"
+              height="210%"
+              color-interpolation-filters="sRGB"
+            >
+              <feGaussianBlur
+                id="shadow-core-blur"
+                in="SourceGraphic"
+                stdDeviation="7"
+              />
+            </filter>
+          </defs>
+          <polygon class="shadow" id="shadow-core"></polygon>
+        </svg>
+
+        <div class="rise">
+          <article class="card" id="card" aria-label="Business card">
+            <div class="back" aria-hidden="true"></div>
+            <div class="edge edge-t" aria-hidden="true"></div>
+            <div class="edge edge-b" aria-hidden="true"></div>
+            <div class="edge edge-l" aria-hidden="true"></div>
+            <div class="edge edge-r" aria-hidden="true"></div>
+
+            <div class="face">
+              <div class="layer stock" aria-hidden="true"></div>
+              <div class="layer fibre" aria-hidden="true"></div>
+              <div class="lt sheen" aria-hidden="true"></div>
+              <div class="lt inv shade" aria-hidden="true"></div>
+
+              <div class="type">
+                <p class="l l-email l-left">
+                  <a href="mailto:hello@yurikoshiishi.com">YURIKOSHIISHI.COM</a>
+                </p>
+                <p class="l l-firm l-right">KOSHIISHI &amp; CO.</p>
+                <p class="l l-dept l-right">Software and Aquisitions</p>
+                <h1 class="l b l-name l-mid">Yuri KOSHIISHI</h1>
+                <p class="l b l-title l-mid">Vice President</p>
+                <p class="l l-addr l-mid">TOKYO, JAPAN 100-0000</p>
+                <p class="l l-link l-mid">
+                  <a
+                    href="https://www.linkedin.com/in/yurikoshiishi/"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="LinkedIn: yurikoshiishi"
+                    >LINKEDIN YURIKOSHIISHI</a
+                  >
+                </p>
+              </div>
+
+              <div class="lt gloss" aria-hidden="true"></div>
+              <div class="rim rim-t" aria-hidden="true"></div>
+              <div class="rim rim-b" aria-hidden="true"></div>
+              <div class="rim rim-l" aria-hidden="true"></div>
+              <div class="rim rim-r" aria-hidden="true"></div>
+            </div>
+          </article>
+        </div>
       </div>
+    </div>
 
-      <p class="intro up" style="animation-delay: 0.22s">
-        I'm a developer based in <ruby>東京<rt>Tokyo</rt></ruby> who likes
-        making things: websites, apps, little tools, whatever an idea needs. I
-        care about <strong>the details you feel but never notice</strong>, and
-        I'm always poking at something new. Building, exploring, learning as I
-        go.
-      </p>
-
-      <nav class="links up" style="animation-delay: 0.32s">
-        <div class="lbl">Elsewhere</div>
-        <a
-          class="row"
-          href="https://github.com/yurikoshiishi"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="arrow">↗</span><span class="nm">GitHub</span
-          ><span class="url">github.com/yurikoshiishi</span>
-        </a>
-        <a
-          class="row"
-          href="https://www.linkedin.com/in/yurikoshiishi/"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="arrow">↗</span><span class="nm">LinkedIn</span
-          ><span class="url">in/yurikoshiishi</span>
-        </a>
-        <a class="row" href="mailto:hello@yurikoshiishi.com">
-          <span class="arrow">↗</span><span class="nm">Email</span
-          ><span class="url">say hello</span>
-        </a>
-      </nav>
-
-      <footer class="up" style="animation-delay: 0.42s">
-        <span>Built quietly in Tokyo</span>
-        <span class="sep">·</span>
-        <span>&copy; <span id="year"></span></span>
-      </footer>
-    </main>
+    <div class="grain" aria-hidden="true"></div>
 
     <script>
       (function () {
-        const yearEl = document.getElementById("year");
-        yearEl.textContent = new Date().getFullYear();
+        var root = document.documentElement;
+        var stage = document.getElementById("stage");
+        var card = document.getElementById("card");
+        var shadowAmbSamples = document.querySelectorAll(
+          "#shadow-amb-samples .shadow",
+        );
+        var shadowCore = document.getElementById("shadow-core");
+        var shadowAmbBlur = document.getElementById("shadow-amb-blur");
+        var shadowCoreBlur = document.getElementById("shadow-core-blur");
+        var sStyle = stage.style;
+        var mReduce = matchMedia("(prefers-reduced-motion: reduce)");
 
-        const timeEl = document.getElementById("time");
+        function clamp(v, a, b) {
+          return v < a ? a : v > b ? b : v;
+        }
+        function norm3(x, y, z) {
+          var n = Math.sqrt(x * x + y * y + z * z) || 1;
+          return [x / n, y / n, z / n];
+        }
+        function dot(u, v) {
+          return u[0] * v[0] + u[1] * v[1] + u[2] * v[2];
+        }
+        function cross(u, v) {
+          return [
+            u[1] * v[2] - u[2] * v[1],
+            u[2] * v[0] - u[0] * v[2],
+            u[0] * v[1] - u[1] * v[0],
+          ];
+        }
 
-        function jst() {
-          const now = new Date();
-          const t = new Date(
-            now.getTime() + now.getTimezoneOffset() * 60000 + 9 * 3600000,
+        /* Every driven value goes through here. The custom properties land
+           on .stage rather than :root, so a turn of the card invalidates
+           the stage subtree instead of the whole document, and a value that
+           has not moved since the last frame never touches style at all. */
+        var wrote = Object.create(null);
+        function set(name, value) {
+          if (wrote[name] !== value) {
+            wrote[name] = value;
+            sStyle.setProperty(name, value);
+          }
+        }
+
+        /* ------------------------------------------------------------
+           Font metrics. The layout is anchored on baselines and cap
+           heights, so ask the browser what the loaded face actually is
+           instead of trusting the numbers baked into the stylesheet.
+           ------------------------------------------------------------ */
+        function faceMetrics(weight) {
+          var ctx = document.createElement("canvas").getContext("2d");
+          ctx.font =
+            weight + ' 1000px "Copperplate Gothic Std", Copperplate, serif';
+          var m = ctx.measureText("H");
+          var a = m.fontBoundingBoxAscent;
+          var d = m.fontBoundingBoxDescent;
+          var cap = m.actualBoundingBoxAscent;
+          if (!isFinite(a) || !isFinite(d) || !isFinite(cap)) return null;
+          return { bo: ((1000 - (a + d)) / 2 + a) / 1000, cap: cap / 1000 };
+        }
+
+        function applyMetrics() {
+          try {
+            var r = faceMetrics(400);
+            var b = faceMetrics(700);
+            if (r && r.cap > 0.45 && r.cap < 0.95) {
+              root.style.setProperty("--capr", r.cap.toFixed(4));
+              root.style.setProperty("--bo", r.bo.toFixed(4));
+            }
+            if (b && b.cap > 0.45 && b.cap < 0.95) {
+              root.style.setProperty("--capr-b", b.cap.toFixed(4));
+              root.style.setProperty("--bo-b", b.bo.toFixed(4));
+            }
+          } catch (e) {}
+          matchFirmBlock();
+          measure();
+        }
+
+        /* keep the firm name and department a clean rectangle */
+        function matchFirmBlock() {
+          var firm = document.querySelector(".l-firm");
+          var dept = document.querySelector(".l-dept");
+          if (!firm || !dept) return;
+          var target = firm.getBoundingClientRect().width;
+          if (!target) return;
+          var lo = -0.08,
+            hi = 0.18;
+          for (var i = 0; i < 16; i++) {
+            var mid = (lo + hi) / 2;
+            dept.style.setProperty("--tr", mid.toFixed(4));
+            var w = dept.getBoundingClientRect().width;
+            if (w < target) lo = mid;
+            else hi = mid;
+          }
+          dept.style.setProperty("--tr", ((lo + hi) / 2).toFixed(4));
+        }
+
+        if (document.fonts && document.fonts.ready)
+          document.fonts.ready.then(applyMetrics);
+        else applyMetrics();
+
+        /* ------------------------------------------------------------
+           Light. Fixed in the room, a little above and to the left.
+           The cut edges, the hotspot on the stock and the cast shadow are
+           all derived from it each frame. The impression filter and the
+           face gradient are not: an SVG lighting graph re-runs its whole
+           turbulence chain when a light attribute changes, and changing the
+           gradient angle repaints the entire face. Those are settled once at
+           the resting pose; the narrow front rim remains live.
+           ------------------------------------------------------------ */
+        /* A large studio source, high and to the left. A frontal z component
+           keeps a physically clear card close enough for the shadow to stay
+           under it instead of being thrown halfway across the room. */
+        var LIGHT_AZ = (240 * Math.PI) / 180;
+        var LIGHT_EL = (68 * Math.PI) / 180;
+        var L = norm3(
+          Math.cos(LIGHT_EL) * Math.cos(LIGHT_AZ),
+          Math.cos(LIGHT_EL) * Math.sin(LIGHT_AZ),
+          Math.sin(LIGHT_EL),
+        );
+        var HALF = norm3(L[0], L[1], L[2] + 1); /* half vector, view = +z */
+
+        /* Nine directions sample a finite studio source. Their projections
+           separate in proportion to a corner's height above the receiver,
+           producing a tight near edge and a softer lifted edge without a
+           single oversized blur. */
+        var LIGHT_U = norm3(-L[1], L[0], 0);
+        var lv = cross(L, LIGHT_U);
+        var LIGHT_V = norm3(lv[0], lv[1], lv[2]);
+        var LIGHT_RADIUS = 0.12;
+        var SHADOW_LIGHTS = [L];
+        for (var li = 0; li < 8; li++) {
+          var la = (li * Math.PI) / 4;
+          var lu = Math.cos(la) * LIGHT_RADIUS;
+          var lv2 = Math.sin(la) * LIGHT_RADIUS;
+          SHADOW_LIGHTS.push(
+            norm3(
+              L[0] + LIGHT_U[0] * lu + LIGHT_V[0] * lv2,
+              L[1] + LIGHT_U[1] * lu + LIGHT_V[1] * lv2,
+              L[2] + LIGHT_U[2] * lu + LIGHT_V[2] * lv2,
+            ),
+          );
+        }
+
+        /* With no pointer input the card faces the viewer squarely. */
+        var REST_RX = 0;
+        var REST_RY = 0;
+        var coarsePointer = matchMedia("(pointer: coarse)").matches;
+        var MAX_RX = coarsePointer ? 5 : 8;
+        var MAX_RY = coarsePointer ? 7 : 13;
+        var TAN_MAX_RX = Math.tan((MAX_RX * Math.PI) / 180);
+        var TAN_MAX_RY = Math.tan((MAX_RY * Math.PI) / 180);
+
+        function basis(rxDeg, ryDeg) {
+          var a = (rxDeg * Math.PI) / 180,
+            b = (ryDeg * Math.PI) / 180;
+          var ca = Math.cos(a),
+            sa = Math.sin(a),
+            cb = Math.cos(b),
+            sb = Math.sin(b);
+          /* R = rotateX(a) · rotateY(b), CSS axes (y down, z toward viewer) */
+          return [
+            [cb, 0, sb],
+            [sa * sb, ca, -sa * cb],
+            [-ca * sb, sa, ca * cb],
+          ];
+        }
+        function tmul(R, v) {
+          /* Rᵀ·v — a world direction expressed in card space */
+          return [
+            R[0][0] * v[0] + R[1][0] * v[1] + R[2][0] * v[2],
+            R[0][1] * v[0] + R[1][1] * v[1] + R[2][1] * v[2],
+            R[0][2] * v[0] + R[1][2] * v[1] + R[2][2] * v[2],
+          ];
+        }
+        function edge(R, x, y, z) {
+          var n = [
+            R[0][0] * x + R[0][1] * y + R[0][2] * z,
+            R[1][0] * x + R[1][1] * y + R[1][2] * z,
+            R[2][0] * x + R[2][1] * y + R[2][2] * z,
+          ];
+          return (0.68 + 0.48 * Math.max(0, dot(n, L))).toFixed(3);
+        }
+
+        /* The front rim is a shallow round-over, not another side face.
+           Resolve the room light into card space and use only its tangent
+           direction: the light-facing edge catches white, its opposite edge
+           gets a fine dark seam, and the other pair fades naturally. */
+        function rim(name, response) {
+          set("--rim-" + name + "-hi", Math.max(0, response).toFixed(3));
+          set("--rim-" + name + "-lo", Math.max(0, -response).toFixed(3));
+        }
+        function lightRim(R) {
+          var lo = tmul(R, L);
+          var tangent = Math.hypot(lo[0], lo[1]);
+          if (tangent < 0.0001) {
+            rim("t", 0);
+            rim("b", 0);
+            rim("l", 0);
+            rim("r", 0);
+            return;
+          }
+          var strength = clamp(tangent * 2.5, 0, 0.72);
+          var dx = lo[0] / tangent;
+          var dy = lo[1] / tangent;
+          rim("t", -dy * strength);
+          rim("b", dy * strength);
+          rim("l", -dx * strength);
+          rim("r", dx * strength);
+        }
+
+        /* The receiver sits just behind the resting card. When the card turns,
+           lift its centre by one coherent amount so its deepest back corner
+           keeps a narrow clearance. The visible object and every shadow ray
+           use this same lift; no corner is clamped independently. */
+        var SHADOW_GAP = 0.04;
+        var SHADOW_CLEARANCE = 0.005;
+        var cardW = 1,
+          cardH = 1,
+          cameraD = 1;
+        function cardLift(R) {
+          var minZ =
+            -0.5 * (Math.abs(R[2][0]) * cardW + Math.abs(R[2][1]) * cardH);
+          var planeZ = -cardW * SHADOW_GAP;
+          var clearance = cardW * SHADOW_CLEARANCE;
+          var halfThickness = cardW * 0.004;
+          return Math.max(0, planeZ + clearance + halfThickness - minZ);
+        }
+        function drawShadow(R, lift) {
+          var gap = cardW * SHADOW_GAP;
+          var originX = cardW * 0.5;
+          var originY = cardH * 0.48;
+          var centreX = cardW * 0.5;
+          var centreY = cardH * 0.5;
+          var cameraScale = cameraD / (cameraD + gap);
+          var corners = [
+            [-cardW * 0.5, -cardH * 0.5],
+            [cardW * 0.5, -cardH * 0.5],
+            [cardW * 0.5, cardH * 0.5],
+            [-cardW * 0.5, cardH * 0.5],
+          ];
+          var world = [];
+          for (var i = 0; i < corners.length; i++) {
+            var x = corners[i][0];
+            var y = corners[i][1];
+            world.push([
+              centreX + R[0][0] * x + R[0][1] * y,
+              centreY + R[1][0] * x + R[1][1] * y,
+              lift + R[2][0] * x + R[2][1] * y,
+            ]);
+          }
+
+          var centreValue = "";
+          for (var s = 0; s < SHADOW_LIGHTS.length; s++) {
+            var light = SHADOW_LIGHTS[s];
+            var points = [];
+            for (var j = 0; j < world.length; j++) {
+              var ray = (world[j][2] + gap) / light[2];
+              var sx = world[j][0] - ray * light[0];
+              var sy = world[j][1] - ray * light[1];
+              var px = originX + (sx - originX) * cameraScale;
+              var py = originY + (sy - originY) * cameraScale;
+              points.push(px.toFixed(2) + "," + py.toFixed(2));
+            }
+            var value = points.join(" ");
+            if (s === 0) centreValue = value;
+            if (wrote["shadowAmb" + s] !== value) {
+              wrote["shadowAmb" + s] = value;
+              shadowAmbSamples[s].setAttribute("points", value);
+            }
+          }
+          if (wrote.shadowCore !== centreValue) {
+            wrote.shadowCore = centreValue;
+            shadowCore.setAttribute("points", centreValue);
+          }
+        }
+
+        /* The face gradient and filter lights are solved at the rest pose. */
+        (function () {
+          var lo = tmul(basis(REST_RX, REST_RY), L);
+          var n = Math.sqrt(lo[0] * lo[0] + lo[1] * lo[1]) || 1;
+          sStyle.setProperty("--lx", (lo[0] / n).toFixed(4));
+          sStyle.setProperty("--ly", (lo[1] / n).toFixed(4));
+          var azimuth = (Math.atan2(lo[1], lo[0]) * 180) / Math.PI;
+          if (azimuth < 0) azimuth += 360;
+          var elevation = (Math.asin(clamp(lo[2], -1, 1)) * 180) / Math.PI;
+          var lights = [
+            document.getElementById("pressD"),
+            document.getElementById("pressS"),
+            document.getElementById("stockD"),
+          ];
+          for (var i = 0; i < lights.length; i++) {
+            if (!lights[i]) continue;
+            lights[i].setAttribute("azimuth", azimuth.toFixed(1));
+            lights[i].setAttribute("elevation", elevation.toFixed(1));
+          }
+        })();
+
+        /* ------------------------------------------------------------
+           Motion. Critically damped, solved in closed form rather than
+           integrated: the same curve on a 60Hz and a 144Hz panel, and no
+           way for a long frame to make it explode.
+           ------------------------------------------------------------ */
+        function spring(s, target, w, dt) {
+          var e = Math.exp(-w * dt);
+          var a = s.v - target;
+          var b = s.vel + w * a;
+          s.v = target + (a + b * dt) * e;
+          s.vel = (b - w * (a + b * dt)) * e;
+        }
+        var W_FOLLOW = 15; /* tracks the pointer closely */
+        var W_REST = 9.5; /* clearly goes home, without rocking */
+
+        var rx = { v: REST_RX, vel: 0 };
+        var ry = { v: REST_RY, vel: 0 };
+        var aimX = 0,
+          aimY = 0,
+          aiming = false;
+
+        var raf = 0,
+          last = 0;
+        function tick() {
+          if (!raf) raf = requestAnimationFrame(render);
+        }
+
+        function render(ts) {
+          raf = 0;
+          var dt = last ? (ts - last) / 1000 : 1 / 60;
+          if (dt > 0.05) dt = 0.05;
+          last = ts;
+
+          /* rotateY(+) swings the card's normal to the right; rotateX(−)
+             swings it downward. Both signs are needed for the face to turn
+             toward the pointer — the old build added on both axes, so the
+             card followed the cursor sideways and shied away from it
+             vertically, which is most of why it fought back. */
+          var tx = aiming
+            ? (-Math.atan(aimY * TAN_MAX_RX) * 180) / Math.PI
+            : REST_RX;
+          var ty = aiming
+            ? (Math.atan(aimX * TAN_MAX_RY) * 180) / Math.PI
+            : REST_RY;
+          var w = aiming ? W_FOLLOW : W_REST;
+
+          spring(rx, tx, w, dt);
+          spring(ry, ty, w, dt);
+
+          var moving =
+            Math.abs(rx.v - tx) > 0.004 ||
+            Math.abs(ry.v - ty) > 0.004 ||
+            Math.abs(rx.vel) > 0.02 ||
+            Math.abs(ry.vel) > 0.02;
+          if (!moving) {
+            rx.v = tx;
+            rx.vel = 0;
+            ry.v = ty;
+            ry.vel = 0;
+          }
+
+          var R = basis(rx.v, ry.v);
+          var lift = cardLift(R);
+          card.style.transform =
+            "translateZ(" +
+            lift.toFixed(2) +
+            "px) rotateX(" +
+            rx.v.toFixed(2) +
+            "deg) rotateY(" +
+            ry.v.toFixed(2) +
+            "deg)";
+
+          var ho = tmul(R, HALF); /* half vector in card space */
+
+          /* the specular hotspot slides across the stock */
+          var hz = Math.max(ho[2], 0.25);
+          set("--ox", clamp((0.58 * ho[0]) / hz, -0.8, 0.8).toFixed(3));
+          set("--oy", clamp((0.58 * ho[1]) / hz, -0.8, 0.8).toFixed(3));
+
+          /* the cut edge: a true face, lit on its own terms */
+          set("--eb-t", edge(R, 0, -1, 0));
+          set("--eb-b", edge(R, 0, 1, 0));
+          set("--eb-l", edge(R, -1, 0, 0));
+          set("--eb-r", edge(R, 1, 0, 0));
+          lightRim(R);
+
+          drawShadow(R, lift);
+
+          /* the mark lives in the stock. it is almost gone at rest, and
+             comes up as the card is turned away from the offered pose. */
+          set(
+            "--wm",
+            Math.min(
+              1,
+              Math.hypot(rx.v - REST_RX, ry.v - REST_RY) / 16,
+            ).toFixed(3),
           );
 
-          timeEl.textContent = pad(t.getHours()) + ":" + pad(t.getMinutes());
+          if (moving) tick();
+          else last = 0;
         }
 
-        function pad(n) {
-          return (n < 10 ? "0" : "") + n;
+        /* ------------------------------------------------------------
+           Turning the card. Aim is taken off the window, not off the
+           card. The stage's hit box *is* the card, and a tilted card
+           slides out from under the cursor near its own edges — so
+           pointerenter/pointerleave on it left the old build flip-flopping
+           against its own animation, and until the cursor was actually on
+           the card nothing happened at all. Full tilt is reached about a
+           card-width out, which makes the room around the card the
+           control surface it always looked like it was.
+           ------------------------------------------------------------ */
+        var midX = 0,
+          midY = 0,
+          kx = 1,
+          ky = 1;
+        function measure() {
+          var r = stage.getBoundingClientRect();
+          midX = r.left + r.width / 2;
+          midY = r.top + r.height / 2;
+          kx = r.width * 0.85 || 1;
+          ky = r.height * 1.05 || 1;
+          cardW = stage.clientWidth || card.offsetWidth || 1;
+          cardH = stage.clientHeight || card.offsetHeight || 1;
+          cameraD = cardW * 1.55;
+          /* the room says how soft its own shadow is */
+          var rs = getComputedStyle(root);
+          var ambOpacity = parseFloat(rs.getPropertyValue("--sh-amb")) || 0.08;
+          var sampleOpacity =
+            1 - Math.pow(1 - ambOpacity, 1 / SHADOW_LIGHTS.length);
+          set("--sh-amb-sample", sampleOpacity.toFixed(4));
+          var ambK = parseFloat(rs.getPropertyValue("--sh-amb-blur")) || 0.008;
+          var coreK =
+            parseFloat(rs.getPropertyValue("--sh-core-blur")) || 0.004;
+          shadowAmbBlur.setAttribute("stdDeviation", (cardW * ambK).toFixed(2));
+          shadowCoreBlur.setAttribute(
+            "stdDeviation",
+            (cardW * coreK).toFixed(2),
+          );
         }
 
-        jst();
-        setInterval(jst, 1000 * 20);
+        function aim(x, y) {
+          if (mReduce.matches) return;
+          aimX = clamp((x - midX) / kx, -1, 1);
+          aimY = clamp((y - midY) / ky, -1, 1);
+          aiming = true;
+          tick();
+        }
+        function rest() {
+          aiming = false;
+          tick();
+        }
+
+        var dragging = false;
+        addEventListener(
+          "pointermove",
+          function (e) {
+            /* a finger has to be down; a mouse only has to be in the room */
+            if (e.pointerType === "touch") {
+              if (dragging) aim(e.clientX, e.clientY);
+            } else aim(e.clientX, e.clientY);
+          },
+          { passive: true },
+        );
+        root.addEventListener("pointerleave", rest);
+        addEventListener("blur", rest);
+
+        card.addEventListener("pointerdown", function (e) {
+          if (e.pointerType !== "touch" || e.target.closest("a")) return;
+          dragging = true;
+          try {
+            card.setPointerCapture(e.pointerId);
+          } catch (err) {}
+          aim(e.clientX, e.clientY);
+        });
+        function drop() {
+          if (!dragging) return;
+          dragging = false;
+          rest();
+        }
+        addEventListener("pointerup", drop);
+        addEventListener("pointercancel", drop);
+
+        var remeasure = 0;
+        function onResize() {
+          if (remeasure) return;
+          remeasure = requestAnimationFrame(function () {
+            remeasure = 0;
+            measure();
+            matchFirmBlock();
+            tick();
+          });
+        }
+        addEventListener("resize", onResize);
+        if (window.visualViewport)
+          visualViewport.addEventListener("resize", onResize);
+        mReduce.addEventListener("change", rest);
+        /* the room decides how soft its shadow is, so a theme flip has to
+           re-read it */
+        matchMedia("(prefers-color-scheme: dark)").addEventListener(
+          "change",
+          function () {
+            measure();
+            tick();
+          },
+        );
+
+        measure();
+        tick();
+        console.log("Look at that subtle off-white coloring");
       })();
-
-      console.log("tom is a genius");
     </script>
   </body>
 </html>
