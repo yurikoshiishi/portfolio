@@ -11,6 +11,20 @@
       name="description"
       content="Tokyo-based developer who enjoys building things."
     />
+    <link
+      rel="preload"
+      href="/fonts/Copperplate-Gothic-Std-30-AB.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Copperplate-Gothic-Std-31-AB.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
     <style>
       /* ============================================================
          Copperplate Gothic Std — the two cuts the card is set in.
@@ -249,6 +263,7 @@
         overflow: visible;
         pointer-events: none;
         animation: shadow-rise 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
+        animation-play-state: paused;
       }
       .shadow {
         fill: rgb(var(--sh-ink));
@@ -268,6 +283,16 @@
         z-index: 1;
         transform-style: preserve-3d;
         animation: rise 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
+        animation-play-state: paused;
+      }
+      /* The card is the font: baselines, tracking and the impression are
+         all solved against it. So the room paints at once and the card
+         waits, held at the first frame of its rise, until both cuts are
+         in. The script releases it, or gives up after the same 3s the
+         font-display block period allows. */
+      .stage.type-in .rise,
+      .stage.type-in .shadow-plane {
+        animation-play-state: running;
       }
       @keyframes rise {
         from {
@@ -668,6 +693,11 @@
         .rise,
         .shadow-plane {
           animation: none;
+          opacity: 0;
+        }
+        .stage.type-in .rise,
+        .stage.type-in .shadow-plane {
+          opacity: 1;
         }
       }
     </style>
@@ -999,9 +1029,27 @@
           dept.style.setProperty("--tr", ((lo + hi) / 2).toFixed(4));
         }
 
-        if (document.fonts && document.fonts.ready)
-          document.fonts.ready.then(applyMetrics);
-        else applyMetrics();
+        /* fonts.ready alone can resolve before the face has even been
+           asked for, so request both cuts by name and wait on those. A
+           blocked or missing file must not leave the room empty: give up
+           after the same 3s the block period allows and show what there is. */
+        function release() {
+          if (stage.classList.contains("type-in")) return;
+          applyMetrics();
+          stage.classList.add("type-in");
+        }
+        if (document.fonts && document.fonts.load) {
+          var timer = setTimeout(release, 3000);
+          Promise.all([
+            document.fonts.load('400 1em "Copperplate Gothic Std"'),
+            document.fonts.load('700 1em "Copperplate Gothic Std"'),
+          ])
+            .catch(function () {})
+            .then(function () {
+              clearTimeout(timer);
+              release();
+            });
+        } else release();
 
         /* ------------------------------------------------------------
            Light. Fixed in the room, a little above and to the left.
