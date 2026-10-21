@@ -1,7 +1,10 @@
 import { createRequire } from "module";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 const require = createRequire(import.meta.url);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   server: {
@@ -58,13 +61,20 @@ export default defineConfig({
       },
     },
     rollupOptions: {
+      /* the film, and the flat card it falls back to */
+      input: {
+        main: resolve(__dirname, "index.html"),
+        card: resolve(__dirname, "card.html"),
+      },
       output: {
-        manualChunks: undefined,
-        inlineDynamicImports: true,
         assetFileNames: "[name].[ext]",
         entryFileNames: "[name].js",
+        chunkFileNames: "[name].js",
       },
     },
     target: "es2020",
+  },
+  worker: {
+    format: "es",
   },
 });

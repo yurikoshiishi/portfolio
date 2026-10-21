@@ -9,12 +9,16 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "prettier": "^3.0.3",
-    "typescript": "^5.0.2",
     "cssnano": "^6.0.0",
     "postcss": "^8.4.31",
+    "prettier": "^3.0.3",
     "terser": "^5.24.0",
+    "typescript": "^5.0.2",
     "vite": "^5.0.0",
     "vite-plugin-html": "^3.2.2"
+  },
+  "dependencies": {
+    "postprocessing": "6.36.4",
+    "three": "0.170.0"
   }
 }
