@@ -533,6 +533,64 @@ export function cardMesh(card, maps, aniso) {
   return mesh;
 }
 
+/* The card in the lacquer: the same geometry mirrored through the table
+   top, added onto the table before the card itself is drawn. What shows
+   is the cut edge, bright, and the underside, in its own shadow; how much
+   shows is the lacquer's Fresnel. */
+export function mirrorMesh(mesh) {
+  const [r, g, b] = mesh.userData.card.stock.paper;
+  const paper = new THREE.Color().setRGB(
+    r / 255,
+    g / 255,
+    b / 255,
+    THREE.SRGBColorSpace,
+  );
+  const lift = { value: 0 };
+  const mat = (k) =>
+    new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: paper.clone().multiplyScalar(k) },
+        uLift: lift,
+      },
+      vertexShader: /* glsl */ `
+        varying vec3 vWorld;
+        void main() {
+          vec4 w = modelMatrix * vec4(position, 1.0);
+          vWorld = w.xyz;
+          gl_Position = projectionMatrix * viewMatrix * w;
+        }`,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uColor;
+        uniform float uLift;
+        varying vec3 vWorld;
+        void main() {
+          float c = abs(normalize(cameraPosition - vWorld).y);
+          float F = 0.04 + 0.96 * pow(1.0 - c, 5.0);
+          /* the coat is not a mirror: the image softens and fades with height */
+          float fade = exp(-max(0.0, -vWorld.y) / 0.04);
+          gl_FragColor = vec4(uColor * F * fade * (1.0 - 0.5 * uLift), 1.0);
+        }`,
+      blending: THREE.AdditiveBlending,
+      depthTest: false,
+      depthWrite: false,
+    });
+  const edge = mat(0.75);
+  const under = mat(0.1);
+  const m = new THREE.Mesh(mesh.geometry, [
+    edge,
+    edge,
+    edge,
+    edge,
+    under,
+    under,
+  ]);
+  m.matrixAutoUpdate = false;
+  m.renderOrder = -1;
+  m.visible = false;
+  m.userData.lift = lift;
+  return m;
+}
+
 export function disposeCard(mesh) {
   mesh.geometry.dispose();
   for (const m of new Set(mesh.material)) {

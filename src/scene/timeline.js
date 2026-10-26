@@ -10,7 +10,7 @@
 const REST_YAW = -Math.PI / 2; /* text reads left to right from the camera */
 
 export const SUBTITLES = [
-  { t0: 22.5, t1: 25.3, text: "Let’s see Paul Allen’s card." },
+  { t0: 22.5, t1: 25.3, text: "Let’s see Yuri Koshiishi’s card." },
   { t0: 29.8, t1: 32.2, text: "Look at that subtle off-white coloring." },
   { t0: 32.5, t1: 34.6, text: "The tasteful thickness of it." },
   { t0: 35.0, t1: 37.8, text: "Oh my God. It even has a watermark." },
@@ -49,8 +49,8 @@ export const SHOTS = [
     t1: 5.2,
     card: null,
     keys: [
-      { t: 0, pos: [-0.6, 0.13, 0.09], look: [1.6, 0.3, 0.04], fov: 30 },
-      { t: 5.2, pos: [-0.52, 0.11, 0.03], look: [1.6, 0.26, 0.0], fov: 29 },
+      { t: 0, pos: [-0.2, 0.1, 0.06], look: [1.6, 0.28, 0.03], fov: 30 },
+      { t: 5.2, pos: [-0.13, 0.085, 0.015], look: [1.6, 0.24, 0.0], fov: 29 },
     ],
     focus: { d: 1.4, range: 0.9, bokeh: 1.6 },
   },
@@ -113,13 +113,13 @@ export const SHOTS = [
     focus: { d: "card", range: 0.04, bokeh: 2.6 },
   },
   {
-    /* the empty place on the table. "Let's see Paul Allen's card." */
+    /* the empty place on the table. In the film: "Let's see Paul Allen's card." */
     t0: 22.0,
     t1: 26.0,
     card: null,
     keys: [
-      { t: 22.0, pos: [-0.31, 0.12, -0.02], look: [0.35, 0.015, 0.0], fov: 26 },
-      { t: 26.0, pos: [-0.285, 0.112, 0.0], look: [0.35, 0.012, 0.0], fov: 26 },
+      { t: 22.0, pos: [-0.21, 0.1, -0.02], look: [0.35, 0.015, 0.0], fov: 26 },
+      { t: 26.0, pos: [-0.19, 0.094, 0.0], look: [0.35, 0.012, 0.0], fov: 26 },
     ],
     focus: { d: 0.42, range: 0.25, bokeh: 3 },
   },

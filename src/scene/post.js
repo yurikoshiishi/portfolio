@@ -23,11 +23,11 @@ class GradeEffect extends Effect {
       void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
         vec3 c = inputColor.rgb;
         float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
-        c = mix(vec3(l), c, 0.86);
+        c = mix(vec3(l), c, 0.93);
         vec3 shadows = vec3(0.975, 1.0, 1.03);
         vec3 highs = vec3(1.035, 1.0, 0.955);
         c *= mix(shadows, highs, smoothstep(0.02, 1.4, l));
-        c = c * 0.985 + 0.0025;
+        c = c * 1.16 + 0.004; /* a daylit office, exposed for the paper */
         outputColor = vec4(c, inputColor.a);
       }`,
     );

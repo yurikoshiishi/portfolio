@@ -60,6 +60,34 @@ def principled(name, color, rough=0.6, metal=0.0, spec=0.5, emit=None, strength=
     return m
 
 
+def surface_detail(m, scale, var, bump, stretch=(1, 1, 1)):
+    """Break up a flat material: slight colour drift and a fine bump."""
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    base = b.inputs["Base Color"].default_value[:]
+    coord = nt.nodes.new("ShaderNodeTexCoord")
+    mapping = nt.nodes.new("ShaderNodeMapping")
+    mapping.inputs["Scale"].default_value = stretch
+    nt.links.new(coord.outputs["Object"], mapping.inputs["Vector"])
+    noise = nt.nodes.new("ShaderNodeTexNoise")
+    noise.inputs["Scale"].default_value = scale
+    noise.inputs["Detail"].default_value = 8
+    nt.links.new(mapping.outputs["Vector"], noise.inputs["Vector"])
+    mix = nt.nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    mix.inputs[6].default_value = tuple(c * (1 - var) for c in base[:3]) + (1,)
+    mix.inputs[7].default_value = tuple(min(1, c * (1 + var)) for c in base[:3]) + (1,)
+    nt.links.new(noise.outputs["Fac"], mix.inputs[0])
+    nt.links.new(mix.outputs[2], b.inputs["Base Color"])
+    if bump:
+        bn = nt.nodes.new("ShaderNodeBump")
+        bn.inputs["Strength"].default_value = bump
+        bn.inputs["Distance"].default_value = 0.002
+        nt.links.new(noise.outputs["Fac"], bn.inputs["Height"])
+        nt.links.new(bn.outputs["Normal"], b.inputs["Normal"])
+    return m
+
+
 def srgb(h):
     """hex → linear rgb"""
     h = h.lstrip("#")
@@ -75,7 +103,14 @@ alu = principled("mullion", srgb("#3a3b3d"), rough=0.35, metal=0.9)
 blind = principled("blind", srgb("#cfcdc7"), rough=0.5)
 leather = principled("leather", srgb("#151413"), rough=0.42, spec=0.6)
 chrome = principled("chrome", srgb("#c8c8c8"), rough=0.12, metal=1.0)
-fluo = principled("fluorescent", srgb("#ffffff"), rough=0.5, emit=srgb("#f3f6ff"), strength=3.6)
+fluo = principled("fluorescent", srgb("#ffffff"), rough=0.5, emit=srgb("#f3f6ff"), strength=5.0)
+surface_detail(wall, 6, 0.04, 0.15)
+surface_detail(carpet, 90, 0.18, 0.6)
+surface_detail(ceiling, 40, 0.05, 0.4)
+surface_detail(leather, 30, 0.08, 0.12)
+surface_detail(wall_dark, 3, 0.12, 0.05, stretch=(1, 1, 18))
+tbar = principled("tbar", srgb("#d8d6d0"), rough=0.4, metal=0.3)
+louver = principled("louver", srgb("#b9bcc0"), rough=0.18, metal=1.0)
 table_mat = principled("table", srgb("#1a1512"), rough=0.3, coat=1.0)
 credenza = principled("credenza", srgb("#2a211b"), rough=0.35, coat=0.6)
 art_a = principled("art_a", srgb("#2f6f73"), rough=0.8)
@@ -147,22 +182,16 @@ def facade_material(name, base, seed):
     haze_t.inputs["To Max"].default_value = 0.85
     links.new(cam.outputs["View Distance"], haze_t.inputs["Value"])
 
-    lit = nodes.new("ShaderNodeEmission")
-    lit.inputs["Strength"].default_value = 1.0
-    links.new(col.outputs[2], lit.inputs["Color"])
+    lit = nodes.new("ShaderNodeBsdfPrincipled")
+    lit.inputs["Roughness"].default_value = 0.55
+    links.new(col.outputs[2], lit.inputs["Base Color"])
 
     haze = nodes.new("ShaderNodeEmission")
     haze.inputs["Color"].default_value = (*srgb("#c9d0d6"), 1)
     haze.inputs["Strength"].default_value = 4.4
 
-    # facades are lit by the same sky; an emission approximation keeps the
-    # probe noise-free and costs nothing
-    gain = nodes.new("ShaderNodeMath")
-    gain.operation = "MULTIPLY_ADD"
-    links.new(noise.outputs["Fac"], gain.inputs[0])
-    gain.inputs[1].default_value = 0.6
-    gain.inputs[2].default_value = 1.3
-    links.new(gain.outputs[0], lit.inputs["Strength"])
+    # a little weathering from bay to bay
+    links.new(noise.outputs["Fac"], lit.inputs["Specular IOR Level"])
 
     mix = nodes.new("ShaderNodeMixShader")
     links.new(haze_t.outputs["Result"], mix.inputs[0])
@@ -204,7 +233,14 @@ hx, hy = ROOM_X / 2, ROOM_Y / 2
 
 # shell
 box("floor", (ROOM_X, ROOM_Y, 0.02), (0, 0, -0.01), carpet)
-box("ceiling", (ROOM_X, ROOM_Y, 0.02), (0, 0, CEIL + 0.01), ceiling)
+for i in range(int(ROOM_X / 0.6)):
+    for j in range(int(ROOM_Y / 1.2) + 1):
+        cx = -ROOM_X / 2 + (i + 0.5) * 0.6
+        cy = -ROOM_Y / 2 + (j + 0.5) * 1.2
+        if i % 3 == 1 and j % 2 == 0 and abs(cy) <= ROOM_Y / 2 - 0.3:
+            continue
+        box(f"tile{i}_{j}", (0.6, 1.2, 0.02), (cx, cy, CEIL + 0.01), ceiling)
+box("plenum", (ROOM_X, ROOM_Y, 0.02), (0, 0, CEIL + 0.12), ceiling)
 box("wall_back", (ROOM_X, 0.1, CEIL), (0, -hy - 0.05, CEIL / 2), wall)
 box("wall_left", (0.1, ROOM_Y, CEIL), (-hx - 0.05, 0, CEIL / 2), wall)
 box("wall_right", (0.1, ROOM_Y, CEIL), (hx + 0.05, 0, CEIL / 2), wall_dark)
@@ -222,7 +258,7 @@ box("transom", (ROOM_X, 0.1, 0.06), (0, hy + 0.05, 2.18), alu)
 
 # venetian blinds pulled two-thirds up, slats tilted open
 slat_top = HEAD - 0.04
-slat_bottom = 1.86
+slat_bottom = 1.52
 z = slat_top
 k = 0
 while z > slat_bottom:
@@ -244,10 +280,28 @@ for i in range(26):
     h = 40 + random.random() * 160
     o = box(f"tower{i}", (w, depth, h), (x, hy + d, h / 2 - 20), facade_material(f"facade{i}", srgb(random.choice(tones)), i))
 
-# fluorescent ceiling panels on a grid
-for ix in range(-2, 3):
-    for iy in range(-2, 2):
-        box(f"fluo{ix}_{iy}", (1.2, 0.6, 0.02), (ix * 1.9, iy * 1.8 + 0.4, CEIL - 0.005), fluo)
+# a 2x4 acoustic tile ceiling on a T-bar grid
+TILE_X, TILE_Y = 0.6, 1.2
+nx = int(ROOM_X / TILE_X)
+ny = int(ROOM_Y / TILE_Y) + 1
+for i in range(nx + 1):
+    box(f"tbar_x{i}", (0.024, ROOM_Y, 0.012), (-hx + i * TILE_X, 0, CEIL - 0.006), tbar)
+for j in range(ny + 1):
+    box(f"tbar_y{j}", (ROOM_X, 0.024, 0.012), (0, -hy + j * TILE_Y, CEIL - 0.006), tbar)
+
+# parabolic troffers in every third tile: a diffuser up in a box, a silver
+# egg-crate louver below it — the light every office had in 1987
+for i in range(1, nx, 3):
+    for j in range(0, ny):
+        cx = -hx + (i + 0.5) * TILE_X
+        cy = -hy + (j + 0.5) * TILE_Y
+        if abs(cy) > hy - 0.3 or j % 2:
+            continue
+        box(f"diffuser{i}_{j}", (TILE_X - 0.04, TILE_Y - 0.04, 0.01), (cx, cy, CEIL + 0.06), fluo)
+        for u in range(1, 4):
+            box("louver_u", (0.008, TILE_Y - 0.04, 0.07), (cx - TILE_X / 2 + u * TILE_X / 4, cy, CEIL - 0.0), louver)
+        for v in range(1, 8):
+            box("louver_v", (TILE_X - 0.04, 0.008, 0.07), (cx, cy - TILE_Y / 2 + v * TILE_Y / 8, CEIL - 0.0), louver)
 
 # the conference table: drawn by the site, here only for light and reflections
 table = box("table", (4.6, 1.3, 0.05), (0, 0, TABLE_TOP - 0.025), table_mat, bevel=0.01)
@@ -255,6 +309,18 @@ table.visible_camera = False
 for sx in (-1.7, 1.7):
     t = box(f"table_leg{sx}", (0.5, 0.9, TABLE_TOP - 0.05), (sx, 0, (TABLE_TOP - 0.05) / 2), table_mat)
     t.visible_camera = False
+
+
+def soft(o, levels=2):
+    """Upholstery: bevel the box, then let subdivision round it out."""
+    b = o.modifiers.new("bevel", "BEVEL")
+    b.width = 0.03
+    b.segments = 2
+    sub = o.modifiers.new("subsurf", "SUBSURF")
+    sub.levels = levels
+    sub.render_levels = levels
+    bpy.ops.object.shade_smooth()
+    return o
 
 
 # executive chairs around the table
@@ -266,12 +332,17 @@ def chair(x, y, facing):
         return (x + dx * c - dy * s, y + dx * s + dy * c, dz)
 
     rot = (0, 0, facing)
-    box("seat", (0.52, 0.5, 0.09), at(0, 0, 0.47), leather, bevel=0.035, rot=rot)
-    back = box("back", (0.5, 0.08, 0.62), at(0, -0.27, 0.86), leather, bevel=0.035, rot=(math.radians(-8), 0, facing))
+    soft(box("seat", (0.52, 0.5, 0.11), at(0, 0, 0.47), leather, rot=rot))
+    soft(box("back", (0.5, 0.11, 0.66), at(0, -0.28, 0.88), leather, rot=(math.radians(-10), 0, facing)))
+    for side in (-1, 1):
+        box("arm_post", (0.025, 0.025, 0.2), at(side * 0.28, 0.02, 0.6), chrome, bevel=0.01, rot=rot)
+        soft(box("arm_pad", (0.06, 0.36, 0.035), at(side * 0.28, -0.02, 0.71), leather, rot=rot), levels=1)
     cyl("post", 0.025, 0.36, at(0, 0, 0.24), chrome)
     for a in range(5):
         ang = a * math.tau / 5
-        box("spoke", (0.3, 0.035, 0.03), at(math.cos(ang) * 0.15, math.sin(ang) * 0.15, 0.06), chrome, rot=(0, 0, facing + ang))
+        box("spoke", (0.3, 0.035, 0.03), at(math.cos(ang) * 0.15, math.sin(ang) * 0.15, 0.06), chrome, bevel=0.008, rot=(0, 0, facing + ang))
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.025, location=at(math.cos(ang) * 0.3, math.sin(ang) * 0.3, 0.025))
+        bpy.context.active_object.data.materials.append(leather)
 
 
 for sx in (-1.5, -0.5, 0.5, 1.5):
@@ -300,6 +371,20 @@ disp.texture = tex
 disp.strength = 0.25
 f.data.materials.append(plant)
 
+# ---------------------------------------------------------------- sun
+
+# Late morning sun, high and off to one side. It comes through the open
+# slats and lands in stripes on the carpet by the window; it never reaches
+# the table, which the site lights itself.
+from mathutils import Vector
+
+bpy.ops.object.light_add(type="SUN", location=(0, 0, 10))
+sun = bpy.context.active_object
+sun.data.energy = 4.2
+sun.data.angle = math.radians(1.2)
+sun.data.color = (1.0, 0.94, 0.86)
+sun.rotation_euler = Vector((0.38, -1.0, -1.05)).to_track_quat("-Z", "Y").to_euler()
+
 # ---------------------------------------------------------------- sky
 
 
@@ -319,7 +404,7 @@ ramp.color_ramp.elements[1].position = 0.9
 ramp.color_ramp.elements[1].color = (*srgb("#eef0f1"), 1)
 wl.new(sepz.outputs["Z"], ramp.inputs[0])
 wl.new(ramp.outputs[0], bg.inputs["Color"])
-bg.inputs["Strength"].default_value = 6.0
+bg.inputs["Strength"].default_value = 4.6
 
 # ---------------------------------------------------------------- camera + render
 

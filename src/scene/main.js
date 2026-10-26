@@ -6,6 +6,7 @@ import {
   FACE,
   cardMesh,
   generate,
+  mirrorMesh,
   releaseWorkers,
 } from "./cards.js";
 import { buildRoom } from "./room.js";
@@ -226,11 +227,30 @@ const focusPoint = new THREE.Vector3();
 const edgePoint = new THREE.Vector3();
 const lookV = new THREE.Vector3();
 
+const MIRROR = new THREE.Matrix4().makeScale(1, -1, 1);
 function setActive(mesh) {
-  if (active === mesh) return;
-  for (const m of Object.values(meshes)) m.visible = m === mesh;
-  active = mesh;
-  shadows.setCaster(mesh);
+  if (active !== mesh) {
+    for (const m of Object.values(meshes)) {
+      m.visible = m === mesh;
+      m.userData.mirror.visible = m === mesh;
+    }
+    active = mesh;
+    shadows.setCaster(mesh);
+  }
+}
+
+/* keep the reflection under the card it belongs to */
+function reflect() {
+  if (!active) return;
+  active.updateMatrixWorld();
+  const mirror = active.userData.mirror;
+  /* through .matrix, so the scene's own world update keeps it */
+  mirror.matrix.multiplyMatrices(MIRROR, active.matrixWorld);
+  mirror.matrixWorld.copy(mirror.matrix);
+  mirror.userData.lift.value = Math.min(
+    1,
+    Math.max(0, active.position.y - 0.001) / 0.02,
+  );
 }
 
 function applyCamera(c, parallax) {
@@ -291,6 +311,7 @@ function frameAt(time) {
     subtitleEl.textContent = text;
     subtitleEl.hidden = !text;
   }
+  reflect();
   shadows.update();
 }
 
@@ -328,6 +349,7 @@ function frameFree(dt) {
   );
   room.setDaylight(1.25);
   mesh.userData.face.userData.uWm.value = 0.35 + 0.5 * S.lift.x;
+  reflect();
   shadows.update();
   needsRender = false;
   return true;
@@ -540,8 +562,9 @@ async function boot() {
       return generate(card, key === "yuri" ? heroW : restW).then((maps) => {
         const m = cardMesh(card, maps, aniso);
         m.visible = false;
+        m.userData.mirror = mirrorMesh(m);
         meshes[key] = m;
-        scene.add(m);
+        scene.add(m, m.userData.mirror);
         printed++;
         show();
       });
@@ -554,9 +577,11 @@ async function boot() {
 
   /* upload everything now, not on the first frame of the film */
   frameAt(0);
-  for (const m of Object.values(meshes)) m.visible = true;
+  for (const m of Object.values(meshes))
+    m.visible = m.userData.mirror.visible = true;
   renderer.compile(scene, camera);
-  for (const m of Object.values(meshes)) m.visible = false;
+  for (const m of Object.values(meshes))
+    m.visible = m.userData.mirror.visible = false;
   post.render(0);
 
   let seen = false;
